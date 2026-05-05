@@ -185,6 +185,43 @@ def format_weather_fewshot_prompt(examples: List[dict]) -> str:
     return "\n".join(lines)
 
 
+def format_ragfs_weather_prompt(examples: List[dict]) -> str:
+    """Build a dynamic few-shot prompt from RAG-retrieved examples.
+
+    Called at inference time by WeatherExperiment when rag_retriever is set.
+    Examples are already sorted by similarity (most similar first) by the
+    retriever, so we preserve that order rather than sorting by horizon.
+    """
+    lines = [
+        "You are a weather forecasting assistant.",
+        "The following examples were retrieved because they are most similar "
+        "to the current observation:\n",
+    ]
+
+    for i, datum in enumerate(examples, 1):
+        try:
+            horizon = get_horizon(datum)
+            area    = get_area(datum)
+            header  = f"--- Retrieved Example {i} (horizon: {horizon}h, location: {area}) ---"
+        except Exception:
+            header = f"--- Retrieved Example {i} ---"
+
+        lines.append(header)
+        lines.append(f"Observations:\n{datum.get('observation', '').strip()}")
+        lines.append(f"\nAnswer:\n{datum.get('result', '').strip()}")
+        lines.append("")
+
+    lines += [
+        "--- Now answer the following ---",
+        "Follow the same format as the examples above.",
+        "Report all variables for each forecast hour.",
+        "Match the timestamp format exactly.",
+        "",
+    ]
+
+    return "\n".join(lines)
+
+
 # ─────────────────────────────────────────────────────────────────────────────
 # Verify split — call this to inspect your split before running experiments
 # ─────────────────────────────────────────────────────────────────────────────

@@ -26,6 +26,8 @@ from experiments.energy_utils import (
     get_threshold,
     get_season,
     ENERGY_HORIZON,
+    format_ragfs_energy_prompt,
+    format_ragfs_energy_extreme_prompt,
 )
 from experiments.prompts import talk_to_llm
 from experiments.utils import Logger, get_logging
@@ -211,11 +213,13 @@ class EnergyForecastExperiment:
         data:            List[dict],
         log_prefix,
         model:           str,
-        prompting_mode:  str,        # "zeroshot" or "fewshot"
-        fewshot_prompt:  str = "",   # initial_prompt string
+        prompting_mode:  str,        # "zeroshot", "fewshot", or "ragfs"
+        fewshot_prompt:  str = "",   # static initial_prompt (ignored when rag_retriever set)
         concurrency:     int = None,
         timeout:         int = None,
         persistence_mae: float = None,
+        rag_retriever=None,          # RAGRetriever instance for ragfs mode
+        n_shots:         int = 4,    # examples to retrieve per query
     ):
         self.data            = data
         self.log_prefix      = log_prefix
@@ -225,6 +229,8 @@ class EnergyForecastExperiment:
         self.persistence_mae = persistence_mae
         self.metrics         = EnergyForecastMetrics()
         self.results         = []
+        self.rag_retriever   = rag_retriever
+        self.n_shots         = n_shots
 
         cfg              = _model_config(model, concurrency, timeout)
         self.concurrency = cfg["concurrency"]
@@ -252,10 +258,17 @@ class EnergyForecastExperiment:
                     target = datum.get("target", [])
                     ctx    = datum.get("context", {})
 
+                    # RAG-FS: build per-datum fewshot prompt dynamically
+                    if self.rag_retriever is not None and self.rag_retriever.is_fitted():
+                        retrieved, _sims = self.rag_retriever.retrieve(
+                            datum, k=self.n_shots, text_key="prompt")
+                        fewshot = format_ragfs_energy_prompt(retrieved)
+                    else:
+                        fewshot = self.fewshot_prompt
+
                     start = time.perf_counter()
                     llm_response = await asyncio.wait_for(
-                        talk_to_llm(prompt, fewshot=self.fewshot_prompt,
-                                    model=self.model),
+                        talk_to_llm(prompt, fewshot=fewshot, model=self.model),
                         timeout=self.timeout,
                     )
                     elapsed = time.perf_counter() - start
@@ -334,10 +347,12 @@ class EnergyExtremeExperiment:
         data:           List[dict],
         log_prefix,
         model:          str,
-        prompting_mode: str,
-        fewshot_prompt: str = "",
+        prompting_mode: str,         # "zeroshot", "fewshot", or "ragfs"
+        fewshot_prompt: str = "",    # static initial_prompt (ignored when rag_retriever set)
         concurrency:    int = None,
         timeout:        int = None,
+        rag_retriever=None,          # RAGRetriever instance for ragfs mode
+        n_shots:        int = 4,     # examples to retrieve per query
     ):
         self.data           = data
         self.log_prefix     = log_prefix
@@ -346,6 +361,8 @@ class EnergyExtremeExperiment:
         self.fewshot_prompt = fewshot_prompt
         self.metrics        = EnergyExtremeMetrics()
         self.results        = []
+        self.rag_retriever  = rag_retriever
+        self.n_shots        = n_shots
 
         cfg              = _model_config(model, concurrency, timeout)
         self.concurrency = cfg["concurrency"]
@@ -374,10 +391,17 @@ class EnergyExtremeExperiment:
                     gt_slots  = datum.get("ground_truth", {}).get("n_extreme_slots", 0)
                     ctx       = datum.get("context", {})
 
+                    # RAG-FS: build per-datum fewshot prompt dynamically
+                    if self.rag_retriever is not None and self.rag_retriever.is_fitted():
+                        retrieved, _sims = self.rag_retriever.retrieve(
+                            datum, k=self.n_shots, text_key="prompt")
+                        fewshot = format_ragfs_energy_extreme_prompt(retrieved)
+                    else:
+                        fewshot = self.fewshot_prompt
+
                     start = time.perf_counter()
                     llm_response = await asyncio.wait_for(
-                        talk_to_llm(prompt, fewshot=self.fewshot_prompt,
-                                    model=self.model),
+                        talk_to_llm(prompt, fewshot=fewshot, model=self.model),
                         timeout=self.timeout,
                     )
                     elapsed = time.perf_counter() - start

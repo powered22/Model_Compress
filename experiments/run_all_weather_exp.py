@@ -1,14 +1,21 @@
-# run_all_weather_experiments.py
+    # run_all_weather_experiments.py
 """
 Entry point for short-term weather forecasting experiments.
 
-Mirrors run_all_extreme_experiments.py but for the weather task.
-Uses fixed held-out few-shot selection (one example per horizon)
-instead of k-fold CV, because the weather task has no class labels
-to stratify over.
+Experiment matrix:
+  Models  : Llama / Mistral / Qwen at multiple quantization levels
+            (q2_K | q4_K_M | q8_0 | f16)
+  Modes   : zeroshot | fewshot | ragfs
+  Baselines: Persistence, LSTM
+
+RAG-FS mode (ragfs):
+  Embeds train.jsonl once with sentence-transformers, then for each test
+  datum retrieves the N_SHOTS_RAG most similar training examples to build
+  a dynamic few-shot prompt.  This is compared against static fewshot and
+  zeroshot across all quantization levels.
 
 Run from project root:
-    python -m run_all_weather_experiments
+    python -m experiments.run_all_weather_exp
 """
 
 import os
@@ -21,6 +28,7 @@ from experiments.utils import get_logging
 from experiments.kfold_weather import (
     fixed_fewshot_weather_split,
     format_weather_fewshot_prompt,
+    format_ragfs_weather_prompt,
     verify_split,
     load_jsonl,
 )
@@ -32,24 +40,36 @@ from experiments.baselines.lstm_evaluator import LSTMEvaluator
 # Configuration — edit these before running
 # ─────────────────────────────────────────────────────────────────────────────
 
-JSONL_PATH   = "data/weather/100_test_data.jsonl"   # swap to full dataset when ready
-LOG_DIR      = "results_log"
+JSONL_PATH   = os.environ.get("WEATHER_DATA",  "data/weather/100_test_data.jsonl")
+TRAIN_JSONL  = os.environ.get("WEATHER_TRAIN", "data/weather/train.jsonl")
+LOG_DIR      = os.environ.get("LOG_DIR",        "results_log")
 CONCURRENCY  = None    # None → resolved from MODEL_DEFAULTS in runner.py
-SEED         = 42
+SEED         = int(os.environ.get("SEED", "42"))
 
-MODELS = [
+# ── Quantization comparison matrix ───────────────────────────────────────────
+# Override via env var: MODELS=llama3:8b-instruct-q2_K,mistral:7b-instruct-v0.2-q2_K
+# Available quant variants: q2_K | q4_K_M | q8_0 | f16
+#   llama3:8b-instruct-{quant}
+#   mistral:7b-instruct-v0.2-{quant}
+#   qwen2.5:7b-instruct-{quant}
+MODELS = os.environ.get(
+    "MODELS",
     "llama3:8b-instruct-q2_K",
-    # "qwen2.5:7b-instruct-q2_K",
-    # "mistral:7b-instruct-v0.2-q2_K",
-]
+).split(",")
 
-MODES = [
-    "zeroshot",
-    "fewshot",
-]
+# ── Prompting modes ───────────────────────────────────────────────────────────
+# Override via env var: MODES=zeroshot  or  MODES=zeroshot,fewshot,ragfs
+# zeroshot : no examples, instructions only
+# fewshot  : fixed static examples (one per horizon, selected once)
+# ragfs    : dynamic retrieval from train.jsonl per test datum (Opsi 2)
+MODES = os.environ.get("MODES", "zeroshot,fewshot,ragfs").split(",")
 
 FORMAT_DBASE = "sentence"   # "sentence" or "jsonl"
 TASK         = "weather"
+
+# RAG-FS configuration
+N_SHOTS_RAG  = 4    # number of examples to retrieve per test datum
+RAG_MODEL    = "all-MiniLM-L6-v2"   # sentence-transformers model name
 
 # Metrics to include in the summary table
 REPORT_METRICS = [
@@ -70,15 +90,14 @@ FEWSHOT_PROMPT_PATH = os.path.join(
     "initial_prompts", "weather", "fewshot-weather.txt"
 )
 
-# Zero-shot prompt path — your existing file
+# Zero-shot prompt path
 ZEROSHOT_PROMPT_PATH = os.path.join(
     "initial_prompts", "weather", "zeroshot-weather.txt"
 )
 
 # LSTM baseline configuration
-# Set LSTM_CHECKPOINT to None to skip LSTM evaluation
 LSTM_CHECKPOINT  = "results_log/lstm_best_h10_seq6_hidden128_layers2.pt"
-LSTM_TRAIN_JSONL = "data/weather/train.jsonl"   # same train data used to fit scalers
+LSTM_TRAIN_JSONL = "data/weather/train.jsonl"
 LSTM_SEQ_LEN     = 6
 LSTM_H_MAX       = 10
 
@@ -88,13 +107,8 @@ LSTM_H_MAX       = 10
 # ─────────────────────────────────────────────────────────────────────────────
 
 def _write_zeroshot_prompt():
-    """
-    Write a minimal zero-shot instruction file if it does not already exist.
-    If you already have a zeroshot-weather.txt, this is skipped.
-    """
     if os.path.exists(ZEROSHOT_PROMPT_PATH):
-        return   # keep your existing file
-
+        return
     os.makedirs(os.path.dirname(ZEROSHOT_PROMPT_PATH), exist_ok=True)
     content = (
         "You are a weather forecasting assistant.\n"
@@ -109,10 +123,6 @@ def _write_zeroshot_prompt():
 
 
 def _write_fewshot_prompt(few_shot_examples: list):
-    """
-    Format and write the few-shot prompt file.
-    Called once before running all few-shot experiments.
-    """
     os.makedirs(os.path.dirname(FEWSHOT_PROMPT_PATH), exist_ok=True)
     prompt_text = format_weather_fewshot_prompt(few_shot_examples)
     with open(FEWSHOT_PROMPT_PATH, "w", encoding="utf-8") as f:
@@ -130,33 +140,31 @@ def run_weather_experiment(
     mode: str,
     log,
     persistence_scores: dict = None,
+    rag_retriever=None,
 ) -> dict:
     """
-    Run one WeatherExperiment (one model, one mode) and return scores.
+    Run one WeatherExperiment (one model × one mode) and return scores.
 
-    For zero-shot: data_list = full dataset
-    For few-shot:  data_list = test set only (few-shot examples already removed)
+    For ragfs, rag_retriever must be pre-fitted before calling this function.
     """
-    # Map mode → prompting_mode string (matches your initial_prompts filenames)
-    prompting_mode = mode   # "zeroshot" or "fewshot"
-
     log.info(f"\n  Running: model={model}, mode={mode}, "
              f"n_samples={len(data_list)}")
 
     exp = WeatherExperiment(
         data_list=data_list,
         log_prefix=log,
-        prompting_mode=prompting_mode,
+        prompting_mode=mode,
         model=model,
         task=TASK,
         format_dbase=FORMAT_DBASE,
-        concurrency=CONCURRENCY,   # None → uses MODEL_DEFAULTS
-        timeout=None,              # None → uses MODEL_DEFAULTS
+        concurrency=CONCURRENCY,
+        timeout=None,
         persistence_scores=persistence_scores,
+        rag_retriever=rag_retriever,   # None for zeroshot/fewshot
+        n_shots=N_SHOTS_RAG,
     )
     exp.run(logging=True)
 
-    # Warn if samples were skipped
     n_expected  = len(data_list)
     n_processed = len(exp.results)
     if n_processed < n_expected:
@@ -183,33 +191,45 @@ def main():
     log.info("="*60)
     log.info("Short-term Weather Forecasting Experiment")
     log.info("="*60)
-    log.info(f"  Dataset:  {JSONL_PATH}")
-    log.info(f"  Models:   {MODELS}")
-    log.info(f"  Modes:    {MODES}")
-    log.info(f"  Format:   {FORMAT_DBASE}")
+    log.info(f"  Dataset:      {JSONL_PATH}")
+    log.info(f"  Train set:    {TRAIN_JSONL}")
+    log.info(f"  Models:       {MODELS}")
+    log.info(f"  Modes:        {MODES}")
+    log.info(f"  Format:       {FORMAT_DBASE}")
+    log.info(f"  N_SHOTS_RAG:  {N_SHOTS_RAG}")
 
-    # ── Load full dataset ─────────────────────────────────────────────────────
-    all_data = load_jsonl(JSONL_PATH)
-    log.info(f"  Loaded {len(all_data)} samples")
+    # ── Load datasets ─────────────────────────────────────────────────────────
+    all_data   = load_jsonl(JSONL_PATH)
+    train_data = load_jsonl(TRAIN_JSONL) if os.path.exists(TRAIN_JSONL) else []
+    log.info(f"  Loaded {len(all_data)} test samples, {len(train_data)} train samples")
 
-    # ── Prepare splits ────────────────────────────────────────────────────────
-    # Few-shot split: done ONCE, shared across all models
-    # This ensures all models are evaluated on the same test set
+    # ── Prepare static few-shot split ─────────────────────────────────────────
     few_shot_examples, test_data = fixed_fewshot_weather_split(all_data)
     verify_split(few_shot_examples, test_data)
 
-    # Write prompt files
     _write_zeroshot_prompt()
     fewshot_path = _write_fewshot_prompt(few_shot_examples)
     log.info(f"\n  Few-shot prompt written to: {fewshot_path}")
-    log.info(f"  Few-shot examples:  {len(few_shot_examples)} "
-             f"(one per horizon)")
-    log.info(f"  Zero-shot test set: {len(all_data)} samples (full dataset)")
-    log.info(f"  Few-shot test set:  {len(test_data)} samples")
+    log.info(f"  Few-shot examples:  {len(few_shot_examples)}")
+    log.info(f"  Static test set:    {len(test_data)} samples")
 
-    # ── Run persistence baseline ONCE ────────────────────────────────────────
-    # Persistence uses the full dataset (same as zero-shot — no contamination
-    # risk since it makes no LLM calls and uses no examples)
+    # ── Build RAG retriever once (shared across all models) ───────────────────
+    rag_retriever = None
+    if "ragfs" in MODES:
+        if not train_data:
+            log.info(f"\n  [WARNING] RAG-FS requested but {TRAIN_JSONL} not found. "
+                     f"Falling back to full test set as pool.")
+            rag_pool = all_data
+        else:
+            rag_pool = train_data
+
+        log.info(f"\n  Building RAG retriever on {len(rag_pool)} examples ...")
+        from experiments.rag_retriever import RAGRetriever
+        rag_retriever = RAGRetriever(model_name=RAG_MODEL)
+        rag_retriever.fit(rag_pool, text_key="observation")
+        log.info(f"  RAG retriever ready (pool_size={rag_retriever.pool_size})")
+
+    # ── Persistence baseline ──────────────────────────────────────────────────
     log.info("\n" + "─"*60)
     log.info("Running persistence baseline...")
     persistence_exp    = PersistenceExperiment(test_data, log)
@@ -222,17 +242,19 @@ def main():
     for model in MODELS:
         log.info(f"\n{'='*60}")
         log.info(f"MODEL: {model}")
+        log.info(f"  Quant level: {_get_quant_level(model)}")
         log.info(f"{'='*60}")
 
-        # ── Inner loop: modes ─────────────────────────────────────────────────
         for mode in MODES:
             log.info(f"\n  Mode: {mode}")
             log.info(f"  {'─'*40}")
 
             try:
-                # Zero-shot uses full dataset
-                # Few-shot uses test_data (few-shot examples removed)
+                # ragfs uses the full test_data with dynamic retrieval
+                # zeroshot uses full test_data (no prompt examples to exclude)
+                # fewshot uses test_data (few-shot examples excluded)
                 data_for_mode = test_data
+                retriever_for_mode = rag_retriever if mode == "ragfs" else None
 
                 scores = run_weather_experiment(
                     data_list=data_for_mode,
@@ -240,10 +262,13 @@ def main():
                     mode=mode,
                     log=log,
                     persistence_scores=persistence_scores,
+                    rag_retriever=retriever_for_mode,
                 )
 
                 all_results.append({
                     "model":  model,
+                    "quant":  _get_quant_level(model),
+                    "family": _get_model_family(model),
                     "mode":   mode,
                     "scores": scores,
                 })
@@ -256,28 +281,50 @@ def main():
 
             except Exception as e:
                 log.info(f"  [ERROR] {model} | {mode}: {e}")
+                import traceback
+                log.info(traceback.format_exc())
                 all_results.append({
                     "model":  model,
+                    "quant":  _get_quant_level(model),
+                    "family": _get_model_family(model),
                     "mode":   mode,
                     "scores": {},
                     "error":  str(e),
                 })
 
-    # ── Add persistence to results table ─────────────────────────────────────
+    # ── Add persistence to results table ──────────────────────────────────────
     all_results.insert(0, {
         "model":  "persistence",
+        "quant":  "baseline",
+        "family": "baseline",
         "mode":   "baseline",
         "scores": persistence_scores,
     })
 
-    # ── Print and save summary ────────────────────────────────────────────────
     _print_summary_table(all_results, log)
 
-    csv_path = os.path.join(
-        LOG_DIR, f"summary_weather_{timestamp}.csv"
-    )
+    csv_path = os.path.join(LOG_DIR, f"summary_weather_{timestamp}.csv")
     _save_summary_csv(all_results, csv_path)
     log.info(f"\nSummary saved to: {csv_path}")
+
+
+# ─────────────────────────────────────────────────────────────────────────────
+# Model name helpers
+# ─────────────────────────────────────────────────────────────────────────────
+
+def _get_quant_level(model: str) -> str:
+    """Extract quantization suffix from model name (e.g. 'q4_K_M', 'f16')."""
+    for quant in ("f16", "q8_0", "q6_K", "q5_K_M", "q4_K_M", "q4_K_S",
+                  "q3_K_M", "q2_K"):
+        if quant.lower() in model.lower():
+            return quant
+    return "unknown"
+
+
+def _get_model_family(model: str) -> str:
+    """Extract model family from Ollama tag (e.g. 'llama3', 'mistral', 'qwen2.5')."""
+    name = model.split(":")[0]
+    return name
 
 
 # ─────────────────────────────────────────────────────────────────────────────
@@ -285,37 +332,38 @@ def main():
 # ─────────────────────────────────────────────────────────────────────────────
 
 def _print_summary_table(all_results: list, log):
-    log.info(f"\n\n{'='*80}")
+    log.info(f"\n\n{'='*90}")
     log.info("FINAL SUMMARY TABLE — Short-term Weather Forecasting")
-    log.info(f"{'='*80}")
+    log.info(f"{'='*90}")
 
-    header = (f"{'Model':<35} {'Mode':<12} " +
+    header = (f"{'Model':<32} {'Quant':<10} {'Mode':<10} " +
               " ".join(f"{m[:10]:>12}" for m in REPORT_METRICS))
     log.info(header)
     log.info("─" * len(header))
 
     for entry in all_results:
         model  = entry["model"]
+        quant  = entry.get("quant", "")
         mode   = entry["mode"]
         scores = entry.get("scores", {})
 
         if "error" in entry:
-            row = f"{model:<35} {mode:<12}  ERROR: {entry['error']}"
+            row = f"{model:<32} {quant:<10} {mode:<10}  ERROR: {entry['error']}"
         else:
             vals = []
             for metric in REPORT_METRICS:
                 val = scores.get(metric)
                 cell = f"{val:.4f}" if isinstance(val, float) else "N/A"
                 vals.append(f"{cell:>12}")
-            row = f"{model:<35} {mode:<12} " + " ".join(vals)
+            row = f"{model:<32} {quant:<10} {mode:<10} " + " ".join(vals)
 
         log.info(row)
 
-    log.info(f"{'='*80}")
+    log.info(f"{'='*90}")
 
 
 def _save_summary_csv(all_results: list, csv_path: str):
-    fieldnames = ["model", "mode"] + REPORT_METRICS
+    fieldnames = ["model", "family", "quant", "mode"] + REPORT_METRICS
 
     with open(csv_path, "w", newline="", encoding="utf-8-sig") as f:
         writer = csv.DictWriter(f, fieldnames=fieldnames)
@@ -325,7 +373,12 @@ def _save_summary_csv(all_results: list, csv_path: str):
             if "error" in entry:
                 continue
             scores = entry.get("scores", {})
-            row    = {"model": entry["model"], "mode": entry["mode"]}
+            row = {
+                "model":  entry["model"],
+                "family": entry.get("family", ""),
+                "quant":  entry.get("quant", ""),
+                "mode":   entry["mode"],
+            }
             for metric in REPORT_METRICS:
                 val        = scores.get(metric)
                 row[metric] = round(val, 4) if isinstance(val, float) else ""

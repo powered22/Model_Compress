@@ -15,6 +15,12 @@ current_dir = os.path.dirname(__file__)
 
 MAX_TOTAL_TOKENS = 4096
 
+# Ollama host — override with OLLAMA_HOST env var to point at a different
+# server instance (e.g. when running multiple Ollama servers on different
+# GPUs at ports 11434, 11435, 11436, 11437).
+# Example: OLLAMA_HOST=http://localhost:11435 python -m experiments.run_all_weather_exp
+_OLLAMA_HOST = os.environ.get("OLLAMA_HOST", "http://localhost:11434")
+
 
 async def talk_to_openai(message: str, fewshot: str = None, model: str = "gpt-4-turbo") -> str:
     """
@@ -96,7 +102,7 @@ async def talk_to_llm(message: str, fewshot: str = None, model: str = 'llama3') 
         else:
             messages = [{'role': 'user', 'content': message.strip()}]
 
-    response = await OllamaClient().chat(model=model, messages=messages)
+    response = await OllamaClient(host=_OLLAMA_HOST).chat(model=model, messages=messages)
 
     return str(response['message']['content'])
 

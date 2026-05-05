@@ -441,3 +441,60 @@ def format_energy_extreme_fewshot_prompt(examples: List[dict]) -> str:
         "",
     ]
     return "\n".join(lines)
+
+
+def format_ragfs_energy_prompt(examples: List[dict]) -> str:
+    """Build a dynamic few-shot prompt from RAG-retrieved energy forecast examples.
+
+    Called at inference time by EnergyForecastExperiment when rag_retriever is set.
+    Examples are already sorted by similarity (most similar first) by the retriever.
+    """
+    lines = [
+        "You are an electricity load forecasting assistant.",
+        "The following examples were retrieved because they are most similar "
+        "to the current query:\n",
+    ]
+    for i, datum in enumerate(examples, 1):
+        ctx     = datum.get("context", {})
+        history = datum.get("history", [])
+        target  = datum.get("target", [])
+        lines.append(f"--- Retrieved Example {i} "
+                     f"({ctx.get('season','')}, {ctx.get('day_of_week','')}) ---")
+        lines.append(f"Historical load (48 values):\n{', '.join(str(v) for v in history)}")
+        lines.append(f"Answer (48 values):\n{', '.join(str(v) for v in target)}\n")
+
+    lines += [
+        "--- Now answer the following ---",
+        "Output exactly 48 comma-separated numbers. No explanation.",
+        "",
+    ]
+    return "\n".join(lines)
+
+
+def format_ragfs_energy_extreme_prompt(examples: List[dict]) -> str:
+    """Build a dynamic few-shot prompt from RAG-retrieved energy extreme examples.
+
+    Called at inference time by EnergyExtremeExperiment when rag_retriever is set.
+    Examples are already sorted by similarity (most similar first) by the retriever.
+    """
+    lines = [
+        "You are an electricity grid analyst.",
+        "The following examples were retrieved because they are most similar "
+        "to the current query:\n",
+    ]
+    for i, datum in enumerate(examples, 1):
+        has, peak = get_label_extreme(datum)
+        ctx = datum.get("context", {})
+        answer = "YES" if has else "NO"
+        peak_line = f"\nPeak load estimate: {peak:.2f} MW" if has and peak else ""
+        lines.append(f"--- Retrieved Example {i} "
+                     f"({ctx.get('season','')}, {ctx.get('day_of_week','')}) ---")
+        lines.append(datum.get("prompt", "").strip())
+        lines.append(f"Answer: {answer}{peak_line}\n")
+
+    lines += [
+        "--- Now answer the following ---",
+        "Answer YES or NO. If YES, also provide peak load estimate in MW.",
+        "",
+    ]
+    return "\n".join(lines)

@@ -179,9 +179,14 @@ Return ONLY the JSON object as specified above.
 async def _ollama_chat(prompt: str, model: Optional[str] = None) -> str:
     """
     Call Ollama via the official python-ollama client (async).
+    Uses OLLAMA_HOST env var if set (for multi-GPU parallel setups).
     """
+    _host = os.environ.get("OLLAMA_HOST", "http://localhost:11434")
     messages = [{"role": "user", "content": prompt}]
-    response = await OllamaClient().chat(model=model or OLLAMA_MODEL, messages=messages,format="json",options={"temperature": 0.1})
+    response = await OllamaClient(host=_host).chat(
+        model=model or OLLAMA_MODEL, messages=messages,
+        format="json", options={"temperature": 0.1},
+    )
     return str(response["message"]["content"])
 
 

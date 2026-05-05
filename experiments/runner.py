@@ -17,6 +17,17 @@ from datetime import datetime, timedelta
 import time
 import torch
 
+# RAGRetriever is imported lazily inside the experiment classes so that
+# projects that don't use RAG-FS don't pay the sentence-transformers load cost.
+_RAGRetriever = None
+
+def _get_rag_retriever_class():
+    global _RAGRetriever
+    if _RAGRetriever is None:
+        from .rag_retriever import RAGRetriever
+        _RAGRetriever = RAGRetriever
+    return _RAGRetriever
+
 curr_dir = os.path.dirname(__file__)
 
 TARGET_FIELDS = [
@@ -39,17 +50,62 @@ TARGET_FIELDS = [
 _ON_GPU = torch.cuda.is_available()
 
 MODEL_DEFAULTS = {
+    # ── Llama 3 8B Instruct ───────────────────────────────────────────────────
+    # q2_K  : most compressed, fastest, lowest quality  (existing baseline)
     "llama3:8b-instruct-q2_K": {
-        "concurrency": 2  if _ON_GPU else 2,    # ← was hardcoded 2
-        "timeout":     600 if _ON_GPU else 600,  # ← GPU is faster, shorter timeout
+        "concurrency": 2,
+        "timeout":     600,
     },
-    "qwen2.5:7b-instruct-q2_K": {
-        "concurrency": 2 if _ON_GPU else 5,
-        "timeout":     600  if _ON_GPU else 600,
+    # q4_K_M: recommended balance between speed and quality
+    "llama3:8b-instruct-q4_K_M": {
+        "concurrency": 2,
+        "timeout":     700,
     },
+    # q8_0  : near-lossless, much slower and heavier
+    "llama3:8b-instruct-q8_0": {
+        "concurrency": 1,
+        "timeout":     900,
+    },
+    # f16   : full precision (largest memory footprint)
+    "llama3:8b-instruct-f16": {
+        "concurrency": 1,
+        "timeout":     1200,
+    },
+
+    # ── Mistral 7B Instruct v0.2 ──────────────────────────────────────────────
     "mistral:7b-instruct-v0.2-q2_K": {
         "concurrency": 2 if _ON_GPU else 5,
-        "timeout":     600  if _ON_GPU else 600,
+        "timeout":     600,
+    },
+    "mistral:7b-instruct-v0.2-q4_K_M": {
+        "concurrency": 2,
+        "timeout":     700,
+    },
+    "mistral:7b-instruct-v0.2-q8_0": {
+        "concurrency": 1,
+        "timeout":     900,
+    },
+    "mistral:7b-instruct-v0.2-f16": {
+        "concurrency": 1,
+        "timeout":     1200,
+    },
+
+    # ── Qwen 2.5 7B Instruct ─────────────────────────────────────────────────
+    "qwen2.5:7b-instruct-q2_K": {
+        "concurrency": 2 if _ON_GPU else 5,
+        "timeout":     600,
+    },
+    "qwen2.5:7b-instruct-q4_K_M": {
+        "concurrency": 2,
+        "timeout":     700,
+    },
+    "qwen2.5:7b-instruct-q8_0": {
+        "concurrency": 1,
+        "timeout":     900,
+    },
+    "qwen2.5:7b-instruct-f16": {
+        "concurrency": 1,
+        "timeout":     1200,
     },
 }
 
@@ -221,18 +277,22 @@ class WeatherExperiment(Experiment):
                  model,
                  task,
                  format_dbase,
-                 concurrency: int = None,   # ← optional override
-                 timeout: int = None,        # ← optional override
-                 persistence_scores: dict = None):
+                 concurrency: int = None,
+                 timeout: int = None,
+                 persistence_scores: dict = None,
+                 rag_retriever=None,   # RAGRetriever instance for ragfs mode
+                 n_shots: int = 4):   # how many examples to retrieve per query
 
         data_dict      = {str(i): d for i, d in enumerate(data_list)}
         prompting      = WeatherPrompting(prompting=prompting_mode,
                                           task=task, format_dbase=format_dbase)
-        self.results           = []
-        self.format_dbase      = format_dbase
-        self.log_prefix        = log_prefix
-        self.task              = task
+        self.results            = []
+        self.format_dbase       = format_dbase
+        self.log_prefix         = log_prefix
+        self.task               = task
         self.persistence_scores = persistence_scores
+        self.rag_retriever      = rag_retriever
+        self.n_shots            = n_shots
 
         super().__init__(data=data_dict, prompting=prompting, model=model,
                          op=None, mode=None,
@@ -250,13 +310,23 @@ class WeatherExperiment(Experiment):
             async with self.semaphore:
                 try:
                     prompt = self.prompting.get_prompt(datum)
-                    start  = time.perf_counter()
+
+                    # RAG-FS: build a per-datum fewshot prompt dynamically
+                    if self.rag_retriever is not None and self.rag_retriever.is_fitted():
+                        from .kfold_weather import format_ragfs_weather_prompt
+                        retrieved, _sims = self.rag_retriever.retrieve(
+                            datum, k=self.n_shots)
+                        fewshot = format_ragfs_weather_prompt(retrieved)
+                    else:
+                        fewshot = self.prompting.get_initial_prompt()
+
+                    start = time.perf_counter()
 
                     llm_response = await asyncio.wait_for(
                         prompts.talk_to_llm(prompt,
-                                            fewshot=self.prompting.get_initial_prompt(),
+                                            fewshot=fewshot,
                                             model=self.model),
-                        timeout=self.timeout)   # ← uses per-model timeout
+                        timeout=self.timeout)
                     elapsed = time.perf_counter() - start
 
                     try:
@@ -372,16 +442,20 @@ class WeatherExtremeExperiment(Experiment):
                  model,
                  task,
                  format_dbase,
-                 concurrency: int = None,   # ← optional override
-                 timeout: int = None):       # ← optional override
+                 concurrency: int = None,
+                 timeout: int = None,
+                 rag_retriever=None,   # RAGRetriever instance for ragfs mode
+                 n_shots: int = 4):   # how many examples to retrieve per query
 
         data_dict  = {str(i): d for i, d in enumerate(data_list)}
         prompting  = WeatherPrompting(prompting=prompting_mode,
                                       task=task, format_dbase=format_dbase)
-        self.task         = task
-        self.format_dbase = format_dbase
-        self.results      = []
-        self.log_prefix   = log_prefix
+        self.task           = task
+        self.format_dbase   = format_dbase
+        self.results        = []
+        self.log_prefix     = log_prefix
+        self.rag_retriever  = rag_retriever
+        self.n_shots        = n_shots
 
         super().__init__(data=data_dict, prompting=prompting, model=model,
                          op=None, mode=None,
@@ -398,14 +472,24 @@ class WeatherExtremeExperiment(Experiment):
             async with self.semaphore:
                 try:
                     prompt = self.prompting.get_prompt(datum)
-                    start  = time.perf_counter()
+
+                    # RAG-FS: build a per-datum fewshot prompt dynamically
+                    if self.rag_retriever is not None and self.rag_retriever.is_fitted():
+                        from .kfold_extreme import format_ragfs_extreme_prompt
+                        retrieved, _sims = self.rag_retriever.retrieve(
+                            datum, k=self.n_shots)
+                        fewshot = format_ragfs_extreme_prompt(retrieved)
+                    else:
+                        fewshot = self.prompting.get_initial_prompt()
+
+                    start = time.perf_counter()
 
                     response = await asyncio.wait_for(
                         prompts.talk_to_llm(
                             prompt,
-                            fewshot=self.prompting.get_initial_prompt(),
+                            fewshot=fewshot,
                             model=self.model),
-                        timeout=self.timeout)   # ← uses per-model timeout
+                        timeout=self.timeout)
                     elapsed = time.perf_counter() - start
 
                     text = response.strip().lower()

@@ -213,6 +213,46 @@ def format_fewshot_prompt(
     return "\n".join(lines)
 
 
+def format_ragfs_extreme_prompt(examples: List[dict]) -> str:
+    """Build a dynamic few-shot prompt from RAG-retrieved extreme-weather examples.
+
+    Called at inference time by WeatherExtremeExperiment when rag_retriever is set.
+    Examples are already sorted by similarity (most similar first).
+    """
+    lines = [
+        "You are a severe weather analyst.",
+        "The following examples were retrieved because they are most similar "
+        "to the current observation:\n",
+    ]
+
+    for i, datum in enumerate(examples, 1):
+        has, etype = get_label(datum)
+        answer     = "Yes," if has else "No,"
+        event_line = etype if has else "NA"
+
+        lines.append(f"Retrieved Example {i}:")
+        lines.append(f"Observations: {datum.get('observation', '').strip()}")
+        lines.append(f"Question: {datum.get('question', '').strip()}")
+        lines.append(f"Answer: {answer}")
+        lines.append(f"EventType: {event_line}")
+        lines.append("")
+
+    lines += [
+        "Output format:",
+        "Line 1: Yes or No",
+        "Line 2: EventType: Hail or Thunderstorm Wind or Flash Flood or "
+        "Tornado or Lightning or Flood or Funnel Cloud or NA",
+        "",
+        "Provide a direct and concise answer.",
+        "Do not repeat the instructions or restate the output format.",
+        "Do not list multiple extreme weather events.",
+        "Follow the required output format exactly.",
+        "",
+    ]
+
+    return "\n".join(lines)
+
+
 # ─────────────────────────────────────────────────────────────────────────────
 # Aggregate scores across folds
 # ─────────────────────────────────────────────────────────────────────────────
@@ -244,7 +284,7 @@ def aggregate_fold_scores(all_fold_scores: List[dict]) -> dict:
 def run_kfold_extreme(
     jsonl_path: str,
     model: str,
-    prompting_mode: str,        # "fewshot" or "zeroshot"
+    prompting_mode: str,        # "fewshot", "zeroshot", or "ragfs"
     format_dbase: str,          # "sentence" or "jsonl"
     concurrency: int = 5,
     k: int = 5,
@@ -253,11 +293,12 @@ def run_kfold_extreme(
     log_dir: str = "results_log",
 ) -> dict:
     """
-    Full 5-fold cross-validation pipeline for WeatherExtremeExperiment.
+    Full k-fold cross-validation pipeline for WeatherExtremeExperiment.
 
-    For zero-shot:  runs once on all data (no split needed)
-    For few-shot:   runs k folds, each with different train/test split
-                    and fresh few-shot examples selected from train pool
+    prompting_mode:
+      "zeroshot" — single run on all data, no examples
+      "fewshot"  — k-fold CV with stratified static few-shot selection
+      "ragfs"    — k-fold CV with per-datum RAG retrieval from train pool
 
     Returns aggregated metrics (mean ± std across folds).
     """
@@ -274,7 +315,6 @@ def run_kfold_extreme(
     if prompting_mode == "zeroshot":
         log.info("[Zero-shot] Running on full dataset — no split needed.")
 
-        # Write a zero-shot prompt file (no examples, just instructions)
         zeroshot_prompt = (
             "You are a severe weather analyst.\n\n"
             "Output format:\n"
@@ -286,8 +326,6 @@ def run_kfold_extreme(
             "Do not list multiple extreme weather events.\n"
             "Follow the required output format exactly.\n"
         )
-
-        # Temporarily write to file so WeatherExtremeExperiment can read it
         _write_prompt_file(zeroshot_prompt, model, "zeroshot")
 
         exp = WeatherExtremeExperiment(
@@ -306,8 +344,11 @@ def run_kfold_extreme(
             log.info(f"  {k_}: {v}")
         return final_scores
 
-    # ── Few-shot: k-fold cross-validation ────────────────────────────────────
-    log.info(f"[Few-shot {k}-Fold CV] model={model}, n_shots={n_shots}")
+    # ── Few-shot / RAG-FS: k-fold cross-validation ───────────────────────────
+    is_ragfs = (prompting_mode == "ragfs")
+    mode_label = "RAG-FS" if is_ragfs else "Few-shot"
+
+    log.info(f"[{mode_label} {k}-Fold CV] model={model}, n_shots={n_shots}")
     folds = stratified_kfold(all_data, k=k, seed=seed)
     all_fold_scores = []
 
@@ -315,29 +356,50 @@ def run_kfold_extreme(
         log.info(f"\n{'─'*40}")
         log.info(f"Fold {fold_idx}/{k}: train={len(train_pool)}, test={len(test_data)}")
 
-        # Select fresh few-shot examples from this fold's train pool
-        examples       = select_fewshot_examples(train_pool, n_shots=n_shots, seed=seed+fold_idx)
-        fewshot_prompt = format_fewshot_prompt(examples)
+        if is_ragfs:
+            # ── RAG-FS: embed train pool, retrieve per-datum at inference time
+            from .rag_retriever import RAGRetriever
+            retriever = RAGRetriever()
+            retriever.fit(train_pool, text_key="observation")
+            log.info(f"  [RAG-FS] Retriever fitted on {retriever.pool_size} train examples")
+            # ragfs-weather-extreme.txt already exists in initial_prompts/
+            # WeatherPrompting will load it, but the content is overridden
+            # per-datum inside WeatherExtremeExperiment.process_example
 
-        # Write prompt to file for this fold
-        prompt_path = _write_prompt_file(fewshot_prompt, model, f"fewshot_fold{fold_idx}")
-        log.info(f"  Few-shot examples: {[get_label(e) for e in examples]}")
-        log.info(f"  Prompt written to: {prompt_path}")
+            exp = WeatherExtremeExperiment(
+                data_list=test_data,
+                log_prefix=log,
+                prompting_mode="ragfs",
+                model=model,
+                concurrency=concurrency,
+                timeout=None,
+                task="weather-extreme",
+                format_dbase=format_dbase,
+                rag_retriever=retriever,
+                n_shots=n_shots,
+            )
+        else:
+            # ── Static few-shot: select fixed examples from train pool
+            examples       = select_fewshot_examples(train_pool, n_shots=n_shots, seed=seed+fold_idx)
+            fewshot_prompt = format_fewshot_prompt(examples)
+            prompt_path    = _write_prompt_file(fewshot_prompt, model, f"fewshot_fold{fold_idx}")
+            log.info(f"  Few-shot examples: {[get_label(e) for e in examples]}")
+            log.info(f"  Prompt written to: {prompt_path}")
 
-        exp = WeatherExtremeExperiment(
-            data_list=test_data,
-            log_prefix=log,
-            prompting_mode=f"fewshot_fold{fold_idx}",
-            model=model,
-            concurrency=concurrency,  # None → resolved from MODEL_DEFAULTS
-            timeout=None,             # None → resolved from MODEL_DEFAULTS
-            task="weather-extreme",
-            format_dbase=format_dbase,
-        )
+            exp = WeatherExtremeExperiment(
+                data_list=test_data,
+                log_prefix=log,
+                prompting_mode=f"fewshot_fold{fold_idx}",
+                model=model,
+                concurrency=concurrency,
+                timeout=None,
+                task="weather-extreme",
+                format_dbase=format_dbase,
+            )
+
         exp.run(logging=True)
         fold_scores = exp.metrics.get(subject="weather-extreme")
 
-        # Warn if this fold processed fewer samples than expected
         n_expected  = len(test_data)
         n_processed = len(exp.results)
         if n_processed < n_expected:
