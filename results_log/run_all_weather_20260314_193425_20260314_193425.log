@@ -1,0 +1,74 @@
+[rank0] [2026-03-14 19:34:25] [INFO] - ============================================================
+[rank0] [2026-03-14 19:34:25] [INFO] - Short-term Weather Forecasting Experiment
+[rank0] [2026-03-14 19:34:25] [INFO] - ============================================================
+[rank0] [2026-03-14 19:34:25] [INFO] -   Dataset:  data/weather/100_test_data.jsonl
+[rank0] [2026-03-14 19:34:25] [INFO] -   Models:   ['llama3:8b-instruct-q2_K', 'qwen2.5:7b-instruct-q2_K', 'mistral:7b-instruct-v0.2-q2_K']
+[rank0] [2026-03-14 19:34:25] [INFO] -   Modes:    ['zeroshot', 'fewshot']
+[rank0] [2026-03-14 19:34:25] [INFO] -   Format:   sentence
+[rank0] [2026-03-14 19:34:25] [INFO] -   Loaded 100 samples
+[rank0] [2026-03-14 19:34:25] [INFO] - 
+  Few-shot prompt written to: initial_prompts/weather/fewshot-weather.txt
+[rank0] [2026-03-14 19:34:25] [INFO] -   Few-shot examples:  4 (one per horizon)
+[rank0] [2026-03-14 19:34:25] [INFO] -   Zero-shot test set: 100 samples (full dataset)
+[rank0] [2026-03-14 19:34:25] [INFO] -   Few-shot test set:  96 samples
+[rank0] [2026-03-14 19:34:25] [INFO] - 
+────────────────────────────────────────────────────────────
+[rank0] [2026-03-14 19:34:25] [INFO] - Running persistence baseline...
+[rank0] [2026-03-14 19:37:34] [INFO] - 
+=== Persistence Baseline ===
+[rank0] [2026-03-14 19:37:34] [INFO] -   levenshtein_distance: 312.82
+[rank0] [2026-03-14 19:37:34] [INFO] -   norm_levenshtein_distance: 0.27700952024146736
+[rank0] [2026-03-14 19:37:34] [INFO] -   lcs: 20.84
+[rank0] [2026-03-14 19:37:34] [INFO] -   norm_lcs: 0.021716073637996446
+[rank0] [2026-03-14 19:37:34] [INFO] -   l1loss: 0.6251174997619051
+[rank0] [2026-03-14 19:37:34] [INFO] -   l1loss_matched: 0.6251174997619049
+[rank0] [2026-03-14 19:37:34] [INFO] -   timestamp_coverage: 100.0
+[rank0] [2026-03-14 19:37:34] [INFO] -   coverage: 100.0
+[rank0] [2026-03-14 19:37:34] [INFO] -   bertscore: 0.5602468621730804
+[rank0] [2026-03-14 19:37:34] [INFO] -   cosinesim: 0.4889886401129649
+[rank0] [2026-03-14 19:37:34] [INFO] -   bleu: 0.010787203874465157
+[rank0] [2026-03-14 19:37:34] [INFO] -   rouge_l: 0.6952810628794055
+[rank0] [2026-03-14 19:37:34] [INFO] -   strict: 1.0
+[rank0] [2026-03-14 19:37:34] [INFO] -   lenient: 0.6313039436876953
+[rank0] [2026-03-14 19:37:34] [INFO] - Persistence baseline complete.
+[rank0] [2026-03-14 19:37:34] [INFO] - 
+============================================================
+[rank0] [2026-03-14 19:37:34] [INFO] - MODEL: llama3:8b-instruct-q2_K
+[rank0] [2026-03-14 19:37:34] [INFO] - ============================================================
+[rank0] [2026-03-14 19:37:34] [INFO] - 
+  Mode: zeroshot
+[rank0] [2026-03-14 19:37:34] [INFO] -   ────────────────────────────────────────
+[rank0] [2026-03-14 19:37:34] [INFO] - 
+  Running: model=llama3:8b-instruct-q2_K, mode=zeroshot, n_samples=100
+[rank0] [2026-03-14 19:37:34] [INFO] - [WeatherExperiment] model=llama3:8b-instruct-q2_K concurrency=2 timeout=600s
+[rank0] [2026-03-14 21:54:01] [INFO] - Model=llama3:8b-instruct-q2_K | Prompting=zeroshot
+[rank0] [2026-03-14 21:54:01] [INFO] -   levenshtein_distance: 760.19
+[rank0] [2026-03-14 21:54:01] [INFO] -   norm_levenshtein_distance: 0.5463956107167759
+[rank0] [2026-03-14 21:54:01] [INFO] -   lcs: 21.13
+[rank0] [2026-03-14 21:54:01] [INFO] -   norm_lcs: 0.01674621144689388
+[rank0] [2026-03-14 21:54:01] [INFO] -   l1loss: 176.47788366395244
+[rank0] [2026-03-14 21:54:01] [INFO] -   l1loss_matched: 0.5708118294893867
+[rank0] [2026-03-14 21:54:01] [INFO] -   timestamp_coverage: 42.85000000000001
+[rank0] [2026-03-14 21:54:01] [INFO] -   coverage: 38.716666666666676
+[rank0] [2026-03-14 21:54:01] [INFO] -   bertscore: 0.3487304766755551
+[rank0] [2026-03-14 21:54:01] [INFO] -   cosinesim: 0.6887898754075121
+[rank0] [2026-03-14 21:54:01] [INFO] -   bleu: 0.21821548785640044
+[rank0] [2026-03-14 21:54:01] [INFO] -   rouge_l: 0.47000386617622675
+[rank0] [2026-03-14 21:54:01] [INFO] -   strict: 1.0
+[rank0] [2026-03-14 21:54:01] [INFO] -   lenient: 0.12917388879270292
+[rank0] [2026-03-14 21:54:01] [INFO] -   skill_l1loss: -281.3115
+[rank0] [2026-03-14 21:54:01] [INFO] -   skill_coverage: 0.6128
+[rank0] [2026-03-14 21:54:01] [INFO] - 
+  [llama3:8b-instruct-q2_K | zeroshot] Key Results:
+[rank0] [2026-03-14 21:54:01] [INFO] -     l1loss              : 176.4779
+[rank0] [2026-03-14 21:54:01] [INFO] -     coverage            : 38.7167
+[rank0] [2026-03-14 21:54:01] [INFO] - 
+  Mode: fewshot
+[rank0] [2026-03-14 21:54:01] [INFO] -   ────────────────────────────────────────
+[rank0] [2026-03-14 21:54:01] [INFO] - 
+  Running: model=llama3:8b-instruct-q2_K, mode=fewshot, n_samples=96
+[rank0] [2026-03-14 21:54:01] [INFO] - [WeatherExperiment] model=llama3:8b-instruct-q2_K concurrency=2 timeout=600s
+[rank0] [2026-03-14 22:26:09] [INFO] - [ERROR] key=84: an error was encountered while running the model: unexpected EOF
+[rank0] [2026-03-14 22:26:09] [INFO] - [ERROR] key=61: llama runner process no longer running: -1 
+[rank0] [2026-03-14 22:26:31] [INFO] - [ERROR] key=85: model runner has unexpectedly stopped, this may be due to resource limitations or an internal error, check ollama server logs for details
+[rank0] [2026-03-14 22:26:31] [INFO] - [ERROR] key=71: llama runner process no longer running: -1 
