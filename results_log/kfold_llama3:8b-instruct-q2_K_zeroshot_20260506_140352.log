@@ -1,0 +1,30 @@
+[rank0] [2026-05-06 14:03:52] [INFO] - [Zero-shot] Running on full dataset — no split needed.
+[rank0] [2026-05-06 14:03:52] [INFO] - [WeatherExtremeExperiment] model=llama3:8b-instruct-q2_K concurrency=2 timeout=600s
+[rank0] [2026-05-06 14:08:12] [INFO] - 
+Model=llama3:8b-instruct-q2_K
+[rank0] [2026-05-06 14:08:12] [INFO] -   accuracy: 0.6
+[rank0] [2026-05-06 14:08:12] [INFO] -   precision: 0.0
+[rank0] [2026-05-06 14:08:12] [INFO] -   recall: 0.0
+[rank0] [2026-05-06 14:08:12] [INFO] -   f1: 0.0
+[rank0] [2026-05-06 14:08:12] [INFO] -   type_accuracy: 0.0
+[rank0] [2026-05-06 14:08:12] [INFO] -   strict: 0.0
+[rank0] [2026-05-06 14:08:12] [INFO] -   lenient: 0.6
+[rank0] [2026-05-06 14:08:12] [INFO] -   consistency: 0.1
+[rank0] [2026-05-06 14:08:12] [INFO] -   tp: 0
+[rank0] [2026-05-06 14:08:12] [INFO] -   fp: 4
+[rank0] [2026-05-06 14:08:12] [INFO] -   fn: 0
+[rank0] [2026-05-06 14:08:12] [INFO] -   tn: 6
+[rank0] [2026-05-06 14:08:12] [INFO] - 
+=== Zero-shot Final Scores ===
+[rank0] [2026-05-06 14:08:12] [INFO] -   accuracy: 0.6
+[rank0] [2026-05-06 14:08:12] [INFO] -   precision: 0.0
+[rank0] [2026-05-06 14:08:12] [INFO] -   recall: 0.0
+[rank0] [2026-05-06 14:08:12] [INFO] -   f1: 0.0
+[rank0] [2026-05-06 14:08:12] [INFO] -   type_accuracy: 0.0
+[rank0] [2026-05-06 14:08:12] [INFO] -   strict: 0.0
+[rank0] [2026-05-06 14:08:12] [INFO] -   lenient: 0.6
+[rank0] [2026-05-06 14:08:12] [INFO] -   consistency: 0.1
+[rank0] [2026-05-06 14:08:12] [INFO] -   tp: 0
+[rank0] [2026-05-06 14:08:12] [INFO] -   fp: 4
+[rank0] [2026-05-06 14:08:12] [INFO] -   fn: 0
+[rank0] [2026-05-06 14:08:12] [INFO] -   tn: 6

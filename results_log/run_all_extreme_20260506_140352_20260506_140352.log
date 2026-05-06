@@ -1,0 +1,35 @@
+[rank0] [2026-05-06 14:03:52] [INFO] - Starting extreme weather experiment matrix
+[rank0] [2026-05-06 14:03:52] [INFO] -   Dataset:     data/weather_extreme/100_dataset.jsonl
+[rank0] [2026-05-06 14:03:52] [INFO] -   Models:      ['llama3:8b-instruct-q2_K']
+[rank0] [2026-05-06 14:03:52] [INFO] -   Modes:       ['zeroshot']
+[rank0] [2026-05-06 14:03:52] [INFO] -   K-folds:     5 (few-shot / ragfs)
+[rank0] [2026-05-06 14:03:52] [INFO] -   N-shots:     4 (fewshot) / 4 (ragfs)
+[rank0] [2026-05-06 14:03:52] [INFO] -   Format:      sentence
+[rank0] [2026-05-06 14:03:52] [INFO] - 
+============================================================
+[rank0] [2026-05-06 14:03:52] [INFO] - MODEL: llama3:8b-instruct-q2_K
+[rank0] [2026-05-06 14:03:52] [INFO] -   Quant level: q2_K
+[rank0] [2026-05-06 14:03:52] [INFO] - ============================================================
+[rank0] [2026-05-06 14:03:52] [INFO] - 
+  Mode: zeroshot
+[rank0] [2026-05-06 14:03:52] [INFO] -   ────────────────────────────────────────
+[rank0] [2026-05-06 14:08:12] [INFO] - 
+  [llama3:8b-instruct-q2_K | zeroshot] Results:
+[rank0] [2026-05-06 14:08:12] [INFO] -     accuracy            : 0.6000
+[rank0] [2026-05-06 14:08:12] [INFO] -     precision           : 0.0000
+[rank0] [2026-05-06 14:08:12] [INFO] -     recall              : 0.0000
+[rank0] [2026-05-06 14:08:12] [INFO] -     f1                  : 0.0000
+[rank0] [2026-05-06 14:08:12] [INFO] -     type_accuracy       : 0.0000
+[rank0] [2026-05-06 14:08:12] [INFO] -     strict              : 0.0000
+[rank0] [2026-05-06 14:08:12] [INFO] -     lenient             : 0.6000
+[rank0] [2026-05-06 14:08:12] [INFO] - 
+
+==========================================================================================
+[rank0] [2026-05-06 14:08:12] [INFO] - FINAL SUMMARY TABLE — Extreme Weather Detection
+[rank0] [2026-05-06 14:08:12] [INFO] - ==========================================================================================
+[rank0] [2026-05-06 14:08:12] [INFO] - Model                            Quant      Mode         accuracy   precisio     recall         f1   type_acc     strict    lenient
+[rank0] [2026-05-06 14:08:12] [INFO] - ───────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────
+[rank0] [2026-05-06 14:08:12] [INFO] - llama3:8b-instruct-q2_K          q2_K       zeroshot        0.600      0.000      0.000      0.000      0.000      0.000      0.600
+[rank0] [2026-05-06 14:08:12] [INFO] - ==========================================================================================
+[rank0] [2026-05-06 14:08:12] [INFO] - 
+Summary saved to: results_log/summary_extreme_weather_20260506_140352.csv
