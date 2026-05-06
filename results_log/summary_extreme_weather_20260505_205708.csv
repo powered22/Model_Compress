@@ -1,0 +1,2 @@
+﻿model,family,quant,mode,accuracy,accuracy_std,precision,precision_std,recall,recall_std,f1,f1_std,type_accuracy,type_accuracy_std,strict,strict_std,lenient,lenient_std,tp,fp,fn,tn
+llama3:8b-instruct-q2_K,llama3,q2_K,zeroshot,0.44,0,0.6944,0,0.3571,0,0.4717,0,0.16,0,0.06,0,0.44,0,25,11,45,19

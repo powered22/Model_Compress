@@ -1,0 +1,501 @@
+﻿Key,Region,Season,Day,Prompt,LLM Result (raw),Pred Has Extreme,Pred Peak MW,GT Has Extreme,GT Peak MW,GT N Extreme Slots,Lenient,Consistent,Peak MAE,Extraction OK,Model,Prompting,Elapsed (s)
+energy_extreme_DE_LU_2023-09-18_01:30,DE_LU,Autumn,Tuesday,"The following is electricity load data (MW) in the DE_LU bidding zone.
+Season: Autumn. Day: Tuesday. Is weekend: No.
+Normal load range: 50813 ± 8469 MW. Extreme threshold: 63516 MW.
+
+Historical load (",RULE: NO,False,0.0,False,0.0,0,1.0,1.0,N/A,True,threshold_rule,threshold_rule,0.0
+energy_extreme_DE_LU_2023-08-08_01:30,DE_LU,Summer,Wednesday,"The following is electricity load data (MW) in the DE_LU bidding zone.
+Season: Summer. Day: Wednesday. Is weekend: No.
+Normal load range: 48624 ± 8006 MW. Extreme threshold: 60633 MW.
+
+Historical load",RULE: NO,False,0.0,False,0.0,0,1.0,1.0,N/A,True,threshold_rule,threshold_rule,0.0
+energy_extreme_DE_LU_2023-07-02_01:30,DE_LU,Summer,Monday,"The following is electricity load data (MW) in the DE_LU bidding zone.
+Season: Summer. Day: Monday. Is weekend: No.
+Normal load range: 50412 ± 8031 MW. Extreme threshold: 62458 MW.
+
+Historical load (l",RULE: NO,False,0.0,True,578.06,6,0.0,1.0,N/A,True,threshold_rule,threshold_rule,0.0
+energy_extreme_DE_LU_2023-02-16_00:30,DE_LU,Winter,Friday,"The following is electricity load data (MW) in the DE_LU bidding zone.
+Season: Winter. Day: Friday. Is weekend: No.
+Normal load range: 57411 ± 8172 MW. Extreme threshold: 69668 MW.
+
+Historical load (l",RULE: YES,True,67366.68,True,859.11,2,1.0,1.0,66507.56999999999,True,threshold_rule,threshold_rule,0.0
+energy_extreme_DE_LU_2023-11-08_00:30,DE_LU,Autumn,Thursday,"The following is electricity load data (MW) in the DE_LU bidding zone.
+Season: Autumn. Day: Thursday. Is weekend: No.
+Normal load range: 55465 ± 8767 MW. Extreme threshold: 68615 MW.
+
+Historical load ",RULE: YES,True,68724.84,True,48.53,1,1.0,1.0,68676.31,True,threshold_rule,threshold_rule,0.0
+energy_extreme_DE_LU_2023-04-24_01:30,DE_LU,Spring,Tuesday,"The following is electricity load data (MW) in the DE_LU bidding zone.
+Season: Spring. Day: Tuesday. Is weekend: No.
+Normal load range: 51724 ± 8333 MW. Extreme threshold: 64223 MW.
+
+Historical load (",RULE: NO,False,0.0,True,480.82,1,0.0,1.0,N/A,True,threshold_rule,threshold_rule,0.0
+energy_extreme_DE_LU_2023-07-01_01:30,DE_LU,Summer,Sunday,"The following is electricity load data (MW) in the DE_LU bidding zone.
+Season: Summer. Day: Sunday. Is weekend: Yes.
+Normal load range: 50200 ± 8246 MW. Extreme threshold: 62569 MW.
+
+Historical load (",RULE: NO,False,0.0,False,0.0,0,1.0,1.0,N/A,True,threshold_rule,threshold_rule,0.0
+energy_extreme_DE_LU_2023-01-09_00:30,DE_LU,Winter,Tuesday,"The following is electricity load data (MW) in the DE_LU bidding zone.
+Season: Winter. Day: Tuesday. Is weekend: No.
+Normal load range: 53567 ± 8090 MW. Extreme threshold: 65702 MW.
+
+Historical load (",RULE: YES,True,66310.16,True,1493.04,16,1.0,1.0,64817.12,True,threshold_rule,threshold_rule,0.0
+energy_extreme_DE_LU_2023-04-12_01:30,DE_LU,Spring,Thursday,"The following is electricity load data (MW) in the DE_LU bidding zone.
+Season: Spring. Day: Thursday. Is weekend: No.
+Normal load range: 47747 ± 8079 MW. Extreme threshold: 59865 MW.
+
+Historical load ",RULE: YES,True,60689.37,True,4340.76,11,1.0,1.0,56348.61,True,threshold_rule,threshold_rule,0.0
+energy_extreme_DE_LU_2023-03-16_00:30,DE_LU,Spring,Friday,"The following is electricity load data (MW) in the DE_LU bidding zone.
+Season: Spring. Day: Friday. Is weekend: No.
+Normal load range: 56445 ± 7918 MW. Extreme threshold: 68321 MW.
+
+Historical load (l",RULE: YES,True,67194.28,False,0.0,0,0.0,1.0,N/A,True,threshold_rule,threshold_rule,0.0
+energy_extreme_DE_LU_2023-01-02_00:30,DE_LU,Winter,Tuesday,"The following is electricity load data (MW) in the DE_LU bidding zone.
+Season: Winter. Day: Tuesday. Is weekend: No.
+Normal load range: 43793 ± 7126 MW. Extreme threshold: 54483 MW.
+
+Historical load (",RULE: YES,True,60992.1,True,400.63,1,1.0,1.0,60591.47,True,threshold_rule,threshold_rule,0.0
+energy_extreme_DE_LU_2023-04-10_01:30,DE_LU,Spring,Tuesday,"The following is electricity load data (MW) in the DE_LU bidding zone.
+Season: Spring. Day: Tuesday. Is weekend: No.
+Normal load range: 49052 ± 8319 MW. Extreme threshold: 61531 MW.
+
+Historical load (",RULE: NO,False,0.0,True,3000.1,8,0.0,1.0,N/A,True,threshold_rule,threshold_rule,0.0
+energy_extreme_DE_LU_2023-08-13_01:30,DE_LU,Summer,Monday,"The following is electricity load data (MW) in the DE_LU bidding zone.
+Season: Summer. Day: Monday. Is weekend: No.
+Normal load range: 48577 ± 7436 MW. Extreme threshold: 59731 MW.
+
+Historical load (l",RULE: NO,False,0.0,True,47.55,1,0.0,1.0,N/A,True,threshold_rule,threshold_rule,0.0
+energy_extreme_DE_LU_2023-08-31_01:30,DE_LU,Autumn,Friday,"The following is electricity load data (MW) in the DE_LU bidding zone.
+Season: Autumn. Day: Friday. Is weekend: No.
+Normal load range: 49580 ± 8294 MW. Extreme threshold: 62020 MW.
+
+Historical load (l",RULE: NO,False,0.0,False,0.0,0,1.0,1.0,N/A,True,threshold_rule,threshold_rule,0.0
+energy_extreme_DE_LU_2023-08-15_01:30,DE_LU,Summer,Wednesday,"The following is electricity load data (MW) in the DE_LU bidding zone.
+Season: Summer. Day: Wednesday. Is weekend: No.
+Normal load range: 48335 ± 7439 MW. Extreme threshold: 59494 MW.
+
+Historical load",RULE: NO,False,0.0,True,669.84,3,0.0,1.0,N/A,True,threshold_rule,threshold_rule,0.0
+energy_extreme_DE_LU_2023-06-13_01:30,DE_LU,Summer,Wednesday,"The following is electricity load data (MW) in the DE_LU bidding zone.
+Season: Summer. Day: Wednesday. Is weekend: No.
+Normal load range: 48312 ± 7441 MW. Extreme threshold: 59475 MW.
+
+Historical load",RULE: YES,True,57808.12,True,1453.25,9,1.0,1.0,56354.87,True,threshold_rule,threshold_rule,0.0
+energy_extreme_DE_LU_2023-03-22_00:30,DE_LU,Spring,Thursday,"The following is electricity load data (MW) in the DE_LU bidding zone.
+Season: Spring. Day: Thursday. Is weekend: No.
+Normal load range: 53989 ± 8574 MW. Extreme threshold: 66850 MW.
+
+Historical load ",RULE: YES,True,64875.25,True,333.78,3,1.0,1.0,64541.47,True,threshold_rule,threshold_rule,0.0
+energy_extreme_DE_LU_2023-12-13_00:30,DE_LU,Winter,Thursday,"The following is electricity load data (MW) in the DE_LU bidding zone.
+Season: Winter. Day: Thursday. Is weekend: No.
+Normal load range: 59080 ± 9313 MW. Extreme threshold: 73050 MW.
+
+Historical load ",RULE: YES,True,70083.77,False,0.0,0,0.0,1.0,N/A,True,threshold_rule,threshold_rule,0.0
+energy_extreme_DE_LU_2023-06-01_01:30,DE_LU,Summer,Friday,"The following is electricity load data (MW) in the DE_LU bidding zone.
+Season: Summer. Day: Friday. Is weekend: No.
+Normal load range: 46508 ± 8653 MW. Extreme threshold: 59488 MW.
+
+Historical load (l",RULE: NO,False,0.0,True,390.1,5,0.0,1.0,N/A,True,threshold_rule,threshold_rule,0.0
+energy_extreme_DE_LU_2023-11-07_00:30,DE_LU,Autumn,Wednesday,"The following is electricity load data (MW) in the DE_LU bidding zone.
+Season: Autumn. Day: Wednesday. Is weekend: No.
+Normal load range: 54278 ± 8514 MW. Extreme threshold: 67049 MW.
+
+Historical load",RULE: YES,True,67722.58,True,620.36,4,1.0,1.0,67102.22,True,threshold_rule,threshold_rule,0.0
+energy_extreme_DE_LU_2023-05-09_01:30,DE_LU,Spring,Wednesday,"The following is electricity load data (MW) in the DE_LU bidding zone.
+Season: Spring. Day: Wednesday. Is weekend: No.
+Normal load range: 51655 ± 7784 MW. Extreme threshold: 63331 MW.
+
+Historical load",RULE: NO,False,0.0,True,1106.5,6,0.0,1.0,N/A,True,threshold_rule,threshold_rule,0.0
+energy_extreme_DE_LU_2023-07-19_01:30,DE_LU,Summer,Thursday,"The following is electricity load data (MW) in the DE_LU bidding zone.
+Season: Summer. Day: Thursday. Is weekend: No.
+Normal load range: 49865 ± 7762 MW. Extreme threshold: 61508 MW.
+
+Historical load ",RULE: NO,False,0.0,False,0.0,0,1.0,1.0,N/A,True,threshold_rule,threshold_rule,0.0
+energy_extreme_DE_LU_2023-11-19_00:30,DE_LU,Autumn,Monday,"The following is electricity load data (MW) in the DE_LU bidding zone.
+Season: Autumn. Day: Monday. Is weekend: No.
+Normal load range: 57491 ± 9130 MW. Extreme threshold: 71185 MW.
+
+Historical load (l",RULE: NO,False,0.0,False,0.0,0,1.0,1.0,N/A,True,threshold_rule,threshold_rule,0.0
+energy_extreme_DE_LU_2023-01-11_00:30,DE_LU,Winter,Thursday,"The following is electricity load data (MW) in the DE_LU bidding zone.
+Season: Winter. Day: Thursday. Is weekend: No.
+Normal load range: 55024 ± 8840 MW. Extreme threshold: 68284 MW.
+
+Historical load ",RULE: YES,True,68765.4,True,3140.35,13,1.0,1.0,65625.04999999999,True,threshold_rule,threshold_rule,0.0
+energy_extreme_DE_LU_2023-06-06_01:30,DE_LU,Summer,Wednesday,"The following is electricity load data (MW) in the DE_LU bidding zone.
+Season: Summer. Day: Wednesday. Is weekend: No.
+Normal load range: 48786 ± 8036 MW. Extreme threshold: 60841 MW.
+
+Historical load",RULE: NO,False,0.0,False,0.0,0,1.0,1.0,N/A,True,threshold_rule,threshold_rule,0.0
+energy_extreme_DE_LU_2023-08-29_01:30,DE_LU,Summer,Wednesday,"The following is electricity load data (MW) in the DE_LU bidding zone.
+Season: Summer. Day: Wednesday. Is weekend: No.
+Normal load range: 49650 ± 8309 MW. Extreme threshold: 62114 MW.
+
+Historical load",RULE: NO,False,0.0,False,0.0,0,1.0,1.0,N/A,True,threshold_rule,threshold_rule,0.0
+energy_extreme_DE_LU_2023-09-20_01:30,DE_LU,Autumn,Thursday,"The following is electricity load data (MW) in the DE_LU bidding zone.
+Season: Autumn. Day: Thursday. Is weekend: No.
+Normal load range: 50479 ± 8264 MW. Extreme threshold: 62876 MW.
+
+Historical load ",RULE: NO,False,0.0,True,606.78,4,0.0,1.0,N/A,True,threshold_rule,threshold_rule,0.0
+energy_extreme_DE_LU_2023-05-16_01:30,DE_LU,Spring,Wednesday,"The following is electricity load data (MW) in the DE_LU bidding zone.
+Season: Spring. Day: Wednesday. Is weekend: No.
+Normal load range: 51228 ± 8495 MW. Extreme threshold: 63970 MW.
+
+Historical load",RULE: NO,False,0.0,True,360.61,2,0.0,1.0,N/A,True,threshold_rule,threshold_rule,0.0
+energy_extreme_DE_LU_2023-03-02_00:30,DE_LU,Spring,Friday,"The following is electricity load data (MW) in the DE_LU bidding zone.
+Season: Spring. Day: Friday. Is weekend: No.
+Normal load range: 56643 ± 7443 MW. Extreme threshold: 67808 MW.
+
+Historical load (l",RULE: YES,True,66084.27,False,0.0,0,0.0,1.0,N/A,True,threshold_rule,threshold_rule,0.0
+energy_extreme_DE_LU_2023-08-17_01:30,DE_LU,Summer,Friday,"The following is electricity load data (MW) in the DE_LU bidding zone.
+Season: Summer. Day: Friday. Is weekend: No.
+Normal load range: 48330 ± 7542 MW. Extreme threshold: 59643 MW.
+
+Historical load (l",RULE: NO,False,0.0,True,846.72,3,0.0,1.0,N/A,True,threshold_rule,threshold_rule,0.0
+energy_extreme_DE_LU_2023-05-23_01:30,DE_LU,Spring,Wednesday,"The following is electricity load data (MW) in the DE_LU bidding zone.
+Season: Spring. Day: Wednesday. Is weekend: No.
+Normal load range: 47884 ± 8140 MW. Extreme threshold: 60094 MW.
+
+Historical load",RULE: YES,True,58240.94,True,1984.13,10,1.0,1.0,56256.810000000005,True,threshold_rule,threshold_rule,0.0
+energy_extreme_DE_LU_2023-01-10_00:30,DE_LU,Winter,Wednesday,"The following is electricity load data (MW) in the DE_LU bidding zone.
+Season: Winter. Day: Wednesday. Is weekend: No.
+Normal load range: 54359 ± 8476 MW. Extreme threshold: 67073 MW.
+
+Historical load",RULE: YES,True,68583.74,True,1319.18,14,1.0,1.0,67264.56000000001,True,threshold_rule,threshold_rule,0.0
+energy_extreme_DE_LU_2023-02-01_00:30,DE_LU,Winter,Thursday,"The following is electricity load data (MW) in the DE_LU bidding zone.
+Season: Winter. Day: Thursday. Is weekend: No.
+Normal load range: 59536 ± 8609 MW. Extreme threshold: 72450 MW.
+
+Historical load ",RULE: YES,True,71211.48,False,0.0,0,0.0,1.0,N/A,True,threshold_rule,threshold_rule,0.0
+energy_extreme_DE_LU_2023-04-09_01:30,DE_LU,Spring,Monday,"The following is electricity load data (MW) in the DE_LU bidding zone.
+Season: Spring. Day: Monday. Is weekend: No.
+Normal load range: 50749 ± 7760 MW. Extreme threshold: 62388 MW.
+
+Historical load (l",RULE: NO,False,0.0,False,0.0,0,1.0,1.0,N/A,True,threshold_rule,threshold_rule,0.0
+energy_extreme_DE_LU_2023-12-14_00:30,DE_LU,Winter,Friday,"The following is electricity load data (MW) in the DE_LU bidding zone.
+Season: Winter. Day: Friday. Is weekend: No.
+Normal load range: 58685 ± 9190 MW. Extreme threshold: 72470 MW.
+
+Historical load (l",RULE: NO,False,0.0,False,0.0,0,1.0,1.0,N/A,True,threshold_rule,threshold_rule,0.0
+energy_extreme_DE_LU_2023-10-11_01:30,DE_LU,Autumn,Thursday,"The following is electricity load data (MW) in the DE_LU bidding zone.
+Season: Autumn. Day: Thursday. Is weekend: No.
+Normal load range: 51976 ± 8838 MW. Extreme threshold: 65233 MW.
+
+Historical load ",RULE: YES,True,63535.28,True,1258.9,6,1.0,1.0,62276.38,True,threshold_rule,threshold_rule,0.0
+energy_extreme_DE_LU_2023-05-18_01:30,DE_LU,Spring,Friday,"The following is electricity load data (MW) in the DE_LU bidding zone.
+Season: Spring. Day: Friday. Is weekend: No.
+Normal load range: 50071 ± 8421 MW. Extreme threshold: 62702 MW.
+
+Historical load (l",RULE: NO,False,0.0,False,0.0,0,1.0,1.0,N/A,True,threshold_rule,threshold_rule,0.0
+energy_extreme_DE_LU_2023-04-19_01:30,DE_LU,Spring,Thursday,"The following is electricity load data (MW) in the DE_LU bidding zone.
+Season: Spring. Day: Thursday. Is weekend: No.
+Normal load range: 52296 ± 7615 MW. Extreme threshold: 63718 MW.
+
+Historical load ",RULE: NO,False,0.0,True,995.29,4,0.0,1.0,N/A,True,threshold_rule,threshold_rule,0.0
+energy_extreme_DE_LU_2023-06-03_01:30,DE_LU,Summer,Sunday,"The following is electricity load data (MW) in the DE_LU bidding zone.
+Season: Summer. Day: Sunday. Is weekend: Yes.
+Normal load range: 46559 ± 8574 MW. Extreme threshold: 59420 MW.
+
+Historical load (",RULE: NO,False,0.0,False,0.0,0,1.0,1.0,N/A,True,threshold_rule,threshold_rule,0.0
+energy_extreme_DE_LU_2023-11-15_00:30,DE_LU,Autumn,Thursday,"The following is electricity load data (MW) in the DE_LU bidding zone.
+Season: Autumn. Day: Thursday. Is weekend: No.
+Normal load range: 57062 ± 9472 MW. Extreme threshold: 71270 MW.
+
+Historical load ",RULE: NO,False,0.0,False,0.0,0,1.0,1.0,N/A,True,threshold_rule,threshold_rule,0.0
+energy_extreme_DE_LU_2023-12-29_00:30,DE_LU,Winter,Saturday,"The following is electricity load data (MW) in the DE_LU bidding zone.
+Season: Winter. Day: Saturday. Is weekend: Yes.
+Normal load range: 48364 ± 6707 MW. Extreme threshold: 58425 MW.
+
+Historical load",RULE: YES,True,57469.13,False,0.0,0,0.0,1.0,N/A,True,threshold_rule,threshold_rule,0.0
+energy_extreme_DE_LU_2023-10-09_01:30,DE_LU,Autumn,Tuesday,"The following is electricity load data (MW) in the DE_LU bidding zone.
+Season: Autumn. Day: Tuesday. Is weekend: No.
+Normal load range: 49787 ± 8603 MW. Extreme threshold: 62691 MW.
+
+Historical load (",RULE: YES,True,60670.45,True,331.45,2,1.0,1.0,60339.0,True,threshold_rule,threshold_rule,0.0
+energy_extreme_DE_LU_2023-10-23_01:30,DE_LU,Autumn,Tuesday,"The following is electricity load data (MW) in the DE_LU bidding zone.
+Season: Autumn. Day: Tuesday. Is weekend: No.
+Normal load range: 54425 ± 8948 MW. Extreme threshold: 67848 MW.
+
+Historical load (",RULE: NO,False,0.0,False,0.0,0,1.0,1.0,N/A,True,threshold_rule,threshold_rule,0.0
+energy_extreme_DE_LU_2023-03-24_00:30,DE_LU,Spring,Saturday,"The following is electricity load data (MW) in the DE_LU bidding zone.
+Season: Spring. Day: Saturday. Is weekend: Yes.
+Normal load range: 53604 ± 8647 MW. Extreme threshold: 66573 MW.
+
+Historical load",RULE: NO,False,0.0,False,0.0,0,1.0,1.0,N/A,True,threshold_rule,threshold_rule,0.0
+energy_extreme_DE_LU_2023-01-27_00:30,DE_LU,Winter,Saturday,"The following is electricity load data (MW) in the DE_LU bidding zone.
+Season: Winter. Day: Saturday. Is weekend: Yes.
+Normal load range: 58879 ± 8460 MW. Extreme threshold: 71569 MW.
+
+Historical load",RULE: NO,False,0.0,False,0.0,0,1.0,1.0,N/A,True,threshold_rule,threshold_rule,0.0
+energy_extreme_DE_LU_2023-12-28_00:30,DE_LU,Winter,Friday,"The following is electricity load data (MW) in the DE_LU bidding zone.
+Season: Winter. Day: Friday. Is weekend: No.
+Normal load range: 49387 ± 7594 MW. Extreme threshold: 60778 MW.
+
+Historical load (l",RULE: YES,True,58513.9,True,354.05,2,1.0,1.0,58159.85,True,threshold_rule,threshold_rule,0.0
+energy_extreme_DE_LU_2023-07-27_01:30,DE_LU,Summer,Friday,"The following is electricity load data (MW) in the DE_LU bidding zone.
+Season: Summer. Day: Friday. Is weekend: No.
+Normal load range: 48634 ± 7838 MW. Extreme threshold: 60392 MW.
+
+Historical load (l",RULE: NO,False,0.0,True,565.62,2,0.0,1.0,N/A,True,threshold_rule,threshold_rule,0.0
+energy_extreme_DE_LU_2023-09-26_01:30,DE_LU,Autumn,Wednesday,"The following is electricity load data (MW) in the DE_LU bidding zone.
+Season: Autumn. Day: Wednesday. Is weekend: No.
+Normal load range: 50207 ± 8522 MW. Extreme threshold: 62989 MW.
+
+Historical load",RULE: YES,True,60562.3,False,0.0,0,0.0,1.0,N/A,True,threshold_rule,threshold_rule,0.0
+energy_extreme_DE_LU_2023-05-31_01:30,DE_LU,Summer,Thursday,"The following is electricity load data (MW) in the DE_LU bidding zone.
+Season: Summer. Day: Thursday. Is weekend: No.
+Normal load range: 46495 ± 8718 MW. Extreme threshold: 59571 MW.
+
+Historical load ",RULE: NO,False,0.0,True,1435.86,9,0.0,1.0,N/A,True,threshold_rule,threshold_rule,0.0
+energy_extreme_DE_LU_2023-03-10_00:30,DE_LU,Spring,Saturday,"The following is electricity load data (MW) in the DE_LU bidding zone.
+Season: Spring. Day: Saturday. Is weekend: Yes.
+Normal load range: 56546 ± 7789 MW. Extreme threshold: 68229 MW.
+
+Historical load",RULE: YES,True,65368.03,False,0.0,0,0.0,1.0,N/A,True,threshold_rule,threshold_rule,0.0
+energy_extreme_DE_LU_2023-09-13_01:30,DE_LU,Autumn,Thursday,"The following is electricity load data (MW) in the DE_LU bidding zone.
+Season: Autumn. Day: Thursday. Is weekend: No.
+Normal load range: 50763 ± 8319 MW. Extreme threshold: 63242 MW.
+
+Historical load ",RULE: NO,False,0.0,False,0.0,0,1.0,1.0,N/A,True,threshold_rule,threshold_rule,0.0
+energy_extreme_DE_LU_2023-03-29_01:30,DE_LU,Spring,Thursday,"The following is electricity load data (MW) in the DE_LU bidding zone.
+Season: Spring. Day: Thursday. Is weekend: No.
+Normal load range: 54570 ± 8048 MW. Extreme threshold: 66643 MW.
+
+Historical load ",RULE: NO,False,0.0,True,804.35,3,0.0,1.0,N/A,True,threshold_rule,threshold_rule,0.0
+energy_extreme_DE_LU_2023-07-25_01:30,DE_LU,Summer,Wednesday,"The following is electricity load data (MW) in the DE_LU bidding zone.
+Season: Summer. Day: Wednesday. Is weekend: No.
+Normal load range: 48840 ± 7921 MW. Extreme threshold: 60721 MW.
+
+Historical load",RULE: NO,False,0.0,False,0.0,0,1.0,1.0,N/A,True,threshold_rule,threshold_rule,0.0
+energy_extreme_DE_LU_2023-08-14_01:30,DE_LU,Summer,Tuesday,"The following is electricity load data (MW) in the DE_LU bidding zone.
+Season: Summer. Day: Tuesday. Is weekend: No.
+Normal load range: 48389 ± 7515 MW. Extreme threshold: 59661 MW.
+
+Historical load (",RULE: NO,False,0.0,True,53.96,1,0.0,1.0,N/A,True,threshold_rule,threshold_rule,0.0
+energy_extreme_DE_LU_2023-11-05_00:30,DE_LU,Autumn,Monday,"The following is electricity load data (MW) in the DE_LU bidding zone.
+Season: Autumn. Day: Monday. Is weekend: No.
+Normal load range: 53308 ± 8063 MW. Extreme threshold: 65403 MW.
+
+Historical load (l",RULE: NO,False,0.0,True,2888.88,15,0.0,1.0,N/A,True,threshold_rule,threshold_rule,0.0
+energy_extreme_DE_LU_2023-02-13_00:30,DE_LU,Winter,Tuesday,"The following is electricity load data (MW) in the DE_LU bidding zone.
+Season: Winter. Day: Tuesday. Is weekend: No.
+Normal load range: 58414 ± 8434 MW. Extreme threshold: 71066 MW.
+
+Historical load (",RULE: NO,False,0.0,False,0.0,0,1.0,1.0,N/A,True,threshold_rule,threshold_rule,0.0
+energy_extreme_DE_LU_2023-11-01_00:30,DE_LU,Autumn,Thursday,"The following is electricity load data (MW) in the DE_LU bidding zone.
+Season: Autumn. Day: Thursday. Is weekend: No.
+Normal load range: 53464 ± 8469 MW. Extreme threshold: 66168 MW.
+
+Historical load ",RULE: NO,False,0.0,True,2399.3,13,0.0,1.0,N/A,True,threshold_rule,threshold_rule,0.0
+energy_extreme_DE_LU_2023-05-21_01:30,DE_LU,Spring,Monday,"The following is electricity load data (MW) in the DE_LU bidding zone.
+Season: Spring. Day: Monday. Is weekend: No.
+Normal load range: 47883 ± 8131 MW. Extreme threshold: 60079 MW.
+
+Historical load (l",RULE: NO,False,0.0,True,1177.17,7,0.0,1.0,N/A,True,threshold_rule,threshold_rule,0.0
+energy_extreme_DE_LU_2023-12-09_00:30,DE_LU,Winter,Sunday,"The following is electricity load data (MW) in the DE_LU bidding zone.
+Season: Winter. Day: Sunday. Is weekend: Yes.
+Normal load range: 61280 ± 9274 MW. Extreme threshold: 75190 MW.
+
+Historical load (",RULE: NO,False,0.0,False,0.0,0,1.0,1.0,N/A,True,threshold_rule,threshold_rule,0.0
+energy_extreme_DE_LU_2023-03-13_00:30,DE_LU,Spring,Tuesday,"The following is electricity load data (MW) in the DE_LU bidding zone.
+Season: Spring. Day: Tuesday. Is weekend: No.
+Normal load range: 56373 ± 7917 MW. Extreme threshold: 68248 MW.
+
+Historical load (",RULE: YES,True,66339.26,True,433.11,2,1.0,1.0,65906.15,True,threshold_rule,threshold_rule,0.0
+energy_extreme_DE_LU_2023-01-25_00:30,DE_LU,Winter,Thursday,"The following is electricity load data (MW) in the DE_LU bidding zone.
+Season: Winter. Day: Thursday. Is weekend: No.
+Normal load range: 58884 ± 8345 MW. Extreme threshold: 71402 MW.
+
+Historical load ",RULE: YES,True,67914.37,True,203.56,1,1.0,1.0,67710.81,True,threshold_rule,threshold_rule,0.0
+energy_extreme_DE_LU_2023-09-24_01:30,DE_LU,Autumn,Monday,"The following is electricity load data (MW) in the DE_LU bidding zone.
+Season: Autumn. Day: Monday. Is weekend: No.
+Normal load range: 50615 ± 8564 MW. Extreme threshold: 63461 MW.
+
+Historical load (l",RULE: NO,False,0.0,False,0.0,0,1.0,1.0,N/A,True,threshold_rule,threshold_rule,0.0
+energy_extreme_DE_LU_2023-07-30_01:30,DE_LU,Summer,Monday,"The following is electricity load data (MW) in the DE_LU bidding zone.
+Season: Summer. Day: Monday. Is weekend: No.
+Normal load range: 48661 ± 7957 MW. Extreme threshold: 60597 MW.
+
+Historical load (l",RULE: NO,False,0.0,True,284.5,3,0.0,1.0,N/A,True,threshold_rule,threshold_rule,0.0
+energy_extreme_DE_LU_2023-01-22_00:30,DE_LU,Winter,Monday,"The following is electricity load data (MW) in the DE_LU bidding zone.
+Season: Winter. Day: Monday. Is weekend: No.
+Normal load range: 59367 ± 8335 MW. Extreme threshold: 71870 MW.
+
+Historical load (l",RULE: NO,False,0.0,False,0.0,0,1.0,1.0,N/A,True,threshold_rule,threshold_rule,0.0
+energy_extreme_DE_LU_2023-08-07_01:30,DE_LU,Summer,Tuesday,"The following is electricity load data (MW) in the DE_LU bidding zone.
+Season: Summer. Day: Tuesday. Is weekend: No.
+Normal load range: 48663 ± 8047 MW. Extreme threshold: 60733 MW.
+
+Historical load (",RULE: NO,False,0.0,False,0.0,0,1.0,1.0,N/A,True,threshold_rule,threshold_rule,0.0
+energy_extreme_DE_LU_2023-08-01_01:30,DE_LU,Summer,Wednesday,"The following is electricity load data (MW) in the DE_LU bidding zone.
+Season: Summer. Day: Wednesday. Is weekend: No.
+Normal load range: 48499 ± 7993 MW. Extreme threshold: 60488 MW.
+
+Historical load",RULE: NO,False,0.0,True,1509.29,6,0.0,1.0,N/A,True,threshold_rule,threshold_rule,0.0
+energy_extreme_DE_LU_2023-05-07_01:30,DE_LU,Spring,Monday,"The following is electricity load data (MW) in the DE_LU bidding zone.
+Season: Spring. Day: Monday. Is weekend: No.
+Normal load range: 49491 ± 8273 MW. Extreme threshold: 61901 MW.
+
+Historical load (l",RULE: NO,False,0.0,True,947.94,6,0.0,1.0,N/A,True,threshold_rule,threshold_rule,0.0
+energy_extreme_DE_LU_2023-10-18_01:30,DE_LU,Autumn,Thursday,"The following is electricity load data (MW) in the DE_LU bidding zone.
+Season: Autumn. Day: Thursday. Is weekend: No.
+Normal load range: 53578 ± 8646 MW. Extreme threshold: 66547 MW.
+
+Historical load ",RULE: YES,True,64991.7,True,1108.41,9,1.0,1.0,63883.28999999999,True,threshold_rule,threshold_rule,0.0
+energy_extreme_DE_LU_2023-04-13_01:30,DE_LU,Spring,Friday,"The following is electricity load data (MW) in the DE_LU bidding zone.
+Season: Spring. Day: Friday. Is weekend: No.
+Normal load range: 47778 ± 8267 MW. Extreme threshold: 60178 MW.
+
+Historical load (l",RULE: YES,True,58032.14,True,161.15,1,1.0,1.0,57870.99,True,threshold_rule,threshold_rule,0.0
+energy_extreme_DE_LU_2023-08-02_01:30,DE_LU,Summer,Thursday,"The following is electricity load data (MW) in the DE_LU bidding zone.
+Season: Summer. Day: Thursday. Is weekend: No.
+Normal load range: 48602 ± 8057 MW. Extreme threshold: 60687 MW.
+
+Historical load ",RULE: NO,False,0.0,True,875.12,3,0.0,1.0,N/A,True,threshold_rule,threshold_rule,0.0
+energy_extreme_DE_LU_2023-12-16_00:30,DE_LU,Winter,Sunday,"The following is electricity load data (MW) in the DE_LU bidding zone.
+Season: Winter. Day: Sunday. Is weekend: Yes.
+Normal load range: 57983 ± 8848 MW. Extreme threshold: 71255 MW.
+
+Historical load (",RULE: NO,False,0.0,False,0.0,0,1.0,1.0,N/A,True,threshold_rule,threshold_rule,0.0
+energy_extreme_DE_LU_2023-09-14_01:30,DE_LU,Autumn,Friday,"The following is electricity load data (MW) in the DE_LU bidding zone.
+Season: Autumn. Day: Friday. Is weekend: No.
+Normal load range: 50929 ± 8374 MW. Extreme threshold: 63490 MW.
+
+Historical load (l",RULE: NO,False,0.0,False,0.0,0,1.0,1.0,N/A,True,threshold_rule,threshold_rule,0.0
+energy_extreme_DE_LU_2023-03-08_00:30,DE_LU,Spring,Thursday,"The following is electricity load data (MW) in the DE_LU bidding zone.
+Season: Spring. Day: Thursday. Is weekend: No.
+Normal load range: 56760 ± 7734 MW. Extreme threshold: 68361 MW.
+
+Historical load ",RULE: NO,False,0.0,False,0.0,0,1.0,1.0,N/A,True,threshold_rule,threshold_rule,0.0
+energy_extreme_DE_LU_2023-08-23_01:30,DE_LU,Summer,Thursday,"The following is electricity load data (MW) in the DE_LU bidding zone.
+Season: Summer. Day: Thursday. Is weekend: No.
+Normal load range: 49446 ± 7939 MW. Extreme threshold: 61355 MW.
+
+Historical load ",RULE: NO,False,0.0,True,1666.89,7,0.0,1.0,N/A,True,threshold_rule,threshold_rule,0.0
+energy_extreme_DE_LU_2023-01-08_00:30,DE_LU,Winter,Monday,"The following is electricity load data (MW) in the DE_LU bidding zone.
+Season: Winter. Day: Monday. Is weekend: No.
+Normal load range: 52645 ± 8469 MW. Extreme threshold: 65348 MW.
+
+Historical load (l",RULE: NO,False,0.0,True,1974.67,16,0.0,1.0,N/A,True,threshold_rule,threshold_rule,0.0
+energy_extreme_DE_LU_2023-10-16_01:30,DE_LU,Autumn,Tuesday,"The following is electricity load data (MW) in the DE_LU bidding zone.
+Season: Autumn. Day: Tuesday. Is weekend: No.
+Normal load range: 53092 ± 8548 MW. Extreme threshold: 65915 MW.
+
+Historical load (",RULE: NO,False,0.0,False,0.0,0,1.0,1.0,N/A,True,threshold_rule,threshold_rule,0.0
+energy_extreme_DE_LU_2023-02-22_00:30,DE_LU,Winter,Thursday,"The following is electricity load data (MW) in the DE_LU bidding zone.
+Season: Winter. Day: Thursday. Is weekend: No.
+Normal load range: 56224 ± 8321 MW. Extreme threshold: 68705 MW.
+
+Historical load ",RULE: YES,True,66659.96,False,0.0,0,0.0,1.0,N/A,True,threshold_rule,threshold_rule,0.0
+energy_extreme_DE_LU_2023-05-05_01:30,DE_LU,Spring,Saturday,"The following is electricity load data (MW) in the DE_LU bidding zone.
+Season: Spring. Day: Saturday. Is weekend: Yes.
+Normal load range: 49203 ± 8305 MW. Extreme threshold: 61661 MW.
+
+Historical load",RULE: NO,False,0.0,False,0.0,0,1.0,1.0,N/A,True,threshold_rule,threshold_rule,0.0
+energy_extreme_DE_LU_2023-08-10_01:30,DE_LU,Summer,Friday,"The following is electricity load data (MW) in the DE_LU bidding zone.
+Season: Summer. Day: Friday. Is weekend: No.
+Normal load range: 48353 ± 7800 MW. Extreme threshold: 60053 MW.
+
+Historical load (l",RULE: NO,False,0.0,False,0.0,0,1.0,1.0,N/A,True,threshold_rule,threshold_rule,0.0
+energy_extreme_DE_LU_2023-05-03_01:30,DE_LU,Spring,Thursday,"The following is electricity load data (MW) in the DE_LU bidding zone.
+Season: Spring. Day: Thursday. Is weekend: No.
+Normal load range: 49254 ± 8322 MW. Extreme threshold: 61737 MW.
+
+Historical load ",RULE: NO,False,0.0,False,0.0,0,1.0,1.0,N/A,True,threshold_rule,threshold_rule,0.0
+energy_extreme_DE_LU_2023-09-06_01:30,DE_LU,Autumn,Thursday,"The following is electricity load data (MW) in the DE_LU bidding zone.
+Season: Autumn. Day: Thursday. Is weekend: No.
+Normal load range: 49391 ± 8050 MW. Extreme threshold: 61467 MW.
+
+Historical load ",RULE: NO,False,0.0,False,0.0,0,1.0,1.0,N/A,True,threshold_rule,threshold_rule,0.0
+energy_extreme_DE_LU_2023-09-03_01:30,DE_LU,Autumn,Monday,"The following is electricity load data (MW) in the DE_LU bidding zone.
+Season: Autumn. Day: Monday. Is weekend: No.
+Normal load range: 49401 ± 8109 MW. Extreme threshold: 61565 MW.
+
+Historical load (l",RULE: NO,False,0.0,False,0.0,0,1.0,1.0,N/A,True,threshold_rule,threshold_rule,0.0
+energy_extreme_DE_LU_2023-10-03_01:30,DE_LU,Autumn,Wednesday,"The following is electricity load data (MW) in the DE_LU bidding zone.
+Season: Autumn. Day: Wednesday. Is weekend: No.
+Normal load range: 49126 ± 8240 MW. Extreme threshold: 61486 MW.
+
+Historical load",RULE: NO,False,0.0,True,2105.96,11,0.0,1.0,N/A,True,threshold_rule,threshold_rule,0.0
+energy_extreme_DE_LU_2023-08-28_01:30,DE_LU,Summer,Tuesday,"The following is electricity load data (MW) in the DE_LU bidding zone.
+Season: Summer. Day: Tuesday. Is weekend: No.
+Normal load range: 49720 ± 8298 MW. Extreme threshold: 62167 MW.
+
+Historical load (",RULE: NO,False,0.0,True,285.11,1,0.0,1.0,N/A,True,threshold_rule,threshold_rule,0.0
+energy_extreme_DE_LU_2023-11-02_00:30,DE_LU,Autumn,Friday,"The following is electricity load data (MW) in the DE_LU bidding zone.
+Season: Autumn. Day: Friday. Is weekend: No.
+Normal load range: 52884 ± 8296 MW. Extreme threshold: 65327 MW.
+
+Historical load (l",RULE: YES,True,66076.98,True,597.17,6,1.0,1.0,65479.81,True,threshold_rule,threshold_rule,0.0
+energy_extreme_DE_LU_2023-10-05_01:30,DE_LU,Autumn,Friday,"The following is electricity load data (MW) in the DE_LU bidding zone.
+Season: Autumn. Day: Friday. Is weekend: No.
+Normal load range: 48686 ± 8353 MW. Extreme threshold: 61215 MW.
+
+Historical load (l",RULE: YES,True,61334.38,True,2445.38,10,1.0,1.0,58889.0,True,threshold_rule,threshold_rule,0.0
+energy_extreme_DE_LU_2023-07-17_01:30,DE_LU,Summer,Tuesday,"The following is electricity load data (MW) in the DE_LU bidding zone.
+Season: Summer. Day: Tuesday. Is weekend: No.
+Normal load range: 50263 ± 7995 MW. Extreme threshold: 62256 MW.
+
+Historical load (",RULE: NO,False,0.0,False,0.0,0,1.0,1.0,N/A,True,threshold_rule,threshold_rule,0.0
+energy_extreme_DE_LU_2023-02-20_00:30,DE_LU,Winter,Tuesday,"The following is electricity load data (MW) in the DE_LU bidding zone.
+Season: Winter. Day: Tuesday. Is weekend: No.
+Normal load range: 56455 ± 8373 MW. Extreme threshold: 69015 MW.
+
+Historical load (",RULE: YES,True,65763.67,False,0.0,0,0.0,1.0,N/A,True,threshold_rule,threshold_rule,0.0
+energy_extreme_DE_LU_2023-09-23_01:30,DE_LU,Autumn,Sunday,"The following is electricity load data (MW) in the DE_LU bidding zone.
+Season: Autumn. Day: Sunday. Is weekend: Yes.
+Normal load range: 50652 ± 8543 MW. Extreme threshold: 63467 MW.
+
+Historical load (",RULE: NO,False,0.0,False,0.0,0,1.0,1.0,N/A,True,threshold_rule,threshold_rule,0.0
+energy_extreme_DE_LU_2023-07-11_01:30,DE_LU,Summer,Wednesday,"The following is electricity load data (MW) in the DE_LU bidding zone.
+Season: Summer. Day: Wednesday. Is weekend: No.
+Normal load range: 50225 ± 8045 MW. Extreme threshold: 62292 MW.
+
+Historical load",RULE: NO,False,0.0,False,0.0,0,1.0,1.0,N/A,True,threshold_rule,threshold_rule,0.0
+energy_extreme_DE_LU_2023-06-05_01:30,DE_LU,Summer,Tuesday,"The following is electricity load data (MW) in the DE_LU bidding zone.
+Season: Summer. Day: Tuesday. Is weekend: No.
+Normal load range: 47798 ± 8124 MW. Extreme threshold: 59985 MW.
+
+Historical load (",RULE: NO,False,0.0,False,0.0,0,1.0,1.0,N/A,True,threshold_rule,threshold_rule,0.0
+energy_extreme_DE_LU_2023-09-28_01:30,DE_LU,Autumn,Friday,"The following is electricity load data (MW) in the DE_LU bidding zone.
+Season: Autumn. Day: Friday. Is weekend: No.
+Normal load range: 50261 ± 8523 MW. Extreme threshold: 63045 MW.
+
+Historical load (l",RULE: YES,True,61184.94,False,0.0,0,0.0,1.0,N/A,True,threshold_rule,threshold_rule,0.0
+energy_extreme_DE_LU_2023-01-16_00:30,DE_LU,Winter,Tuesday,"The following is electricity load data (MW) in the DE_LU bidding zone.
+Season: Winter. Day: Tuesday. Is weekend: No.
+Normal load range: 58695 ± 8656 MW. Extreme threshold: 71679 MW.
+
+Historical load (",RULE: YES,True,70127.14,False,0.0,0,0.0,1.0,N/A,True,threshold_rule,threshold_rule,0.0
+energy_extreme_DE_LU_2023-08-30_01:30,DE_LU,Summer,Thursday,"The following is electricity load data (MW) in the DE_LU bidding zone.
+Season: Summer. Day: Thursday. Is weekend: No.
+Normal load range: 49642 ± 8329 MW. Extreme threshold: 62136 MW.
+
+Historical load ",RULE: NO,False,0.0,False,0.0,0,1.0,1.0,N/A,True,threshold_rule,threshold_rule,0.0
+energy_extreme_DE_LU_2023-11-22_00:30,DE_LU,Autumn,Thursday,"The following is electricity load data (MW) in the DE_LU bidding zone.
+Season: Autumn. Day: Thursday. Is weekend: No.
+Normal load range: 57479 ± 9014 MW. Extreme threshold: 71000 MW.
+
+Historical load ",RULE: YES,True,70462.81,False,0.0,0,0.0,1.0,N/A,True,threshold_rule,threshold_rule,0.0
+energy_extreme_DE_LU_2023-07-23_01:30,DE_LU,Summer,Monday,"The following is electricity load data (MW) in the DE_LU bidding zone.
+Season: Summer. Day: Monday. Is weekend: No.
+Normal load range: 48934 ± 7981 MW. Extreme threshold: 60906 MW.
+
+Historical load (l",RULE: NO,False,0.0,True,1634.53,6,0.0,1.0,N/A,True,threshold_rule,threshold_rule,0.0
+energy_extreme_DE_LU_2023-09-17_01:30,DE_LU,Autumn,Monday,"The following is electricity load data (MW) in the DE_LU bidding zone.
+Season: Autumn. Day: Monday. Is weekend: No.
+Normal load range: 50731 ± 8421 MW. Extreme threshold: 63362 MW.
+
+Historical load (l",RULE: NO,False,0.0,True,1041.1,3,0.0,1.0,N/A,True,threshold_rule,threshold_rule,0.0
+energy_extreme_DE_LU_2023-03-12_00:30,DE_LU,Spring,Monday,"The following is electricity load data (MW) in the DE_LU bidding zone.
+Season: Spring. Day: Monday. Is weekend: No.
+Normal load range: 56353 ± 7817 MW. Extreme threshold: 68078 MW.
+
+Historical load (l",RULE: NO,False,0.0,True,396.22,3,0.0,1.0,N/A,True,threshold_rule,threshold_rule,0.0
+energy_extreme_DE_LU_2023-02-19_00:30,DE_LU,Winter,Monday,"The following is electricity load data (MW) in the DE_LU bidding zone.
+Season: Winter. Day: Monday. Is weekend: No.
+Normal load range: 56568 ± 8380 MW. Extreme threshold: 69139 MW.
+
+Historical load (l",RULE: NO,False,0.0,False,0.0,0,1.0,1.0,N/A,True,threshold_rule,threshold_rule,0.0
+energy_extreme_DE_LU_2023-05-04_01:30,DE_LU,Spring,Friday,"The following is electricity load data (MW) in the DE_LU bidding zone.
+Season: Spring. Day: Friday. Is weekend: No.
+Normal load range: 49092 ± 8266 MW. Extreme threshold: 61491 MW.
+
+Historical load (l",RULE: YES,True,58627.44,True,2032.89,10,1.0,1.0,56594.55,True,threshold_rule,threshold_rule,0.0

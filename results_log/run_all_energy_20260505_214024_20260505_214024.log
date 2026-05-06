@@ -1,0 +1,100 @@
+[rank0] [2026-05-05 21:40:24] [INFO] - ============================================================
+[rank0] [2026-05-05 21:40:24] [INFO] - Energy Forecasting + Extreme Energy Experiment
+[rank0] [2026-05-05 21:40:24] [INFO] - ============================================================
+[rank0] [2026-05-05 21:40:24] [INFO] -   Forecast data:        data/energy_task/energy_forecast_new.json
+[rank0] [2026-05-05 21:40:24] [INFO] -   Extreme data:         data/energy_extreme/energy_extreme_new.json
+[rank0] [2026-05-05 21:40:24] [INFO] -   Train forecast data:  data/energy_task/train.json
+[rank0] [2026-05-05 21:40:24] [INFO] -   Train extreme data:   data/energy_extreme/train.json
+[rank0] [2026-05-05 21:40:24] [INFO] -   Models:               ['llama3:8b-instruct-q2_K']
+[rank0] [2026-05-05 21:40:24] [INFO] -   Modes:                ['zeroshot']
+[rank0] [2026-05-05 21:40:24] [INFO] -   N_SHOTS_RAG:          4
+[rank0] [2026-05-05 21:40:24] [INFO] -   Loaded 100 forecast samples, 100 extreme samples (capped at MAX_SAMPLES=100)
+[rank0] [2026-05-05 21:40:24] [INFO] -   Loaded 291 train forecast samples from data/energy_task/train.json
+[rank0] [2026-05-05 21:40:24] [INFO] -   Loaded 80 train extreme samples from data/energy_extreme/train.json
+[rank0] [2026-05-05 21:40:24] [INFO] - 
+  Extreme class distribution: True=50 (50.0%), False=50 (50.0%)
+[rank0] [2026-05-05 21:40:24] [INFO] - 
+============================================================
+[rank0] [2026-05-05 21:40:24] [INFO] - TASK 1: Energy Load Forecasting
+[rank0] [2026-05-05 21:40:24] [INFO] - ============================================================
+[rank0] [2026-05-05 21:40:24] [INFO] - 
+  Running persistence baseline...
+[rank0] [2026-05-05 21:40:24] [INFO] - 
+=== Energy Persistence Baseline ===
+[rank0] [2026-05-05 21:40:24] [INFO] -   mae_penalised            : 3854.4696750000003
+[rank0] [2026-05-05 21:40:24] [INFO] -   mae_matched              : 3854.4696750000003
+[rank0] [2026-05-05 21:40:24] [INFO] -   step_coverage            : 100.0
+[rank0] [2026-05-05 21:40:24] [INFO] -   extraction_rate          : 100.0
+[rank0] [2026-05-05 21:40:24] [INFO] -   n_samples                : 100
+[rank0] [2026-05-05 21:40:24] [INFO] - 
+  ==================================================
+[rank0] [2026-05-05 21:40:24] [INFO] -   MODEL: llama3:8b-instruct-q2_K  [quant=q2_K]
+[rank0] [2026-05-05 21:40:24] [INFO] -   ==================================================
+[rank0] [2026-05-05 21:40:24] [INFO] - 
+    Mode: zeroshot
+[rank0] [2026-05-05 21:40:24] [INFO] - [EnergyForecast] model=llama3:8b-instruct-q2_K mode=zeroshot n=100 concurrency=2 timeout=600s
+[rank0] [2026-05-05 22:32:15] [INFO] - 
+[EnergyForecast] llama3:8b-instruct-q2_K | zeroshot
+[rank0] [2026-05-05 22:32:15] [INFO] -   mae_penalised            : 55169.18053333331
+[rank0] [2026-05-05 22:32:15] [INFO] -   mae_matched              : 47998.49749594641
+[rank0] [2026-05-05 22:32:15] [INFO] -   step_coverage            : 11.812499999999998
+[rank0] [2026-05-05 22:32:15] [INFO] -   extraction_rate          : 1.0
+[rank0] [2026-05-05 22:32:15] [INFO] -   n_samples                : 100
+[rank0] [2026-05-05 22:32:15] [INFO] -   skill_penalised          : -13.313
+[rank0] [2026-05-05 22:32:15] [INFO] -   skill_matched            : -11.4527
+[rank0] [2026-05-05 22:32:15] [INFO] - 
+============================================================
+[rank0] [2026-05-05 22:32:15] [INFO] - TASK 2: Extreme Energy Classification
+[rank0] [2026-05-05 22:32:15] [INFO] - ============================================================
+[rank0] [2026-05-05 22:32:15] [INFO] - 
+  Running threshold rule baseline...
+[rank0] [2026-05-05 22:32:15] [INFO] - 
+=== Energy Threshold Rule Baseline ===
+[rank0] [2026-05-05 22:32:15] [INFO] -   accuracy                 : 0.59
+[rank0] [2026-05-05 22:32:15] [INFO] -   precision                : 0.6363636363636364
+[rank0] [2026-05-05 22:32:15] [INFO] -   recall                   : 0.42
+[rank0] [2026-05-05 22:32:15] [INFO] -   f1                       : 0.5060240963855421
+[rank0] [2026-05-05 22:32:15] [INFO] -   peak_mae                 : 62437.89952380953
+[rank0] [2026-05-05 22:32:15] [INFO] -   lenient                  : 0.59
+[rank0] [2026-05-05 22:32:15] [INFO] -   consistency              : 1.0
+[rank0] [2026-05-05 22:32:15] [INFO] -   extraction_rate          : 100.0
+[rank0] [2026-05-05 22:32:15] [INFO] -   tp                       : 21
+[rank0] [2026-05-05 22:32:15] [INFO] -   fp                       : 12
+[rank0] [2026-05-05 22:32:15] [INFO] -   fn                       : 29
+[rank0] [2026-05-05 22:32:15] [INFO] -   tn                       : 38
+[rank0] [2026-05-05 22:32:15] [INFO] -   n_samples                : 100
+[rank0] [2026-05-05 22:32:15] [INFO] - 
+  ==================================================
+[rank0] [2026-05-05 22:32:15] [INFO] -   MODEL: llama3:8b-instruct-q2_K  [quant=q2_K]
+[rank0] [2026-05-05 22:32:15] [INFO] -   ==================================================
+[rank0] [2026-05-05 22:32:15] [INFO] - 
+    Mode: zeroshot
+[rank0] [2026-05-05 22:32:15] [INFO] - [EnergyExtreme] model=llama3:8b-instruct-q2_K mode=zeroshot n=100 concurrency=2 timeout=600s
+[rank0] [2026-05-05 22:48:21] [INFO] -     [ERROR] llama3:8b-instruct-q2_K | zeroshot: 'EnergyExtremeMetrics' object has no attribute 'get'
+[rank0] [2026-05-05 22:48:21] [INFO] - Traceback (most recent call last):
+  File "/home/bertha/Project3/Model_Compress/experiments/run_all_energy_exp.py", line 284, in main
+    scores = exp.run(logging=True)
+             ^^^^^^^^^^^^^^^^^^^^^
+  File "/home/bertha/Project3/Model_Compress/experiments/energy_runner.py", line 453, in run
+    final = self.metrics.get()
+            ^^^^^^^^^^^^^^^^
+AttributeError: 'EnergyExtremeMetrics' object has no attribute 'get'
+
+[rank0] [2026-05-05 22:48:21] [INFO] - 
+==========================================================================================
+[rank0] [2026-05-05 22:48:21] [INFO] - SUMMARY: Energy Load Forecasting
+[rank0] [2026-05-05 22:48:21] [INFO] - ==========================================================================================
+[rank0] [2026-05-05 22:48:21] [INFO] - Model                            Quant      Mode        mae_penalise   mae_matched  step_coverag  extraction_r  skill_penali  skill_matche
+[rank0] [2026-05-05 22:48:21] [INFO] - ──────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────
+[rank0] [2026-05-05 22:48:21] [INFO] - persistence                      baseline   baseline       3854.4697     3854.4697      100.0000      100.0000           N/A           N/A
+[rank0] [2026-05-05 22:48:21] [INFO] - llama3:8b-instruct-q2_K          q2_K       zeroshot      55169.1805    47998.4975       11.8125        1.0000      -13.3130      -11.4527
+[rank0] [2026-05-05 22:48:21] [INFO] - ==========================================================================================
+[rank0] [2026-05-05 22:48:21] [INFO] - 
+==========================================================================================
+[rank0] [2026-05-05 22:48:21] [INFO] - SUMMARY: Extreme Energy Classification
+[rank0] [2026-05-05 22:48:21] [INFO] - ==========================================================================================
+[rank0] [2026-05-05 22:48:21] [INFO] - Model                            Quant      Mode            accuracy     precision        recall            f1      peak_mae       lenient   consistency  extraction_r
+[rank0] [2026-05-05 22:48:21] [INFO] - ──────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────
+[rank0] [2026-05-05 22:48:21] [INFO] - threshold_rule                   baseline   baseline          0.5900        0.6364        0.4200        0.5060    62437.8995        0.5900        1.0000      100.0000
+[rank0] [2026-05-05 22:48:21] [INFO] - llama3:8b-instruct-q2_K          q2_K       zeroshot    ERROR: 'EnergyExtremeMetrics' object has no attribute 'get'
+[rank0] [2026-05-05 22:48:21] [INFO] - ==========================================================================================

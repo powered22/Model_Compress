@@ -1,0 +1,3 @@
+﻿model,family,quant,mode,l1loss,l1loss_matched,timestamp_coverage,coverage,skill_l1loss,skill_l1loss_matched,bertscore,cosinesim,bleu,rouge_l
+persistence,baseline,baseline,baseline,0.6251,0.6251,100.0,100.0,,,0.5601,0.4915,0.0108,0.6959
+llama3:8b-instruct-q2_K,llama3,q2_K,zeroshot,153.0948,0.5436,49.4618,46.8924,,,0.3928,0.7087,0.2548,0.5056
