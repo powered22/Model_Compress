@@ -432,6 +432,155 @@ def run_kfold_extreme(
 
 
 # ─────────────────────────────────────────────────────────────────────────────
+# Multi-seed runner (replaces k-fold for uniform evaluation across tasks)
+# ─────────────────────────────────────────────────────────────────────────────
+
+def run_multiseed_extreme(
+    jsonl_path: str,
+    model: str,
+    prompting_mode: str,
+    format_dbase: str,
+    concurrency: int = 5,
+    n_shots: int = 4,
+    seeds: List[int] = None,
+    log_dir: str = "results_log",
+    max_samples: int = None,
+) -> dict:
+    """
+    Stratified multi-seed evaluation for WeatherExtremeExperiment.
+
+    prompting_mode:
+      "zeroshot" — single run on full data, no split
+      "fewshot"  — multi-seed stratified split, static fewshot selection
+      "ragfs"    — multi-seed stratified split, RAG pool from fewshot pool
+
+    Stratum = (has_extreme, event_type) so fewshot examples cover all classes.
+    Returns aggregated metrics (mean ± std across seeds).
+    """
+    from experiments.multiseed_eval import stratified_multiseed_split, aggregate_seeds
+
+    if seeds is None:
+        seeds = [42, 123, 999]
+
+    log = get_logging(
+        name=f"multiseed_{model}_{prompting_mode}",
+        log_dir=log_dir,
+        log_prefix=f"multiseed_{model}_{prompting_mode}",
+    )
+
+    all_data = load_jsonl(jsonl_path)
+    if max_samples and max_samples < len(all_data):
+        all_data = all_data[:max_samples]
+    print_class_distribution(all_data, label="Full Dataset")
+
+    # ── Zero-shot: single run, no split needed ────────────────────────────────
+    if prompting_mode == "zeroshot":
+        log.info("[Zero-shot] Running on full dataset — no split needed.")
+        zeroshot_prompt = (
+            "You are a severe weather analyst.\n\n"
+            "Output format:\n"
+            "Line 1: Yes or No\n"
+            "Line 2: EventType: Hail or Thunderstorm Wind or Flash Flood or "
+            "Tornado or Lightning or Flood or Funnel Cloud or NA\n\n"
+            "Provide a direct and concise answer.\n"
+            "Do not repeat the instructions or restate the output format.\n"
+            "Do not list multiple extreme weather events.\n"
+            "Follow the required output format exactly.\n"
+        )
+        _write_prompt_file(zeroshot_prompt, model, "zeroshot")
+        exp = WeatherExtremeExperiment(
+            data_list=all_data,
+            log_prefix=log,
+            prompting_mode="zeroshot",
+            model=model,
+            concurrency=concurrency,
+            task="weather-extreme",
+            format_dbase=format_dbase,
+        )
+        exp.run(logging=True)
+        final_scores = exp.metrics.get(subject="weather-extreme")
+        log.info("\n=== Zero-shot Final Scores ===")
+        for k_, v in final_scores.items():
+            log.info(f"  {k_}: {v}")
+        return final_scores
+
+    # ── Fewshot / RAG-FS: multi-seed stratified split ─────────────────────────
+    is_ragfs   = (prompting_mode == "ragfs")
+    mode_label = "RAG-FS" if is_ragfs else "Few-shot"
+    log.info(f"[{mode_label} Multi-seed] model={model}, seeds={seeds}, n_shots={n_shots}")
+
+    all_seed_scores = []
+
+    for seed in seeds:
+        log.info(f"\n{'─'*40}")
+        log.info(f"Seed {seed}")
+
+        fewshot_pool, test_data = stratified_multiseed_split(
+            all_data,
+            get_stratum_fn=get_label,
+            n_per_stratum=1,
+            seed=seed,
+        )
+        log.info(f"  fewshot={len(fewshot_pool)}, test={len(test_data)}")
+
+        if is_ragfs:
+            from .rag_retriever import RAGRetriever
+            retriever = RAGRetriever()
+            retriever.fit(fewshot_pool, text_key="observation")
+            log.info(f"  [RAG-FS] Retriever fitted on {retriever.pool_size} examples")
+            exp = WeatherExtremeExperiment(
+                data_list=test_data,
+                log_prefix=log,
+                prompting_mode="ragfs",
+                model=model,
+                concurrency=concurrency,
+                task="weather-extreme",
+                format_dbase=format_dbase,
+                rag_retriever=retriever,
+                n_shots=n_shots,
+            )
+        else:
+            examples       = select_fewshot_examples(fewshot_pool, n_shots=n_shots, seed=seed)
+            fewshot_prompt = format_fewshot_prompt(examples)
+            prompt_path    = _write_prompt_file(fewshot_prompt, model, f"fewshot_seed{seed}")
+            log.info(f"  Few-shot examples: {[get_label(e) for e in examples]}")
+            log.info(f"  Prompt written to: {prompt_path}")
+            exp = WeatherExtremeExperiment(
+                data_list=test_data,
+                log_prefix=log,
+                prompting_mode=f"fewshot_seed{seed}",
+                model=model,
+                concurrency=concurrency,
+                task="weather-extreme",
+                format_dbase=format_dbase,
+            )
+
+        exp.run(logging=True)
+        seed_scores = exp.metrics.get(subject="weather-extreme")
+
+        if len(exp.results) < len(test_data):
+            log.info(f"  [WARNING] Seed {seed}: {len(exp.results)}/{len(test_data)} processed")
+
+        log.info(f"  Seed {seed} scores: "
+                 f"F1={seed_scores.get('f1', 0):.4f}, "
+                 f"Acc={seed_scores.get('accuracy', 0):.4f}")
+        all_seed_scores.append(seed_scores)
+
+    # ── Aggregate across seeds ────────────────────────────────────────────────
+    aggregated = aggregate_seeds(all_seed_scores)
+
+    log.info(f"\n{'='*50}")
+    log.info(f"[Multi-seed Final] model={model}, mode={prompting_mode}, seeds={seeds}")
+    for metric in ["accuracy", "precision", "recall", "f1",
+                   "type_accuracy", "strict", "lenient"]:
+        mean = aggregated.get(metric, 0)
+        std  = aggregated.get(f"{metric}_std", 0)
+        log.info(f"  {metric:20s}: {mean:.4f} ± {std:.4f}")
+
+    return aggregated
+
+
+# ─────────────────────────────────────────────────────────────────────────────
 # Helper: write prompt to .txt file (WeatherPrompting reads from file)
 # ─────────────────────────────────────────────────────────────────────────────
 

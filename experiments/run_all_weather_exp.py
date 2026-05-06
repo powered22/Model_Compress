@@ -44,8 +44,8 @@ JSONL_PATH   = os.environ.get("WEATHER_DATA",  "data/weather/100_test_data.jsonl
 TRAIN_JSONL  = os.environ.get("WEATHER_TRAIN", "data/weather/train.jsonl")
 LOG_DIR      = os.environ.get("LOG_DIR",        "results_log")
 CONCURRENCY  = None    # None → resolved from MODEL_DEFAULTS in runner.py
-SEED         = int(os.environ.get("SEED", "42"))
 MAX_SAMPLES  = int(os.environ.get("MAX_SAMPLES", "100"))
+SEEDS        = [int(s) for s in os.environ.get("SEEDS", "42,123,999").split(",")]
 
 # ── Quantization comparison matrix ───────────────────────────────────────────
 # Override via env var: MODELS=llama3:8b-instruct-q2_K,mistral:7b-instruct-v0.2-q2_K
@@ -198,46 +198,25 @@ def main():
     log.info(f"  Modes:        {MODES}")
     log.info(f"  Format:       {FORMAT_DBASE}")
     log.info(f"  N_SHOTS_RAG:  {N_SHOTS_RAG}")
+    log.info(f"  SEEDS:        {SEEDS}")
 
     # ── Load datasets ─────────────────────────────────────────────────────────
     all_data   = load_jsonl(JSONL_PATH)[:MAX_SAMPLES]
     train_data = load_jsonl(TRAIN_JSONL) if os.path.exists(TRAIN_JSONL) else []
-    log.info(f"  Loaded {len(all_data)} test samples, {len(train_data)} train samples")
-
-    # ── Prepare static few-shot split ─────────────────────────────────────────
-    few_shot_examples, test_data = fixed_fewshot_weather_split(all_data)
-    verify_split(few_shot_examples, test_data)
+    log.info(f"  Loaded {len(all_data)} samples, {len(train_data)} train samples")
 
     _write_zeroshot_prompt()
-    fewshot_path = _write_fewshot_prompt(few_shot_examples)
-    log.info(f"\n  Few-shot prompt written to: {fewshot_path}")
-    log.info(f"  Few-shot examples:  {len(few_shot_examples)}")
-    log.info(f"  Static test set:    {len(test_data)} samples")
 
-    # ── Build RAG retriever once (shared across all models) ───────────────────
-    rag_retriever = None
-    if "ragfs" in MODES:
-        if not train_data:
-            log.info(f"\n  [WARNING] RAG-FS requested but {TRAIN_JSONL} not found. "
-                     f"Falling back to full test set as pool.")
-            rag_pool = all_data
-        else:
-            rag_pool = train_data
-
-        log.info(f"\n  Building RAG retriever on {len(rag_pool)} examples ...")
-        from experiments.rag_retriever import RAGRetriever
-        rag_retriever = RAGRetriever(model_name=RAG_MODEL)
-        rag_retriever.fit(rag_pool, text_key="observation")
-        log.info(f"  RAG retriever ready (pool_size={rag_retriever.pool_size})")
-
-    # ── Persistence baseline ──────────────────────────────────────────────────
+    # ── Persistence baseline (run once on full data) ──────────────────────────
     log.info("\n" + "─"*60)
     log.info("Running persistence baseline...")
-    persistence_exp    = PersistenceExperiment(test_data, log)
+    persistence_exp    = PersistenceExperiment(all_data, log)
     persistence_scores = persistence_exp.run(logging=True)
     log.info("Persistence baseline complete.")
 
     all_results = []
+
+    from experiments.multiseed_eval import aggregate_seeds
 
     # ── Outer loop: models ────────────────────────────────────────────────────
     for model in MODELS:
@@ -251,20 +230,44 @@ def main():
             log.info(f"  {'─'*40}")
 
             try:
-                # ragfs uses the full test_data with dynamic retrieval
-                # zeroshot uses full test_data (no prompt examples to exclude)
-                # fewshot uses test_data (few-shot examples excluded)
-                data_for_mode = test_data
-                retriever_for_mode = rag_retriever if mode == "ragfs" else None
+                if mode == "zeroshot":
+                    # Zeroshot: single run on full data, no split needed
+                    scores = run_weather_experiment(
+                        data_list=all_data,
+                        model=model,
+                        mode=mode,
+                        log=log,
+                        persistence_scores=persistence_scores,
+                        rag_retriever=None,
+                    )
+                else:
+                    # Fewshot / RAG-FS: loop over seeds with stratified split
+                    seed_scores = []
+                    for seed in SEEDS:
+                        log.info(f"  [Seed {seed}]")
+                        few_shot_examples, test_data = fixed_fewshot_weather_split(
+                            all_data, seed=seed
+                        )
+                        fewshot_path = _write_fewshot_prompt(few_shot_examples)
 
-                scores = run_weather_experiment(
-                    data_list=data_for_mode,
-                    model=model,
-                    mode=mode,
-                    log=log,
-                    persistence_scores=persistence_scores,
-                    rag_retriever=retriever_for_mode,
-                )
+                        if mode == "ragfs":
+                            rag_pool = train_data if train_data else few_shot_examples
+                            from experiments.rag_retriever import RAGRetriever
+                            rag_retriever = RAGRetriever(model_name=RAG_MODEL)
+                            rag_retriever.fit(rag_pool, text_key="observation")
+                        else:
+                            rag_retriever = None
+
+                        s = run_weather_experiment(
+                            data_list=test_data,
+                            model=model,
+                            mode=mode,
+                            log=log,
+                            persistence_scores=persistence_scores,
+                            rag_retriever=rag_retriever,
+                        )
+                        seed_scores.append(s)
+                    scores = aggregate_seeds(seed_scores)
 
                 all_results.append({
                     "model":  model,
@@ -277,8 +280,10 @@ def main():
                 log.info(f"\n  [{model} | {mode}] Key Results:")
                 for metric in ["l1loss", "coverage", "skill_l1loss"]:
                     val = scores.get(metric)
+                    std = scores.get(f"{metric}_std")
                     if val is not None:
-                        log.info(f"    {metric:20s}: {val:.4f}")
+                        suffix = f" ± {std:.4f}" if std is not None else ""
+                        log.info(f"    {metric:20s}: {val:.4f}{suffix}")
 
             except Exception as e:
                 log.info(f"  [ERROR] {model} | {mode}: {e}")

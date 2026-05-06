@@ -56,96 +56,22 @@ def get_first_timestamp(datum: dict) -> str:
 
 def fixed_fewshot_weather_split(
     data: List[dict],
+    seed: int = 42,
     prefer_unique_location: bool = True,
 ) -> Tuple[List[dict], List[dict]]:
     """
-    Select exactly 1 few-shot example per unique forecast horizon.
-    Removes selected examples from the test set.
-
-    Selection priority:
-      1. Pick from a location that appears only ONCE in the dataset
-         (zero contamination risk — that location never appears in test set)
-      2. If no unique location exists for a horizon, pick the earliest
-         timestamp (maximises temporal distance from other test samples)
-
-    Args:
-        data:                    full dataset
-        prefer_unique_location:  if True, prefer locations appearing only once
-
-    Returns:
-        (few_shot_examples, test_data)
+    Select 1 few-shot example per forecast horizon.
+    Stratified by horizon so fewshot represents all forecast ranges.
+    Seed controls which example is picked within each horizon group.
+    Returns (few_shot_examples, test_data).
     """
-    # Group by horizon
-    horizon_groups: Dict[int, List[dict]] = defaultdict(list)
-    for datum in data:
-        h = get_horizon(datum)
-        horizon_groups[h].append(datum)
-
-    # Count how many times each location appears across the full dataset
-    location_counts: Dict[str, int] = defaultdict(int)
-    for datum in data:
-        location_counts[get_area(datum)] += 1
-
-    print(f"\n[Weather Few-shot Split]")
-    print(f"  Total samples:    {len(data)}")
-    print(f"  Unique horizons:  {sorted(horizon_groups.keys())}")
-    print(f"  Unique locations: {len(location_counts)}")
-    print(f"\n  Location counts:")
-    for loc, count in sorted(location_counts.items()):
-        unique_flag = " ← unique (safest for few-shot)" if count == 1 else ""
-        print(f"    {loc}: {count} sample(s){unique_flag}")
-
-    few_shot_examples = []
-    few_shot_indices  = set()
-
-    print(f"\n  Selection per horizon:")
-    for horizon in sorted(horizon_groups.keys()):
-        candidates = horizon_groups[horizon]
-
-        selected = None
-
-        if prefer_unique_location:
-            # Priority 1: pick a sample whose location appears only once
-            unique_candidates = [
-                d for d in candidates
-                if location_counts[get_area(d)] == 1
-            ]
-            if unique_candidates:
-                # Among unique-location candidates, pick earliest timestamp
-                selected = min(unique_candidates, key=get_first_timestamp)
-                reason = f"unique location ({get_area(selected)})"
-
-        if selected is None:
-            # Fallback: pick the candidate with the earliest timestamp
-            selected = min(candidates, key=get_first_timestamp)
-            reason = f"earliest timestamp (location={get_area(selected)})"
-
-        few_shot_examples.append(selected)
-        few_shot_indices.add(id(selected))
-
-        print(f"    Horizon {horizon}h → {get_area(selected)} "
-              f"@ {get_first_timestamp(selected)} [{reason}]")
-
-    # Test set = everything not selected as a few-shot example
-    test_data = [d for d in data if id(d) not in few_shot_indices]
-
-    print(f"\n  Few-shot examples: {len(few_shot_examples)}")
-    print(f"  Test set:          {len(test_data)}")
-
-    # Verify no location overlap between few-shot and test set
-    fewshot_locations = {get_area(d) for d in few_shot_examples}
-    test_locations    = {get_area(d) for d in test_data}
-    overlap           = fewshot_locations & test_locations
-
-    if overlap:
-        print(f"\n  [WARNING] Location overlap between few-shot and test set:")
-        print(f"    {overlap}")
-        print(f"    These locations appear in both — mild contamination risk.")
-        print(f"    Consider collecting more diverse location samples.")
-    else:
-        print(f"\n  [OK] No location overlap — zero contamination risk.")
-
-    return few_shot_examples, test_data
+    from experiments.multiseed_eval import stratified_multiseed_split
+    return stratified_multiseed_split(
+        data,
+        get_stratum_fn=get_horizon,
+        n_per_stratum=1,
+        seed=seed,
+    )
 
 
 # ─────────────────────────────────────────────────────────────────────────────

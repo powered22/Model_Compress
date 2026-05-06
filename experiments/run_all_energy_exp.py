@@ -52,15 +52,11 @@ EXTREME_DATA_PATH   = os.environ.get("ENERGY_EXTREME_DATA",   "data/energy_extre
 TRAIN_FORECAST_PATH = os.environ.get("ENERGY_FORECAST_TRAIN", "data/energy_task/train.json")
 TRAIN_EXTREME_PATH  = os.environ.get("ENERGY_EXTREME_TRAIN",  "data/energy_extreme/train.json")
 
-LOG_DIR = os.environ.get("LOG_DIR", "results_log")
-SEED    = int(os.environ.get("SEED", "42"))
-
-# Limit number of test samples (keeps experiments tractable with large JSON files)
+LOG_DIR     = os.environ.get("LOG_DIR", "results_log")
 MAX_SAMPLES = int(os.environ.get("MAX_SAMPLES", "100"))
-
-# RAG-FS configuration
 N_SHOTS_RAG = int(os.environ.get("N_SHOTS_RAG", "4"))
 RAG_MODEL   = "all-MiniLM-L6-v2"
+SEEDS       = [int(s) for s in os.environ.get("SEEDS", "42,123,999").split(",")]
 
 # ── Quantization comparison matrix ───────────────────────────────────────────
 # Override via env var: MODELS=llama3:8b-instruct-q2_K,mistral:7b-instruct-v0.2-q2_K
@@ -165,12 +161,7 @@ def main():
              f"True={n_pos} ({n_pos/len(extreme_data):.1%}), "
              f"False={n_neg} ({n_neg/len(extreme_data):.1%})")
 
-    # ── Static few-shot splits (done once, shared across models) ──────────────
-    fewshot_forecast, test_forecast = fixed_fewshot_energy_split(forecast_data)
-    fewshot_extreme,  test_extreme  = fixed_fewshot_energy_extreme_split(extreme_data)
-
-    fewshot_forecast_prompt = format_energy_fewshot_prompt(fewshot_forecast)
-    fewshot_extreme_prompt  = format_energy_extreme_fewshot_prompt(fewshot_extreme)
+    from experiments.multiseed_eval import aggregate_seeds
 
     zeroshot_forecast_prompt = (
         "You are an electricity load forecasting assistant.\n"
@@ -206,22 +197,39 @@ def main():
         for mode in MODES:
             log.info(f"\n    Mode: {mode}")
             try:
-                data_for_mode   = forecast_data if mode == "zeroshot" else test_forecast
-                retriever       = rag_forecast_retriever if mode == "ragfs" else None
-                static_prompt   = (zeroshot_forecast_prompt if mode == "zeroshot"
-                                   else fewshot_forecast_prompt)
+                if mode == "zeroshot":
+                    exp = EnergyForecastExperiment(
+                        data=forecast_data,
+                        log_prefix=log,
+                        model=model,
+                        prompting_mode=mode,
+                        fewshot_prompt=zeroshot_forecast_prompt,
+                        persistence_mae=pers_scores.get("mae_penalised"),
+                        rag_retriever=None,
+                        n_shots=N_SHOTS_RAG,
+                    )
+                    scores = exp.run(logging=True)
+                else:
+                    seed_scores = []
+                    for seed in SEEDS:
+                        log.info(f"    [Seed {seed}]")
+                        fewshot_examples, test_data = fixed_fewshot_energy_split(
+                            forecast_data, seed=seed
+                        )
+                        retriever = rag_forecast_retriever if mode == "ragfs" else None
+                        exp = EnergyForecastExperiment(
+                            data=test_data,
+                            log_prefix=log,
+                            model=model,
+                            prompting_mode=mode,
+                            fewshot_prompt=format_energy_fewshot_prompt(fewshot_examples),
+                            persistence_mae=pers_scores.get("mae_penalised"),
+                            rag_retriever=retriever,
+                            n_shots=N_SHOTS_RAG,
+                        )
+                        seed_scores.append(exp.run(logging=True))
+                    scores = aggregate_seeds(seed_scores)
 
-                exp = EnergyForecastExperiment(
-                    data=data_for_mode,
-                    log_prefix=log,
-                    model=model,
-                    prompting_mode=mode,
-                    fewshot_prompt=static_prompt,
-                    persistence_mae=pers_scores.get("mae_penalised"),
-                    rag_retriever=retriever,
-                    n_shots=N_SHOTS_RAG,
-                )
-                scores = exp.run(logging=True)
                 forecast_results.append({
                     "model":  model,
                     "quant":  _get_quant_level(model),
@@ -267,21 +275,37 @@ def main():
         for mode in MODES:
             log.info(f"\n    Mode: {mode}")
             try:
-                data_for_mode = extreme_data if mode == "zeroshot" else test_extreme
-                retriever     = rag_extreme_retriever if mode == "ragfs" else None
-                static_prompt = (zeroshot_extreme_prompt if mode == "zeroshot"
-                                 else fewshot_extreme_prompt)
+                if mode == "zeroshot":
+                    exp = EnergyExtremeExperiment(
+                        data=extreme_data,
+                        log_prefix=log,
+                        model=model,
+                        prompting_mode=mode,
+                        fewshot_prompt=zeroshot_extreme_prompt,
+                        rag_retriever=None,
+                        n_shots=N_SHOTS_RAG,
+                    )
+                    scores = exp.run(logging=True)
+                else:
+                    seed_scores = []
+                    for seed in SEEDS:
+                        log.info(f"    [Seed {seed}]")
+                        fewshot_examples, test_data = fixed_fewshot_energy_extreme_split(
+                            extreme_data, seed=seed
+                        )
+                        retriever = rag_extreme_retriever if mode == "ragfs" else None
+                        exp = EnergyExtremeExperiment(
+                            data=test_data,
+                            log_prefix=log,
+                            model=model,
+                            prompting_mode=mode,
+                            fewshot_prompt=format_energy_extreme_fewshot_prompt(fewshot_examples),
+                            rag_retriever=retriever,
+                            n_shots=N_SHOTS_RAG,
+                        )
+                        seed_scores.append(exp.run(logging=True))
+                    scores = aggregate_seeds(seed_scores)
 
-                exp = EnergyExtremeExperiment(
-                    data=data_for_mode,
-                    log_prefix=log,
-                    model=model,
-                    prompting_mode=mode,
-                    fewshot_prompt=static_prompt,
-                    rag_retriever=retriever,
-                    n_shots=N_SHOTS_RAG,
-                )
-                scores = exp.run(logging=True)
                 extreme_results.append({
                     "model":  model,
                     "quant":  _get_quant_level(model),

@@ -21,7 +21,7 @@ import torch
 import csv
 import os
 from datetime import datetime
-from experiments.kfold_extreme import run_kfold_extreme
+from experiments.kfold_extreme import run_multiseed_extreme
 from experiments.utils import get_logging
 
 
@@ -32,13 +32,9 @@ from experiments.utils import get_logging
 JSONL_PATH   = os.environ.get("EXTREME_DATA", "data/weather_extreme/100_dataset.jsonl")
 LOG_DIR      = os.environ.get("LOG_DIR",       "results_log")
 CONCURRENCY  = None
-SEED         = int(os.environ.get("SEED", "42"))
 MAX_SAMPLES  = int(os.environ.get("MAX_SAMPLES", "100"))
-
-# For 100-sample real run: k=5, n_shots=4
-# Override via: K_FOLDS=5 N_SHOTS=4
-K_FOLDS  = int(os.environ.get("K_FOLDS", "5"))
-N_SHOTS  = int(os.environ.get("N_SHOTS", "4"))
+N_SHOTS      = int(os.environ.get("N_SHOTS", "4"))
+SEEDS        = [int(s) for s in os.environ.get("SEEDS", "42,123,999").split(",")]
 
 # RAG-FS configuration — retrieved examples per test datum
 N_SHOTS_RAG = int(os.environ.get("N_SHOTS_RAG", "4"))
@@ -107,19 +103,18 @@ def main():
 
             try:
                 # N_SHOTS_RAG is passed for ragfs; N_SHOTS for static fewshot.
-                # run_kfold_extreme uses n_shots for both — the retriever in
+                # run_multiseed_extreme uses n_shots for both — the retriever in
                 # ragfs mode will use it as k for retrieve().
                 n_shots_for_mode = N_SHOTS_RAG if mode == "ragfs" else N_SHOTS
 
-                scores = run_kfold_extreme(
+                scores = run_multiseed_extreme(
                     jsonl_path=JSONL_PATH,
                     model=model,
                     prompting_mode=mode,
                     format_dbase=FORMAT_DBASE,
                     concurrency=CONCURRENCY,
-                    k=K_FOLDS,
                     n_shots=n_shots_for_mode,
-                    seed=SEED,
+                    seeds=SEEDS,
                     log_dir=LOG_DIR,
                     max_samples=MAX_SAMPLES,
                 )

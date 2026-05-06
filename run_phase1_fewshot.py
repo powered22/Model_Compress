@@ -46,6 +46,8 @@ def parse_args():
     parser.add_argument("--n-shots",     default=int(os.environ.get("N_SHOTS", 4)),
                         dest="n_shots",  type=int,
                         help="Few-shot examples for extreme weather (default: 4)")
+    parser.add_argument("--seeds",       default=os.environ.get("SEEDS", "42,123,999"),
+                        help="Comma-separated seeds for multi-seed evaluation (default: 42,123,999)")
     parser.add_argument("--ollama-host", default=os.environ.get("OLLAMA_HOST", "http://localhost:11434"),
                         dest="ollama_host", help="Ollama server URL")
     return parser.parse_args()
@@ -98,6 +100,7 @@ def main():
     max_samples = args.max_samples
     k_folds     = args.k_folds
     n_shots     = args.n_shots
+    seeds       = args.seeds
     ollama_host = args.ollama_host
     modes       = "fewshot"
 
@@ -133,6 +136,7 @@ def main():
     env["MAX_SAMPLES"] = str(max_samples)
     env["K_FOLDS"]     = str(k_folds)
     env["N_SHOTS"]     = str(n_shots)
+    env["SEEDS"]       = seeds
 
     task_map = {
         "weather": ("experiments.run_all_weather_exp", "weather forecasting (fewshot)"),

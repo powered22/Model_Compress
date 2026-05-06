@@ -328,38 +328,21 @@ def threshold_rule_baseline(
 
 def fixed_fewshot_energy_split(
     data: List[dict],
+    seed: int = 42,
 ) -> Tuple[List[dict], List[dict]]:
     """
-    Select 1 few-shot example per unique season (Winter/Spring/Summer/Autumn).
-    Prefer examples whose region+timestamp does not appear elsewhere in the dataset.
+    Select 1 few-shot example per season (Winter/Spring/Summer/Autumn).
+    Stratified by season so fewshot represents seasonal distribution.
+    Seed controls which example is picked within each season group.
     Returns (few_shot_examples, test_data).
     """
-    groups: Dict[str, List[dict]] = defaultdict(list)
-    for datum in data:
-        groups[get_season(datum)].append(datum)
-
-    # Count how many times each key appears
-    key_counts: Counter = Counter(d.get("key", "") for d in data)
-
-    few_shot = []
-    used_ids = set()
-
-    print(f"\n[Energy Few-shot Split]")
-    print(f"  Total samples: {len(data)}")
-    print(f"  Seasons found: {list(groups.keys())}")
-
-    for season, items in sorted(groups.items()):
-        # Prefer unique keys (appear only once)
-        unique = [d for d in items if key_counts[d.get("key", "")] == 1]
-        selected = (min(unique, key=lambda d: d.get("context", {}).get("start_timestamp", ""))
-                    if unique else items[0])
-        few_shot.append(selected)
-        used_ids.add(id(selected))
-        print(f"  Season={season}: selected key={selected.get('key', 'unknown')}")
-
-    test_data = [d for d in data if id(d) not in used_ids]
-    print(f"  Few-shot: {len(few_shot)} | Test: {len(test_data)}")
-    return few_shot, test_data
+    from experiments.multiseed_eval import stratified_multiseed_split
+    return stratified_multiseed_split(
+        data,
+        get_stratum_fn=get_season,
+        n_per_stratum=1,
+        seed=seed,
+    )
 
 
 # ─────────────────────────────────────────────────────────────────────────────
@@ -368,30 +351,21 @@ def fixed_fewshot_energy_split(
 
 def fixed_fewshot_energy_extreme_split(
     data: List[dict],
+    seed: int = 42,
 ) -> Tuple[List[dict], List[dict]]:
     """
     Select 1 few-shot example per class (True/False).
-    For each class, prefer an example from a different season than the test set.
+    Stratified by class so fewshot represents class distribution.
+    Seed controls which example is picked within each class group.
     Returns (few_shot_examples, test_data).
     """
-    groups: Dict[bool, List[dict]] = defaultdict(list)
-    for datum in data:
-        has, _ = get_label_extreme(datum)
-        groups[has].append(datum)
-
-    few_shot = []
-    used_ids = set()
-
-    for has_extreme, items in groups.items():
-        selected = items[0]
-        few_shot.append(selected)
-        used_ids.add(id(selected))
-        label = "True (extreme)" if has_extreme else "False (no event)"
-        print(f"  Class={label}: selected key={selected.get('key', 'unknown')}")
-
-    test_data = [d for d in data if id(d) not in used_ids]
-    print(f"  Few-shot: {len(few_shot)} | Test: {len(test_data)}")
-    return few_shot, test_data
+    from experiments.multiseed_eval import stratified_multiseed_split
+    return stratified_multiseed_split(
+        data,
+        get_stratum_fn=lambda d: get_label_extreme(d)[0],
+        n_per_stratum=1,
+        seed=seed,
+    )
 
 
 # ─────────────────────────────────────────────────────────────────────────────
