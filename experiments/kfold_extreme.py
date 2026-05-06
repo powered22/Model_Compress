@@ -291,6 +291,7 @@ def run_kfold_extreme(
     n_shots: int = 4,
     seed: int = 42,
     log_dir: str = "results_log",
+    max_samples: int = None,
 ) -> dict:
     """
     Full k-fold cross-validation pipeline for WeatherExtremeExperiment.
@@ -309,6 +310,8 @@ def run_kfold_extreme(
     )
 
     all_data = load_jsonl(jsonl_path)
+    if max_samples and max_samples < len(all_data):
+        all_data = all_data[:max_samples]
     pos, neg = print_class_distribution(all_data, label="Full Dataset")
 
     # ── Zero-shot: single run on all data ────────────────────────────────────

@@ -392,7 +392,6 @@ def _save_csv(results: list, metrics: list, path: str, extra_cols: list = None):
                 v = scores.get(m)
                 row[m] = round(v, 4) if isinstance(v, float) else (v or "")
             writer.writerow(row)
-    log.info(f"  Saved: {path}")  # log called inside main, but log not in scope here
     print(f"Saved: {path}")
 
 

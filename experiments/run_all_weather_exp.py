@@ -45,6 +45,7 @@ TRAIN_JSONL  = os.environ.get("WEATHER_TRAIN", "data/weather/train.jsonl")
 LOG_DIR      = os.environ.get("LOG_DIR",        "results_log")
 CONCURRENCY  = None    # None → resolved from MODEL_DEFAULTS in runner.py
 SEED         = int(os.environ.get("SEED", "42"))
+MAX_SAMPLES  = int(os.environ.get("MAX_SAMPLES", "100"))
 
 # ── Quantization comparison matrix ───────────────────────────────────────────
 # Override via env var: MODELS=llama3:8b-instruct-q2_K,mistral:7b-instruct-v0.2-q2_K
@@ -199,7 +200,7 @@ def main():
     log.info(f"  N_SHOTS_RAG:  {N_SHOTS_RAG}")
 
     # ── Load datasets ─────────────────────────────────────────────────────────
-    all_data   = load_jsonl(JSONL_PATH)
+    all_data   = load_jsonl(JSONL_PATH)[:MAX_SAMPLES]
     train_data = load_jsonl(TRAIN_JSONL) if os.path.exists(TRAIN_JSONL) else []
     log.info(f"  Loaded {len(all_data)} test samples, {len(train_data)} train samples")
 

@@ -450,7 +450,7 @@ class EnergyExtremeExperiment:
             self.log_prefix.info(
                 f"[WARNING] {len(self.results)}/{len(self.data)} processed")
 
-        final = self.metrics.get()
+        final = self.metrics.cget()
 
         if logger:
             logger.writerow([

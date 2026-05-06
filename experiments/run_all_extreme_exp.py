@@ -33,6 +33,7 @@ JSONL_PATH   = os.environ.get("EXTREME_DATA", "data/weather_extreme/100_dataset.
 LOG_DIR      = os.environ.get("LOG_DIR",       "results_log")
 CONCURRENCY  = None
 SEED         = int(os.environ.get("SEED", "42"))
+MAX_SAMPLES  = int(os.environ.get("MAX_SAMPLES", "100"))
 
 # For 100-sample real run: k=5, n_shots=4
 # Override via: K_FOLDS=5 N_SHOTS=4
@@ -120,6 +121,7 @@ def main():
                     n_shots=n_shots_for_mode,
                     seed=SEED,
                     log_dir=LOG_DIR,
+                    max_samples=MAX_SAMPLES,
                 )
 
                 all_results.append({
