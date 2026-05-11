@@ -1,0 +1,91 @@
+﻿Key,Region,Season,Day,Prompt,LLM Result (raw),Pred Has Extreme,Pred Peak MW,GT Has Extreme,GT Peak MW,GT N Extreme Slots,Lenient,Consistent,Peak MAE,Extraction OK,Model,Prompting,Elapsed (s)
+energy_extreme_DE_LU_2023-03-16_00:30,DE_LU,Spring,Friday,"The following is electricity load data (MW) in the DE_LU bidding zone.
+Season: Spring. Day: Friday. Is weekend: No.
+Normal load range: 56445 ± 7918 MW. Extreme threshold: 68321 MW.
+
+Historical load (l","Based on the historical load pattern, I will answer YES if I predict an extreme demand event (load exceeding 68321 MW) in the NEXT 24 hours.
+
+Peak load estimate: 65345.23 MW
+
+Explanation:
+The load pattern shows a increasing trend, and it seems that the peak load is expected to exceed the threshold o",True,65345.23,False,0.0,0,0.0,1.0,N/A,True,llama3:8b-instruct-q2_K,fewshot,31.24
+energy_extreme_DE_LU_2023-02-16_00:30,DE_LU,Winter,Friday,"The following is electricity load data (MW) in the DE_LU bidding zone.
+Season: Winter. Day: Friday. Is weekend: No.
+Normal load range: 57411 ± 8172 MW. Extreme threshold: 69668 MW.
+
+Historical load (l","Based on the historical load pattern, I'll answer the question:
+
+YES
+
+Peak load estimate: 69311.42 MW
+
+The load pattern suggests a strong upward trend, and I estimate that the peak load will exceed the extreme threshold of 69668 MW. The historical load data indicates a significant increase in load, ",True,69311.42,True,859.11,2,1.0,1.0,68452.31,True,llama3:8b-instruct-q2_K,fewshot,50.87
+energy_extreme_DE_LU_2023-08-08_01:30,DE_LU,Summer,Wednesday,"The following is electricity load data (MW) in the DE_LU bidding zone.
+Season: Summer. Day: Wednesday. Is weekend: No.
+Normal load range: 48624 ± 8006 MW. Extreme threshold: 60633 MW.
+
+Historical load","Based on the provided electricity load data, I will answer the question with the following responses:
+
+**YES**, as I estimate that the peak load in the NEXT 24 hours will exceed the extreme threshold of 60633 MW.
+
+Peak load estimate: 63147.45 MW",True,60633.0,False,0.0,0,0.0,1.0,N/A,True,llama3:8b-instruct-q2_K,fewshot,36.39
+energy_extreme_DE_LU_2023-11-08_00:30,DE_LU,Autumn,Thursday,"The following is electricity load data (MW) in the DE_LU bidding zone.
+Season: Autumn. Day: Thursday. Is weekend: No.
+Normal load range: 55465 ± 8767 MW. Extreme threshold: 68615 MW.
+
+Historical load ","Based on the provided load data, I'll analyze the historical pattern to determine whether an extreme demand event (load exceeding 68615 MW) is likely to occur in the next 24 hours.
+
+Here's my answer:
+
+YES
+
+Peak load estimate: 74337 MW
+
+I estimate that there will be an extreme demand event (load exce",True,74337.0,True,48.53,1,1.0,1.0,74288.47,True,llama3:8b-instruct-q2_K,fewshot,38.39
+energy_extreme_DE_LU_2023-04-12_01:30,DE_LU,Spring,Thursday,"The following is electricity load data (MW) in the DE_LU bidding zone.
+Season: Spring. Day: Thursday. Is weekend: No.
+Normal load range: 47747 ± 8079 MW. Extreme threshold: 59865 MW.
+
+Historical load ","Based on the provided electricity load data, I will answer the question as follows:
+
+YES
+
+Peak load estimate: 60935.12 MW
+
+The provided historical load pattern suggests that there will be an extreme demand event (load exceeding 59865 MW) in the NEXT 24 hours. The peak load estimate is 60935.12 MW, w",True,60935.12,True,4340.76,11,1.0,1.0,56594.36,True,llama3:8b-instruct-q2_K,fewshot,42.19
+energy_extreme_DE_LU_2023-04-24_01:30,DE_LU,Spring,Tuesday,"The following is electricity load data (MW) in the DE_LU bidding zone.
+Season: Spring. Day: Tuesday. Is weekend: No.
+Normal load range: 51724 ± 8333 MW. Extreme threshold: 64223 MW.
+
+Historical load (","Based on the provided historical load data, I will answer the question as follows:
+
+NO
+
+There is no indication of an extreme demand event (load exceeding 64223 MW) in the next 24 hours.",False,,True,480.82,1,0.0,1.0,N/A,True,llama3:8b-instruct-q2_K,fewshot,35.49
+energy_extreme_DE_LU_2023-09-18_01:30,DE_LU,Autumn,Tuesday,"The following is electricity load data (MW) in the DE_LU bidding zone.
+Season: Autumn. Day: Tuesday. Is weekend: No.
+Normal load range: 50813 ± 8469 MW. Extreme threshold: 63516 MW.
+
+Historical load (","Based on the provided load data and historical patterns, I'll analyze the data to determine if there will be an extreme demand event (load exceeding 63516 MW) in the next 24 hours.
+
+Here's my answer:
+
+**NO**
+
+I do not estimate a peak load exceeding 63516 MW in the next 24 hours.
+
+Let me know if you'",False,,False,0.0,0,1.0,1.0,N/A,True,llama3:8b-instruct-q2_K,fewshot,35.65
+energy_extreme_DE_LU_2023-07-02_01:30,DE_LU,Summer,Monday,"The following is electricity load data (MW) in the DE_LU bidding zone.
+Season: Summer. Day: Monday. Is weekend: No.
+Normal load range: 50412 ± 8031 MW. Extreme threshold: 62458 MW.
+
+Historical load (l","Based on the provided load data, I'll answer the question.
+
+For the given load data, I'll assess the probability of an extreme demand event (load exceeding 62458 MW) in the next 24 hours.
+
+After analyzing the historical load pattern, I conclude:
+
+**NO**
+
+There won't be an extreme demand event (load ",False,,True,578.06,6,0.0,1.0,N/A,True,llama3:8b-instruct-q2_K,fewshot,41.68
+Final Avg.,,,,,,TP:3,FP:2,FN:2,TN:1,,0.5000,1.0000,66445.0467,100.0%,llama3:8b-instruct-q2_K,fewshot,

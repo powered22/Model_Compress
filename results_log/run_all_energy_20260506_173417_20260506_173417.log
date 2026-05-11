@@ -1,0 +1,165 @@
+[rank0] [2026-05-06 17:34:17] [INFO] - ============================================================
+[rank0] [2026-05-06 17:34:17] [INFO] - Energy Forecasting + Extreme Energy Experiment
+[rank0] [2026-05-06 17:34:17] [INFO] - ============================================================
+[rank0] [2026-05-06 17:34:17] [INFO] -   Forecast data:        data/energy_task/energy_forecast_new.json
+[rank0] [2026-05-06 17:34:17] [INFO] -   Extreme data:         data/energy_extreme/energy_extreme_new.json
+[rank0] [2026-05-06 17:34:17] [INFO] -   Train forecast data:  data/energy_task/train.json
+[rank0] [2026-05-06 17:34:17] [INFO] -   Train extreme data:   data/energy_extreme/train.json
+[rank0] [2026-05-06 17:34:17] [INFO] -   Models:               ['llama3:8b-instruct-q2_K']
+[rank0] [2026-05-06 17:34:17] [INFO] -   Modes:                ['fewshot']
+[rank0] [2026-05-06 17:34:17] [INFO] -   N_SHOTS_RAG:          4
+[rank0] [2026-05-06 17:34:18] [INFO] -   Loaded 10 forecast samples, 10 extreme samples (capped at MAX_SAMPLES=10)
+[rank0] [2026-05-06 17:34:18] [INFO] -   Loaded 291 train forecast samples from data/energy_task/train.json
+[rank0] [2026-05-06 17:34:18] [INFO] -   Loaded 80 train extreme samples from data/energy_extreme/train.json
+[rank0] [2026-05-06 17:34:18] [INFO] - 
+  Extreme class distribution: True=6 (60.0%), False=4 (40.0%)
+[rank0] [2026-05-06 17:34:18] [INFO] - 
+============================================================
+[rank0] [2026-05-06 17:34:18] [INFO] - TASK 1: Energy Load Forecasting
+[rank0] [2026-05-06 17:34:18] [INFO] - ============================================================
+[rank0] [2026-05-06 17:34:18] [INFO] - 
+  Running persistence baseline...
+[rank0] [2026-05-06 17:34:18] [INFO] - 
+=== Energy Persistence Baseline ===
+[rank0] [2026-05-06 17:34:18] [INFO] -   mae_penalised            : 3444.690604166666
+[rank0] [2026-05-06 17:34:18] [INFO] -   mae_matched              : 3444.690604166666
+[rank0] [2026-05-06 17:34:18] [INFO] -   step_coverage            : 100.0
+[rank0] [2026-05-06 17:34:18] [INFO] -   extraction_rate          : 100.0
+[rank0] [2026-05-06 17:34:18] [INFO] -   n_samples                : 10
+[rank0] [2026-05-06 17:34:18] [INFO] - 
+  ==================================================
+[rank0] [2026-05-06 17:34:18] [INFO] -   MODEL: llama3:8b-instruct-q2_K  [quant=q2_K]
+[rank0] [2026-05-06 17:34:18] [INFO] -   ==================================================
+[rank0] [2026-05-06 17:34:18] [INFO] - 
+    Mode: fewshot
+[rank0] [2026-05-06 17:34:18] [INFO] -     [Seed 42]
+[rank0] [2026-05-06 17:34:18] [INFO] - [EnergyForecast] model=llama3:8b-instruct-q2_K mode=fewshot n=9 concurrency=2 timeout=600s
+[rank0] [2026-05-06 17:41:30] [INFO] - 
+[EnergyForecast] llama3:8b-instruct-q2_K | fewshot
+[rank0] [2026-05-06 17:41:30] [INFO] -   mae_penalised            : 6334.290300925926
+[rank0] [2026-05-06 17:41:30] [INFO] -   mae_matched              : 5585.9707963947985
+[rank0] [2026-05-06 17:41:30] [INFO] -   step_coverage            : 98.14814814814812
+[rank0] [2026-05-06 17:41:30] [INFO] -   extraction_rate          : 11.11111111111111
+[rank0] [2026-05-06 17:41:30] [INFO] -   n_samples                : 9
+[rank0] [2026-05-06 17:41:30] [INFO] -   skill_penalised          : -0.8389
+[rank0] [2026-05-06 17:41:30] [INFO] -   skill_matched            : -0.6216
+[rank0] [2026-05-06 17:41:30] [INFO] -     [Seed 123]
+[rank0] [2026-05-06 17:41:30] [INFO] - [EnergyForecast] model=llama3:8b-instruct-q2_K mode=fewshot n=9 concurrency=2 timeout=600s
+[rank0] [2026-05-06 17:48:41] [INFO] - 
+[EnergyForecast] llama3:8b-instruct-q2_K | fewshot
+[rank0] [2026-05-06 17:48:41] [INFO] -   mae_penalised            : 10817.490069444446
+[rank0] [2026-05-06 17:48:41] [INFO] -   mae_matched              : 5446.053355496452
+[rank0] [2026-05-06 17:48:41] [INFO] -   step_coverage            : 87.49999999999997
+[rank0] [2026-05-06 17:48:41] [INFO] -   extraction_rate          : 22.22222222222222
+[rank0] [2026-05-06 17:48:41] [INFO] -   n_samples                : 9
+[rank0] [2026-05-06 17:48:41] [INFO] -   skill_penalised          : -2.1403
+[rank0] [2026-05-06 17:48:41] [INFO] -   skill_matched            : -0.581
+[rank0] [2026-05-06 17:48:41] [INFO] -     [Seed 999]
+[rank0] [2026-05-06 17:48:41] [INFO] - [EnergyForecast] model=llama3:8b-instruct-q2_K mode=fewshot n=9 concurrency=2 timeout=600s
+[rank0] [2026-05-06 17:55:45] [INFO] - 
+[EnergyForecast] llama3:8b-instruct-q2_K | fewshot
+[rank0] [2026-05-06 17:55:45] [INFO] -   mae_penalised            : 11824.337152777776
+[rank0] [2026-05-06 17:55:45] [INFO] -   mae_matched              : 10194.116170778698
+[rank0] [2026-05-06 17:55:45] [INFO] -   step_coverage            : 95.83333333333334
+[rank0] [2026-05-06 17:55:45] [INFO] -   extraction_rate          : 22.22222222222222
+[rank0] [2026-05-06 17:55:45] [INFO] -   n_samples                : 9
+[rank0] [2026-05-06 17:55:45] [INFO] -   skill_penalised          : -2.4326
+[rank0] [2026-05-06 17:55:45] [INFO] -   skill_matched            : -1.9594
+[rank0] [2026-05-06 17:55:45] [INFO] - 
+============================================================
+[rank0] [2026-05-06 17:55:45] [INFO] - TASK 2: Extreme Energy Classification
+[rank0] [2026-05-06 17:55:45] [INFO] - ============================================================
+[rank0] [2026-05-06 17:55:45] [INFO] - 
+  Running threshold rule baseline...
+[rank0] [2026-05-06 17:55:45] [INFO] - 
+=== Energy Threshold Rule Baseline ===
+[rank0] [2026-05-06 17:55:45] [INFO] -   accuracy                 : 0.7
+[rank0] [2026-05-06 17:55:45] [INFO] -   precision                : 0.8
+[rank0] [2026-05-06 17:55:45] [INFO] -   recall                   : 0.6666666666666666
+[rank0] [2026-05-06 17:55:45] [INFO] -   f1                       : 0.7272727272727272
+[rank0] [2026-05-06 17:55:45] [INFO] -   peak_mae                 : 64087.4025
+[rank0] [2026-05-06 17:55:45] [INFO] -   lenient                  : 0.7
+[rank0] [2026-05-06 17:55:45] [INFO] -   consistency              : 1.0
+[rank0] [2026-05-06 17:55:45] [INFO] -   extraction_rate          : 100.0
+[rank0] [2026-05-06 17:55:45] [INFO] -   tp                       : 4
+[rank0] [2026-05-06 17:55:45] [INFO] -   fp                       : 1
+[rank0] [2026-05-06 17:55:45] [INFO] -   fn                       : 2
+[rank0] [2026-05-06 17:55:45] [INFO] -   tn                       : 3
+[rank0] [2026-05-06 17:55:45] [INFO] -   n_samples                : 10
+[rank0] [2026-05-06 17:55:45] [INFO] - 
+  ==================================================
+[rank0] [2026-05-06 17:55:45] [INFO] -   MODEL: llama3:8b-instruct-q2_K  [quant=q2_K]
+[rank0] [2026-05-06 17:55:45] [INFO] -   ==================================================
+[rank0] [2026-05-06 17:55:45] [INFO] - 
+    Mode: fewshot
+[rank0] [2026-05-06 17:55:45] [INFO] -     [Seed 42]
+[rank0] [2026-05-06 17:55:45] [INFO] - [EnergyExtreme] model=llama3:8b-instruct-q2_K mode=fewshot n=8 concurrency=2 timeout=600s
+[rank0] [2026-05-06 17:58:03] [INFO] - 
+[EnergyExtreme] llama3:8b-instruct-q2_K | fewshot
+[rank0] [2026-05-06 17:58:03] [INFO] -   accuracy                 : 0.125
+[rank0] [2026-05-06 17:58:03] [INFO] -   precision                : 0.25
+[rank0] [2026-05-06 17:58:03] [INFO] -   recall                   : 0.2
+[rank0] [2026-05-06 17:58:03] [INFO] -   f1                       : 0.22222222222222224
+[rank0] [2026-05-06 17:58:03] [INFO] -   peak_mae                 : 60116.13
+[rank0] [2026-05-06 17:58:03] [INFO] -   lenient                  : 0.125
+[rank0] [2026-05-06 17:58:03] [INFO] -   consistency              : 1.0
+[rank0] [2026-05-06 17:58:03] [INFO] -   extraction_rate          : 100.0
+[rank0] [2026-05-06 17:58:03] [INFO] -   tp                       : 1
+[rank0] [2026-05-06 17:58:03] [INFO] -   fp                       : 3
+[rank0] [2026-05-06 17:58:03] [INFO] -   fn                       : 4
+[rank0] [2026-05-06 17:58:03] [INFO] -   tn                       : 0
+[rank0] [2026-05-06 17:58:03] [INFO] -   n_samples                : 8
+[rank0] [2026-05-06 17:58:03] [INFO] -     [Seed 123]
+[rank0] [2026-05-06 17:58:03] [INFO] - [EnergyExtreme] model=llama3:8b-instruct-q2_K mode=fewshot n=8 concurrency=2 timeout=600s
+[rank0] [2026-05-06 18:00:49] [INFO] - 
+[EnergyExtreme] llama3:8b-instruct-q2_K | fewshot
+[rank0] [2026-05-06 18:00:49] [INFO] -   accuracy                 : 0.5
+[rank0] [2026-05-06 18:00:49] [INFO] -   precision                : 0.6
+[rank0] [2026-05-06 18:00:49] [INFO] -   recall                   : 0.6
+[rank0] [2026-05-06 18:00:49] [INFO] -   f1                       : 0.6
+[rank0] [2026-05-06 18:00:49] [INFO] -   peak_mae                 : 66445.04666666668
+[rank0] [2026-05-06 18:00:49] [INFO] -   lenient                  : 0.5
+[rank0] [2026-05-06 18:00:49] [INFO] -   consistency              : 1.0
+[rank0] [2026-05-06 18:00:49] [INFO] -   extraction_rate          : 100.0
+[rank0] [2026-05-06 18:00:49] [INFO] -   tp                       : 3
+[rank0] [2026-05-06 18:00:49] [INFO] -   fp                       : 2
+[rank0] [2026-05-06 18:00:49] [INFO] -   fn                       : 2
+[rank0] [2026-05-06 18:00:49] [INFO] -   tn                       : 1
+[rank0] [2026-05-06 18:00:49] [INFO] -   n_samples                : 8
+[rank0] [2026-05-06 18:00:49] [INFO] -     [Seed 999]
+[rank0] [2026-05-06 18:00:49] [INFO] - [EnergyExtreme] model=llama3:8b-instruct-q2_K mode=fewshot n=8 concurrency=2 timeout=600s
+[rank0] [2026-05-06 18:03:21] [INFO] - 
+[EnergyExtreme] llama3:8b-instruct-q2_K | fewshot
+[rank0] [2026-05-06 18:03:21] [INFO] -   accuracy                 : 0.375
+[rank0] [2026-05-06 18:03:21] [INFO] -   precision                : 0.5
+[rank0] [2026-05-06 18:03:21] [INFO] -   recall                   : 0.4
+[rank0] [2026-05-06 18:03:21] [INFO] -   f1                       : 0.4444444444444445
+[rank0] [2026-05-06 18:03:21] [INFO] -   peak_mae                 : 63791.75
+[rank0] [2026-05-06 18:03:21] [INFO] -   lenient                  : 0.375
+[rank0] [2026-05-06 18:03:21] [INFO] -   consistency              : 1.0
+[rank0] [2026-05-06 18:03:21] [INFO] -   extraction_rate          : 100.0
+[rank0] [2026-05-06 18:03:21] [INFO] -   tp                       : 2
+[rank0] [2026-05-06 18:03:21] [INFO] -   fp                       : 2
+[rank0] [2026-05-06 18:03:21] [INFO] -   fn                       : 3
+[rank0] [2026-05-06 18:03:21] [INFO] -   tn                       : 1
+[rank0] [2026-05-06 18:03:21] [INFO] -   n_samples                : 8
+[rank0] [2026-05-06 18:03:21] [INFO] - 
+==========================================================================================
+[rank0] [2026-05-06 18:03:21] [INFO] - SUMMARY: Energy Load Forecasting
+[rank0] [2026-05-06 18:03:21] [INFO] - ==========================================================================================
+[rank0] [2026-05-06 18:03:21] [INFO] - Model                            Quant      Mode        mae_penalise   mae_matched  step_coverag  extraction_r  skill_penali  skill_matche
+[rank0] [2026-05-06 18:03:21] [INFO] - ──────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────
+[rank0] [2026-05-06 18:03:21] [INFO] - persistence                      baseline   baseline       3444.6906     3444.6906      100.0000      100.0000           N/A           N/A
+[rank0] [2026-05-06 18:03:21] [INFO] - llama3:8b-instruct-q2_K          q2_K       fewshot        9658.7058     7075.3801       93.8272       18.5185       -1.8039       -1.0540
+[rank0] [2026-05-06 18:03:21] [INFO] - ==========================================================================================
+[rank0] [2026-05-06 18:03:21] [INFO] - 
+==========================================================================================
+[rank0] [2026-05-06 18:03:21] [INFO] - SUMMARY: Extreme Energy Classification
+[rank0] [2026-05-06 18:03:21] [INFO] - ==========================================================================================
+[rank0] [2026-05-06 18:03:21] [INFO] - Model                            Quant      Mode            accuracy     precision        recall            f1      peak_mae       lenient   consistency  extraction_r
+[rank0] [2026-05-06 18:03:21] [INFO] - ──────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────
+[rank0] [2026-05-06 18:03:21] [INFO] - threshold_rule                   baseline   baseline          0.7000        0.8000        0.6667        0.7273    64087.4025        0.7000        1.0000      100.0000
+[rank0] [2026-05-06 18:03:21] [INFO] - llama3:8b-instruct-q2_K          q2_K       fewshot           0.3333        0.4500        0.4000        0.4222    63450.9756        0.3333        1.0000      100.0000
+[rank0] [2026-05-06 18:03:21] [INFO] - ==========================================================================================
+[rank0] [2026-05-06 18:03:21] [INFO] - 
+All results saved to results_log/

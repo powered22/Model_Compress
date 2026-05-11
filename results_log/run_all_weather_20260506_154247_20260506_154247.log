@@ -1,0 +1,121 @@
+[rank0] [2026-05-06 15:42:47] [INFO] - ============================================================
+[rank0] [2026-05-06 15:42:47] [INFO] - Short-term Weather Forecasting Experiment
+[rank0] [2026-05-06 15:42:47] [INFO] - ============================================================
+[rank0] [2026-05-06 15:42:47] [INFO] -   Dataset:      data/weather/100_test_data.jsonl
+[rank0] [2026-05-06 15:42:47] [INFO] -   Train set:    data/weather/train.jsonl
+[rank0] [2026-05-06 15:42:47] [INFO] -   Models:       ['llama3:8b-instruct-q2_K']
+[rank0] [2026-05-06 15:42:47] [INFO] -   Modes:        ['fewshot']
+[rank0] [2026-05-06 15:42:47] [INFO] -   Format:       sentence
+[rank0] [2026-05-06 15:42:47] [INFO] -   N_SHOTS_RAG:  4
+[rank0] [2026-05-06 15:42:47] [INFO] -   SEEDS:        [42, 123, 999]
+[rank0] [2026-05-06 15:42:47] [INFO] -   Loaded 10 samples, 80 train samples
+[rank0] [2026-05-06 15:42:47] [INFO] - 
+────────────────────────────────────────────────────────────
+[rank0] [2026-05-06 15:42:47] [INFO] - Running persistence baseline...
+[rank0] [2026-05-06 15:43:08] [INFO] - 
+=== Persistence Baseline ===
+[rank0] [2026-05-06 15:43:08] [INFO] -   levenshtein_distance: 308.9
+[rank0] [2026-05-06 15:43:08] [INFO] -   norm_levenshtein_distance: 0.2709360683030728
+[rank0] [2026-05-06 15:43:08] [INFO] -   lcs: 23.4
+[rank0] [2026-05-06 15:43:08] [INFO] -   norm_lcs: 0.02299585644973495
+[rank0] [2026-05-06 15:43:08] [INFO] -   l1loss: 0.5857200628571407
+[rank0] [2026-05-06 15:43:08] [INFO] -   l1loss_matched: 0.5857200628571407
+[rank0] [2026-05-06 15:43:08] [INFO] -   timestamp_coverage: 100.0
+[rank0] [2026-05-06 15:43:08] [INFO] -   coverage: 100.0
+[rank0] [2026-05-06 15:43:08] [INFO] -   bertscore: 0.5585622727870941
+[rank0] [2026-05-06 15:43:08] [INFO] -   cosinesim: 0.5156747719030345
+[rank0] [2026-05-06 15:43:08] [INFO] -   bleu: 0.011566855540617638
+[rank0] [2026-05-06 15:43:08] [INFO] -   rouge_l: 0.7101510320775947
+[rank0] [2026-05-06 15:43:08] [INFO] -   strict: 1.0
+[rank0] [2026-05-06 15:43:08] [INFO] -   lenient: 0.6538668007113452
+[rank0] [2026-05-06 15:43:08] [INFO] - Persistence baseline complete.
+[rank0] [2026-05-06 15:43:08] [INFO] - 
+============================================================
+[rank0] [2026-05-06 15:43:08] [INFO] - MODEL: llama3:8b-instruct-q2_K
+[rank0] [2026-05-06 15:43:08] [INFO] -   Quant level: q2_K
+[rank0] [2026-05-06 15:43:08] [INFO] - ============================================================
+[rank0] [2026-05-06 15:43:08] [INFO] - 
+  Mode: fewshot
+[rank0] [2026-05-06 15:43:08] [INFO] -   ────────────────────────────────────────
+[rank0] [2026-05-06 15:43:08] [INFO] -   [Seed 42]
+[rank0] [2026-05-06 15:43:08] [INFO] - 
+  Running: model=llama3:8b-instruct-q2_K, mode=fewshot, n_samples=8
+[rank0] [2026-05-06 15:43:08] [INFO] - [WeatherExperiment] model=llama3:8b-instruct-q2_K concurrency=2 timeout=600s
+[rank0] [2026-05-06 16:28:41] [INFO] - Model=llama3:8b-instruct-q2_K | Prompting=fewshot
+[rank0] [2026-05-06 16:28:41] [INFO] -   levenshtein_distance: 1064.625
+[rank0] [2026-05-06 16:28:41] [INFO] -   norm_levenshtein_distance: 0.7528689695573422
+[rank0] [2026-05-06 16:28:41] [INFO] -   lcs: 41.125
+[rank0] [2026-05-06 16:28:41] [INFO] -   norm_lcs: 0.03007253720739458
+[rank0] [2026-05-06 16:28:41] [INFO] -   l1loss: 96.60549098988096
+[rank0] [2026-05-06 16:28:41] [INFO] -   l1loss_matched: 0.8562721154761883
+[rank0] [2026-05-06 16:28:41] [INFO] -   timestamp_coverage: 66.66666666666667
+[rank0] [2026-05-06 16:28:41] [INFO] -   coverage: 66.66666666666667
+[rank0] [2026-05-06 16:28:41] [INFO] -   bertscore: 0.6504221856594086
+[rank0] [2026-05-06 16:28:41] [INFO] -   cosinesim: 0.8853413293070642
+[rank0] [2026-05-06 16:28:41] [INFO] -   bleu: 0.4392364629791367
+[rank0] [2026-05-06 16:28:41] [INFO] -   rouge_l: 0.642321198041483
+[rank0] [2026-05-06 16:28:41] [INFO] -   strict: 1.0
+[rank0] [2026-05-06 16:28:41] [INFO] -   lenient: 0.3386163036076208
+[rank0] [2026-05-06 16:28:41] [INFO] -   skill_l1loss: -163.9346
+[rank0] [2026-05-06 16:28:41] [INFO] -   skill_coverage: 0.3333
+[rank0] [2026-05-06 16:28:41] [INFO] -   [Seed 123]
+[rank0] [2026-05-06 16:28:41] [INFO] - 
+  Running: model=llama3:8b-instruct-q2_K, mode=fewshot, n_samples=8
+[rank0] [2026-05-06 16:28:41] [INFO] - [WeatherExperiment] model=llama3:8b-instruct-q2_K concurrency=2 timeout=600s
+[rank0] [2026-05-06 16:38:41] [INFO] - [TIMEOUT] key=5 model=llama3:8b-instruct-q2_K after 600s — sample skipped
+[rank0] [2026-05-06 17:04:23] [INFO] - [WARNING] Only 7/8 samples processed for llama3:8b-instruct-q2_K. Check for timeouts above.
+[rank0] [2026-05-06 17:04:23] [INFO] - Model=llama3:8b-instruct-q2_K | Prompting=fewshot
+[rank0] [2026-05-06 17:04:23] [INFO] -   levenshtein_distance: 572.1428571428571
+[rank0] [2026-05-06 17:04:23] [INFO] -   norm_levenshtein_distance: 0.3930958966125685
+[rank0] [2026-05-06 17:04:23] [INFO] -   lcs: 54.857142857142854
+[rank0] [2026-05-06 17:04:23] [INFO] -   norm_lcs: 0.042293068760422534
+[rank0] [2026-05-06 17:04:23] [INFO] -   l1loss: 22.162020040476193
+[rank0] [2026-05-06 17:04:23] [INFO] -   l1loss_matched: 0.8631287295918346
+[rank0] [2026-05-06 17:04:23] [INFO] -   timestamp_coverage: 92.38095238095238
+[rank0] [2026-05-06 17:04:23] [INFO] -   coverage: 92.38095238095238
+[rank0] [2026-05-06 17:04:23] [INFO] -   bertscore: 0.760246251310621
+[rank0] [2026-05-06 17:04:23] [INFO] -   cosinesim: 0.9090669369347165
+[rank0] [2026-05-06 17:04:23] [INFO] -   bleu: 0.5671774201791507
+[rank0] [2026-05-06 17:04:23] [INFO] -   rouge_l: 0.7509301824560446
+[rank0] [2026-05-06 17:04:23] [INFO] -   strict: 1.0
+[rank0] [2026-05-06 17:04:23] [INFO] -   lenient: 0.39043784417947663
+[rank0] [2026-05-06 17:04:23] [INFO] -   skill_l1loss: -36.8372
+[rank0] [2026-05-06 17:04:23] [INFO] -   skill_coverage: 0.0762
+[rank0] [2026-05-06 17:04:23] [INFO] -   [WARNING] 7/8 samples processed — check for timeouts
+[rank0] [2026-05-06 17:04:23] [INFO] -   [Seed 999]
+[rank0] [2026-05-06 17:04:23] [INFO] - 
+  Running: model=llama3:8b-instruct-q2_K, mode=fewshot, n_samples=8
+[rank0] [2026-05-06 17:04:23] [INFO] - [WeatherExperiment] model=llama3:8b-instruct-q2_K concurrency=2 timeout=600s
+[rank0] [2026-05-06 17:34:07] [INFO] - Model=llama3:8b-instruct-q2_K | Prompting=fewshot
+[rank0] [2026-05-06 17:34:07] [INFO] -   levenshtein_distance: 347.875
+[rank0] [2026-05-06 17:34:07] [INFO] -   norm_levenshtein_distance: 0.26308920591382334
+[rank0] [2026-05-06 17:34:07] [INFO] -   lcs: 52.875
+[rank0] [2026-05-06 17:34:07] [INFO] -   norm_lcs: 0.0359393522700011
+[rank0] [2026-05-06 17:34:07] [INFO] -   l1loss: 37.60746527351189
+[rank0] [2026-05-06 17:34:07] [INFO] -   l1loss_matched: 0.803689346598639
+[rank0] [2026-05-06 17:34:07] [INFO] -   timestamp_coverage: 87.5
+[rank0] [2026-05-06 17:34:07] [INFO] -   coverage: 87.5
+[rank0] [2026-05-06 17:34:07] [INFO] -   bertscore: 0.6990945339202881
+[rank0] [2026-05-06 17:34:07] [INFO] -   cosinesim: 0.9029809163218957
+[rank0] [2026-05-06 17:34:07] [INFO] -   bleu: 0.587755790519108
+[rank0] [2026-05-06 17:34:07] [INFO] -   rouge_l: 0.778792925131523
+[rank0] [2026-05-06 17:34:07] [INFO] -   strict: 1.0
+[rank0] [2026-05-06 17:34:07] [INFO] -   lenient: 0.5141067140350042
+[rank0] [2026-05-06 17:34:07] [INFO] -   skill_l1loss: -63.2072
+[rank0] [2026-05-06 17:34:07] [INFO] -   skill_coverage: 0.125
+[rank0] [2026-05-06 17:34:07] [INFO] - 
+  [llama3:8b-instruct-q2_K | fewshot] Key Results:
+[rank0] [2026-05-06 17:34:07] [INFO] -     l1loss              : 52.1250 ± 32.0783
+[rank0] [2026-05-06 17:34:07] [INFO] -     coverage            : 82.1825 ± 11.1509
+[rank0] [2026-05-06 17:34:07] [INFO] - 
+
+==========================================================================================
+[rank0] [2026-05-06 17:34:07] [INFO] - FINAL SUMMARY TABLE — Short-term Weather Forecasting
+[rank0] [2026-05-06 17:34:07] [INFO] - ==========================================================================================
+[rank0] [2026-05-06 17:34:07] [INFO] - Model                            Quant      Mode             l1loss   l1loss_mat   timestamp_     coverage   skill_l1lo   skill_l1lo    bertscore    cosinesim         bleu      rouge_l
+[rank0] [2026-05-06 17:34:07] [INFO] - ────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────
+[rank0] [2026-05-06 17:34:07] [INFO] - persistence                      baseline   baseline         0.5857       0.5857     100.0000     100.0000          N/A          N/A       0.5586       0.5157       0.0116       0.7102
+[rank0] [2026-05-06 17:34:07] [INFO] - llama3:8b-instruct-q2_K          q2_K       fewshot         52.1250       0.8410      82.1825      82.1825          N/A          N/A       0.7033       0.8991       0.5314       0.7240
+[rank0] [2026-05-06 17:34:07] [INFO] - ==========================================================================================
+[rank0] [2026-05-06 17:34:07] [INFO] - 
+Summary saved to: results_log/summary_weather_20260506_154247.csv

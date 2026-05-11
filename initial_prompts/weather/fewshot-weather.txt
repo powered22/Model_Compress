@@ -1,31 +1,7 @@
 You are a weather forecasting assistant.
 Here are some examples of how to answer:
 
---- Example 1 (horizon: 2 hours, location: Tebing Tinggi Barat, Riau) ---
-Observations:
-At 2011-08-09 20:00, in Tebing Tinggi Barat, Riau, the weather observations were recorded as follows:
-East – west wind speed at 10 meters above ground: -0.26 m/s, North – south wind speed at 10 meters above ground: 1.16 m/s. Dewpoint Temperature: 24.43 °C. Temperature: 25.46 °C. Pressure Mean Sea Level: 1009.04 hPa. Surface Pressure: 1007.69 hPa. Total Precipitation: 0.0000 meters
-At 2011-08-09 21:00, in Tebing Tinggi Barat, Riau, the weather observations were recorded as follows:
-East – west wind speed at 10 meters above ground: -0.65 m/s, North – south wind speed at 10 meters above ground: 1.39 m/s. Dewpoint Temperature: 24.15 °C. Temperature: 25.20 °C. Pressure Mean Sea Level: 1009.09 hPa. Surface Pressure: 1007.73 hPa. Total Precipitation: 0.0000 meters
-At 2011-08-09 22:00, in Tebing Tinggi Barat, Riau, the weather observations were recorded as follows:
-East – west wind speed at 10 meters above ground: -1.14 m/s, North – south wind speed at 10 meters above ground: 1.52 m/s. Dewpoint Temperature: 24.90 °C. Temperature: 26.01 °C. Pressure Mean Sea Level: 1009.13 hPa. Surface Pressure: 1007.78 hPa. Total Precipitation: 0.0000 meters
-At 2011-08-09 23:00, in Tebing Tinggi Barat, Riau, the weather observations were recorded as follows:
-East – west wind speed at 10 meters above ground: -0.89 m/s, North – south wind speed at 10 meters above ground: 1.17 m/s. Dewpoint Temperature: 24.70 °C. Temperature: 25.86 °C. Pressure Mean Sea Level: 1009.26 hPa. Surface Pressure: 1007.91 hPa. Total Precipitation: 0.0000 meters
-At 2011-08-10 00:00, in Tebing Tinggi Barat, Riau, the weather observations were recorded as follows:
-East – west wind speed at 10 meters above ground: -0.58 m/s, North – south wind speed at 10 meters above ground: 1.36 m/s. Dewpoint Temperature: 24.62 °C. Temperature: 25.58 °C. Pressure Mean Sea Level: 1010.22 hPa. Surface Pressure: 1008.87 hPa. Total Precipitation: 0.0000 meters
-At 2011-08-10 01:00, in Tebing Tinggi Barat, Riau, the weather observations were recorded as follows:
-East – west wind speed at 10 meters above ground: -0.63 m/s, North – south wind speed at 10 meters above ground: 1.53 m/s. Dewpoint Temperature: 25.00 °C. Temperature: 26.32 °C. Pressure Mean Sea Level: 1010.67 hPa. Surface Pressure: 1009.32 hPa. Total Precipitation: 0.0000 meters
-At 2011-08-10 02:00, in Tebing Tinggi Barat, Riau, the weather observations were recorded as follows:
-East – west wind speed at 10 meters above ground: -1.03 m/s, North – south wind speed at 10 meters above ground: 2.07 m/s. Dewpoint Temperature: 24.26 °C. Temperature: 28.65 °C. Pressure Mean Sea Level: 1010.90 hPa. Surface Pressure: 1009.54 hPa. Total Precipitation: 0.0000 meters
-At 2011-08-10 03:00, in Tebing Tinggi Barat, Riau, the weather observations were recorded as follows:
-East – west wind speed at 10 meters above ground: -0.95 m/s, North – south wind speed at 10 meters above ground: 2.63 m/s. Dewpoint Temperature: 24.33 °C. Temperature: 29.59 °C. Pressure Mean Sea Level: 1010.70 hPa. Surface Pressure: 1009.36 hPa. Total Precipitation: 0.0001 meters
-
-Please describe weather observation in the next 2 hours.
-
-Answer:
-At 2011-08-10 04:00, in Tebing Tinggi Barat, Riau, the weather observations were recorded as follows: East – west wind speed at 10 meters above ground: -0.53 m/s, North – south wind speed at 10 meters above ground: 2.41 m/s. Dewpoint Temperature: 24.59 °C. Temperature: 30.39 °C. Pressure Mean Sea Level: 1010.30 hPa. Surface Pressure: 1008.96 hPa. Total Precipitation: 0.0001 meters At 2011-08-10 05:00, in Tebing Tinggi Barat, Riau, the weather observations were recorded as follows: East – west wind speed at 10 meters above ground: -0.38 m/s, North – south wind speed at 10 meters above ground: 1.90 m/s. Dewpoint Temperature: 23.79 °C. Temperature: 30.51 °C. Pressure Mean Sea Level: 1009.74 hPa. Surface Pressure: 1008.40 hPa. Total Precipitation: 0.0001 meters
-
---- Example 2 (horizon: 3 hours, location: Sungai Penuh, Jambi) ---
+--- Example 1 (horizon: 3 hours, location: Sungai Penuh, Jambi) ---
 Observations:
 At 2010-02-16 16:00, in Sungai Penuh, Jambi, the weather observations were recorded as follows:
 East – west wind speed at 10 meters above ground: -0.22 m/s, North – south wind speed at 10 meters above ground: -0.30 m/s. Dewpoint Temperature: 19.31 °C. Temperature: 20.56 °C. Pressure Mean Sea Level: 1015.97 hPa. Surface Pressure: 884.53 hPa. Total Precipitation: 0.0000 meters
@@ -47,43 +23,25 @@ Please describe weather observation in the next 3 hours.
 Answer:
 At 2010-02-16 23:00, in Sungai Penuh, Jambi, the weather observations were recorded as follows: East – west wind speed at 10 meters above ground: -0.31 m/s, North – south wind speed at 10 meters above ground: -0.46 m/s. Dewpoint Temperature: 18.33 °C. Temperature: 18.69 °C. Pressure Mean Sea Level: 1013.18 hPa. Surface Pressure: 882.15 hPa. Total Precipitation: 0.0001 meters At 2010-02-17 00:00, in Sungai Penuh, Jambi, the weather observations were recorded as follows: East – west wind speed at 10 meters above ground: -0.58 m/s, North – south wind speed at 10 meters above ground: -0.67 m/s. Dewpoint Temperature: 18.51 °C. Temperature: 18.87 °C. Pressure Mean Sea Level: 1013.90 hPa. Surface Pressure: 882.73 hPa. Total Precipitation: 0.0001 meters At 2010-02-17 01:00, in Sungai Penuh, Jambi, the weather observations were recorded as follows: East – west wind speed at 10 meters above ground: -0.87 m/s, North – south wind speed at 10 meters above ground: -0.76 m/s. Dewpoint Temperature: 18.66 °C. Temperature: 19.68 °C. Pressure Mean Sea Level: 1014.59 hPa. Surface Pressure: 883.28 hPa. Total Precipitation: 0.0001 meters
 
---- Example 3 (horizon: 4 hours, location: Bolaang Mongondow Selatan, North Sulawesi) ---
+--- Example 2 (horizon: 4 hours, location: Tulang Bawang Barat, Lampung) ---
 Observations:
-At 2010-09-12 04:00, in Bolaang Mongondow Selatan, North Sulawesi, the weather observations were recorded as follows:
-East – west wind speed at 10 meters above ground: 0.52 m/s, North – south wind speed at 10 meters above ground: 2.94 m/s. Dewpoint Temperature: 23.41 °C. Temperature: 26.12 °C. Pressure Mean Sea Level: 1010.87 hPa. Surface Pressure: 976.40 hPa. Total Precipitation: 0.0009 meters
-At 2010-09-12 05:00, in Bolaang Mongondow Selatan, North Sulawesi, the weather observations were recorded as follows:
-East – west wind speed at 10 meters above ground: 0.37 m/s, North – south wind speed at 10 meters above ground: 2.96 m/s. Dewpoint Temperature: 22.87 °C. Temperature: 25.65 °C. Pressure Mean Sea Level: 1010.39 hPa. Surface Pressure: 975.94 hPa. Total Precipitation: 0.0004 meters
-At 2010-09-12 06:00, in Bolaang Mongondow Selatan, North Sulawesi, the weather observations were recorded as follows:
-East – west wind speed at 10 meters above ground: 0.96 m/s, North – south wind speed at 10 meters above ground: 2.68 m/s. Dewpoint Temperature: 22.93 °C. Temperature: 25.42 °C. Pressure Mean Sea Level: 1010.13 hPa. Surface Pressure: 975.63 hPa. Total Precipitation: 0.0005 meters
-At 2010-09-12 07:00, in Bolaang Mongondow Selatan, North Sulawesi, the weather observations were recorded as follows:
-East – west wind speed at 10 meters above ground: 1.75 m/s, North – south wind speed at 10 meters above ground: 1.81 m/s. Dewpoint Temperature: 22.94 °C. Temperature: 25.53 °C. Pressure Mean Sea Level: 1009.56 hPa. Surface Pressure: 975.07 hPa. Total Precipitation: 0.0014 meters
-At 2010-09-12 08:00, in Bolaang Mongondow Selatan, North Sulawesi, the weather observations were recorded as follows:
-East – west wind speed at 10 meters above ground: 1.84 m/s, North – south wind speed at 10 meters above ground: 0.65 m/s. Dewpoint Temperature: 22.63 °C. Temperature: 24.71 °C. Pressure Mean Sea Level: 1009.75 hPa. Surface Pressure: 975.26 hPa. Total Precipitation: 0.0001 meters
-At 2010-09-12 09:00, in Bolaang Mongondow Selatan, North Sulawesi, the weather observations were recorded as follows:
-East – west wind speed at 10 meters above ground: 0.77 m/s, North – south wind speed at 10 meters above ground: 0.62 m/s. Dewpoint Temperature: 22.27 °C. Temperature: 24.30 °C. Pressure Mean Sea Level: 1010.27 hPa. Surface Pressure: 975.77 hPa. Total Precipitation: 0.0004 meters
+At 2011-11-22 00:00, in Tulang Bawang Barat, Lampung, the weather observations were recorded as follows:
+East – west wind speed at 10 meters above ground: 1.56 m/s, North – south wind speed at 10 meters above ground: -1.03 m/s. Dewpoint Temperature: 23.04 °C. Temperature: 24.31 °C. Pressure Mean Sea Level: 1008.38 hPa. Surface Pressure: 1004.84 hPa. Total Precipitation: 0.0000 meters
+At 2011-11-22 01:00, in Tulang Bawang Barat, Lampung, the weather observations were recorded as follows:
+East – west wind speed at 10 meters above ground: 1.86 m/s, North – south wind speed at 10 meters above ground: -1.16 m/s. Dewpoint Temperature: 23.21 °C. Temperature: 25.24 °C. Pressure Mean Sea Level: 1009.43 hPa. Surface Pressure: 1005.90 hPa. Total Precipitation: 0.0000 meters
+At 2011-11-22 02:00, in Tulang Bawang Barat, Lampung, the weather observations were recorded as follows:
+East – west wind speed at 10 meters above ground: 2.06 m/s, North – south wind speed at 10 meters above ground: -1.68 m/s. Dewpoint Temperature: 23.70 °C. Temperature: 28.44 °C. Pressure Mean Sea Level: 1009.65 hPa. Surface Pressure: 1006.12 hPa. Total Precipitation: 0.0000 meters
+At 2011-11-22 03:00, in Tulang Bawang Barat, Lampung, the weather observations were recorded as follows:
+East – west wind speed at 10 meters above ground: 2.21 m/s, North – south wind speed at 10 meters above ground: -1.38 m/s. Dewpoint Temperature: 23.80 °C. Temperature: 29.36 °C. Pressure Mean Sea Level: 1009.53 hPa. Surface Pressure: 1006.01 hPa. Total Precipitation: 0.0001 meters
+At 2011-11-22 04:00, in Tulang Bawang Barat, Lampung, the weather observations were recorded as follows:
+East – west wind speed at 10 meters above ground: 1.82 m/s, North – south wind speed at 10 meters above ground: -1.06 m/s. Dewpoint Temperature: 24.21 °C. Temperature: 29.99 °C. Pressure Mean Sea Level: 1008.81 hPa. Surface Pressure: 1005.30 hPa. Total Precipitation: 0.0001 meters
+At 2011-11-22 05:00, in Tulang Bawang Barat, Lampung, the weather observations were recorded as follows:
+East – west wind speed at 10 meters above ground: 1.74 m/s, North – south wind speed at 10 meters above ground: -0.70 m/s. Dewpoint Temperature: 23.79 °C. Temperature: 30.87 °C. Pressure Mean Sea Level: 1007.85 hPa. Surface Pressure: 1004.35 hPa. Total Precipitation: 0.0002 meters
 
 Please describe weather observation in the next 4 hours.
 
 Answer:
-At 2010-09-12 10:00, in Bolaang Mongondow Selatan, North Sulawesi, the weather observations were recorded as follows: East – west wind speed at 10 meters above ground: 0.95 m/s, North – south wind speed at 10 meters above ground: 0.66 m/s. Dewpoint Temperature: 21.90 °C. Temperature: 23.67 °C. Pressure Mean Sea Level: 1010.49 hPa. Surface Pressure: 975.94 hPa. Total Precipitation: 0.0009 meters At 2010-09-12 11:00, in Bolaang Mongondow Selatan, North Sulawesi, the weather observations were recorded as follows: East – west wind speed at 10 meters above ground: 1.06 m/s, North – south wind speed at 10 meters above ground: 0.80 m/s. Dewpoint Temperature: 21.49 °C. Temperature: 23.40 °C. Pressure Mean Sea Level: 1012.05 hPa. Surface Pressure: 977.43 hPa. Total Precipitation: 0.0010 meters At 2010-09-12 12:00, in Bolaang Mongondow Selatan, North Sulawesi, the weather observations were recorded as follows: East – west wind speed at 10 meters above ground: 0.82 m/s, North – south wind speed at 10 meters above ground: 0.75 m/s. Dewpoint Temperature: 21.58 °C. Temperature: 23.25 °C. Pressure Mean Sea Level: 1012.20 hPa. Surface Pressure: 977.57 hPa. Total Precipitation: 0.0007 meters At 2010-09-12 13:00, in Bolaang Mongondow Selatan, North Sulawesi, the weather observations were recorded as follows: East – west wind speed at 10 meters above ground: 0.66 m/s, North – south wind speed at 10 meters above ground: 0.37 m/s. Dewpoint Temperature: 21.58 °C. Temperature: 23.44 °C. Pressure Mean Sea Level: 1012.80 hPa. Surface Pressure: 978.14 hPa. Total Precipitation: 0.0003 meters
-
---- Example 4 (horizon: 5 hours, location: Bengkulu, Bengkulu) ---
-Observations:
-At 2011-02-22 02:00, in Bengkulu, Bengkulu, the weather observations were recorded as follows:
-East – west wind speed at 10 meters above ground: 1.99 m/s, North – south wind speed at 10 meters above ground: -2.08 m/s. Dewpoint Temperature: 23.15 °C. Temperature: 27.39 °C. Pressure Mean Sea Level: 1011.14 hPa. Surface Pressure: 1005.21 hPa. Total Precipitation: 0.0000 meters
-At 2011-02-22 03:00, in Bengkulu, Bengkulu, the weather observations were recorded as follows:
-East – west wind speed at 10 meters above ground: 2.49 m/s, North – south wind speed at 10 meters above ground: -1.90 m/s. Dewpoint Temperature: 22.79 °C. Temperature: 27.90 °C. Pressure Mean Sea Level: 1011.05 hPa. Surface Pressure: 1005.12 hPa. Total Precipitation: 0.0000 meters
-At 2011-02-22 04:00, in Bengkulu, Bengkulu, the weather observations were recorded as follows:
-East – west wind speed at 10 meters above ground: 3.14 m/s, North – south wind speed at 10 meters above ground: -1.60 m/s. Dewpoint Temperature: 22.43 °C. Temperature: 28.32 °C. Pressure Mean Sea Level: 1010.74 hPa. Surface Pressure: 1004.81 hPa. Total Precipitation: 0.0000 meters
-At 2011-02-22 05:00, in Bengkulu, Bengkulu, the weather observations were recorded as follows:
-East – west wind speed at 10 meters above ground: 3.73 m/s, North – south wind speed at 10 meters above ground: -1.37 m/s. Dewpoint Temperature: 22.34 °C. Temperature: 29.75 °C. Pressure Mean Sea Level: 1010.10 hPa. Surface Pressure: 1004.19 hPa. Total Precipitation: 0.0000 meters
-At 2011-02-22 06:00, in Bengkulu, Bengkulu, the weather observations were recorded as follows:
-East – west wind speed at 10 meters above ground: 4.36 m/s, North – south wind speed at 10 meters above ground: -1.07 m/s. Dewpoint Temperature: 22.43 °C. Temperature: 29.92 °C. Pressure Mean Sea Level: 1009.36 hPa. Surface Pressure: 1003.45 hPa. Total Precipitation: 0.0000 meters
-
-Please describe weather observation in the next 5 hours.
-
-Answer:
-At 2011-02-22 07:00, in Bengkulu, Bengkulu, the weather observations were recorded as follows: East – west wind speed at 10 meters above ground: 4.70 m/s, North – south wind speed at 10 meters above ground: -1.09 m/s. Dewpoint Temperature: 22.72 °C. Temperature: 29.78 °C. Pressure Mean Sea Level: 1008.62 hPa. Surface Pressure: 1002.71 hPa. Total Precipitation: 0.0000 meters At 2011-02-22 08:00, in Bengkulu, Bengkulu, the weather observations were recorded as follows: East – west wind speed at 10 meters above ground: 4.78 m/s, North – south wind speed at 10 meters above ground: -1.14 m/s. Dewpoint Temperature: 22.96 °C. Temperature: 29.65 °C. Pressure Mean Sea Level: 1007.95 hPa. Surface Pressure: 1002.05 hPa. Total Precipitation: 0.0000 meters At 2011-02-22 09:00, in Bengkulu, Bengkulu, the weather observations were recorded as follows: East – west wind speed at 10 meters above ground: 4.67 m/s, North – south wind speed at 10 meters above ground: -1.39 m/s. Dewpoint Temperature: 23.04 °C. Temperature: 29.16 °C. Pressure Mean Sea Level: 1008.14 hPa. Surface Pressure: 1002.23 hPa. Total Precipitation: 0.0000 meters At 2011-02-22 10:00, in Bengkulu, Bengkulu, the weather observations were recorded as follows: East – west wind speed at 10 meters above ground: 4.23 m/s, North – south wind speed at 10 meters above ground: -0.78 m/s. Dewpoint Temperature: 23.89 °C. Temperature: 28.35 °C. Pressure Mean Sea Level: 1008.19 hPa. Surface Pressure: 1002.28 hPa. Total Precipitation: 0.0002 meters At 2011-02-22 11:00, in Bengkulu, Bengkulu, the weather observations were recorded as follows: East – west wind speed at 10 meters above ground: 3.40 m/s, North – south wind speed at 10 meters above ground: -1.33 m/s. Dewpoint Temperature: 23.99 °C. Temperature: 28.16 °C. Pressure Mean Sea Level: 1008.33 hPa. Surface Pressure: 1002.40 hPa. Total Precipitation: 0.0001 meters
+At 2011-11-22 06:00, in Tulang Bawang Barat, Lampung, the weather observations were recorded as follows: East – west wind speed at 10 meters above ground: 1.94 m/s, North – south wind speed at 10 meters above ground: -0.44 m/s. Dewpoint Temperature: 23.59 °C. Temperature: 30.17 °C. Pressure Mean Sea Level: 1006.35 hPa. Surface Pressure: 1002.86 hPa. Total Precipitation: 0.0027 meters At 2011-11-22 07:00, in Tulang Bawang Barat, Lampung, the weather observations were recorded as follows: East – west wind speed at 10 meters above ground: 2.46 m/s, North – south wind speed at 10 meters above ground: -0.13 m/s. Dewpoint Temperature: 24.04 °C. Temperature: 30.39 °C. Pressure Mean Sea Level: 1005.03 hPa. Surface Pressure: 1001.53 hPa. Total Precipitation: 0.0028 meters At 2011-11-22 08:00, in Tulang Bawang Barat, Lampung, the weather observations were recorded as follows: East – west wind speed at 10 meters above ground: 2.16 m/s, North – south wind speed at 10 meters above ground: -0.34 m/s. Dewpoint Temperature: 24.05 °C. Temperature: 29.79 °C. Pressure Mean Sea Level: 1004.58 hPa. Surface Pressure: 1001.08 hPa. Total Precipitation: 0.0012 meters At 2011-11-22 09:00, in Tulang Bawang Barat, Lampung, the weather observations were recorded as follows: East – west wind speed at 10 meters above ground: 1.33 m/s, North – south wind speed at 10 meters above ground: 0.09 m/s. Dewpoint Temperature: 24.34 °C. Temperature: 29.15 °C. Pressure Mean Sea Level: 1004.49 hPa. Surface Pressure: 1001.00 hPa. Total Precipitation: 0.0001 meters
 
 --- Now answer the following ---
 Follow the same format as the examples above.

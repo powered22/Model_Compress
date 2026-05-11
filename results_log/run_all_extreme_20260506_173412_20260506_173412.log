@@ -1,0 +1,4 @@
+[rank0] [2026-05-06 17:34:12] [INFO] - Starting extreme weather experiment matrix
+[rank0] [2026-05-06 17:34:12] [INFO] -   Dataset:     data/weather_extreme/100_dataset.jsonl
+[rank0] [2026-05-06 17:34:12] [INFO] -   Models:      ['llama3:8b-instruct-q2_K']
+[rank0] [2026-05-06 17:34:12] [INFO] -   Modes:       ['fewshot']

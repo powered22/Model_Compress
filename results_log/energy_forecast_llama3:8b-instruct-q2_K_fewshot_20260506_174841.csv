@@ -1,0 +1,34 @@
+﻿Key,Region,Season,Day,Prompt,LLM Result (raw),N Predicted Steps,MAE Penalised,MAE Matched,Step Coverage %,Extraction OK,Model,Prompting,Elapsed (s)
+energy_DE_LU_2023-01-09_00:30,DE_LU,Winter,Tuesday,"The following is electricity load data (MW) recorded at 30-minute intervals in the DE_LU bidding zone.
+Region: DE_LU. Season: Winter. Day: Tuesday. Is weekend: No.
+Historical average load: 52819.01 MW","42541.02, 41460.16, 40781.24, 40309.46, 40149.79, 40427.44, 40484.02, 40391.98, 40691.74, 40504.25, 40338.21, 40092.26, 40568.21, 41006.96, 41938.8, 43359.56, 44940.98, 46862.84, 48342.01, 49394.86, 50527.2, 52161.04, 52960.0, 52507.58, 52113.8, 51244.42, 50254.94, 49386.19, 48868.62, 48690.86, 4916",48,13298.5548,13298.5548,100.0,True,llama3:8b-instruct-q2_K,fewshot,60.48
+energy_DE_LU_2023-01-10_00:30,DE_LU,Winter,Wednesday,"The following is electricity load data (MW) recorded at 30-minute intervals in the DE_LU bidding zone.
+Region: DE_LU. Season: Winter. Day: Wednesday. Is weekend: No.
+Historical average load: 59611.59 ","42541.02, 41460.16, 40781.24, 40309.46, 40149.79, 40427.44, 40484.02, 40391.98, 40691.74, 40504.25, 40338.21, 40092.26, 40568.21, 41006.96, 41938.8, 43359.56, 44940.98, 46862.84, 48342.01, 49394.86, 50527.2, 52161.04, 52960.0, 52507.58, 52113.8, 51244.42, 50254.94, 49386.19, 48868.62, 48690.86, 4916",46,16173.7319,14573.4659,95.8,False,llama3:8b-instruct-q2_K,fewshot,105.83
+energy_DE_LU_2023-01-03_00:30,DE_LU,Winter,Wednesday,"The following is electricity load data (MW) recorded at 30-minute intervals in the DE_LU bidding zone.
+Region: DE_LU. Season: Winter. Day: Wednesday. Is weekend: No.
+Historical average load: 54064.73 ","42541.02, 41460.16, 40781.24, 40309.46, 40149.79, 40427.44, 40484.02, 40391.98, 40691.74, 40504.25, 40338.21, 40092.26, 40568.21, 41006.96, 41938.8, 43359.56, 44940.98, 46862.84, 48342.01, 49394.86, 50527.2, 52161.04, 52960.0, 52507.58, 52113.8, 51244.42, 50254.94, 49386.19, 48868.62, 48690.86, 4916",46,13475.9623,11911.4474,95.8,False,llama3:8b-instruct-q2_K,fewshot,90.41
+energy_DE_LU_2023-01-08_00:30,DE_LU,Winter,Monday,"The following is electricity load data (MW) recorded at 30-minute intervals in the DE_LU bidding zone.
+Region: DE_LU. Season: Winter. Day: Monday. Is weekend: No.
+Historical average load: 47822.45 MW.","42541.02, 41460.16, 40781.24, 40309.46, 40149.79, 40427.44, 40484.02, 40391.98, 40691.74, 40504.25, 40338.21, 40092.26, 40568.21, 41006.96, 41938.8, 43359.56, 44940.98, 46862.84, 48342.01, 49394.86, 50527.2, 52161.04, 52960.0, 52507.58, 52113.8, 51244.42, 50254.94, 49386.19, 48868.62, 48690.86, 4916",48,11182.7633,11182.7633,100.0,True,llama3:8b-instruct-q2_K,fewshot,92.02
+energy_DE_LU_2023-01-11_00:30,DE_LU,Winter,Thursday,"The following is electricity load data (MW) recorded at 30-minute intervals in the DE_LU bidding zone.
+Region: DE_LU. Season: Winter. Day: Thursday. Is weekend: No.
+Historical average load: 61362.79 M","42541.02, 41460.16, 40781.24, 40309.46, 40149.79, 40427.44, 40484.02, 40391.98, 40691.74, 40504.25, 40338.21, 40092.26, 40568.21, 41006.96, 41938.8, 43359.56, 44940.98, 46862.84, 48342.01, 49394.86, 50527.2, 52161.04, 52960.0, 52507.58, 52113.8, 51244.42, 50254.94, 49386.19, 48868.62, 48690.86, 4916",46,17467.8369,15945.7796,95.8,False,llama3:8b-instruct-q2_K,fewshot,92.03
+energy_DE_LU_2023-01-05_00:30,DE_LU,Winter,Friday,"The following is electricity load data (MW) recorded at 30-minute intervals in the DE_LU bidding zone.
+Region: DE_LU. Season: Winter. Day: Friday. Is weekend: No.
+Historical average load: 57927.7 MW.
+","42541.02, 41460.16, 40781.24, 40309.46, 40149.79, 40427.44, 40484.02, 40391.98, 40691.74, 40504.25, 40338.21, 40092.26, 40568.21, 41006.96, 41938.8, 43359.56, 44940.98, 46862.84, 48342.01, 49394.86, 50527.2, 52161.04, 52960.0, 52507.58, 52113.8, 51244.42, 50254.94, 49386.19, 48868.62, 48690.86, 4916",46,8285.7935,6678.6635,95.8,False,llama3:8b-instruct-q2_K,fewshot,90.41
+energy_DE_LU_2023-01-04_00:30,DE_LU,Winter,Thursday,"The following is electricity load data (MW) recorded at 30-minute intervals in the DE_LU bidding zone.
+Region: DE_LU. Season: Winter. Day: Thursday. Is weekend: No.
+Historical average load: 56707.73 M","Here are the predicted electricity loads:
+
+42545.01, 41460.16, 40881.24, 40409.46, 40149.79, 40427.44, 40504.25, 40338.21, 40192.26, 40568.21, 41006.96, 41938.8, 43359.56, 44940.98, 46862.84, 48342.01, 49394.86, 50527.2, 52161.04, 52960.0, 52507.58, 51244.42, 50254.94, 49386.19, 48868.62, 48690.86, ",42,14310.5633,9385.7552,87.5,False,llama3:8b-instruct-q2_K,fewshot,88.38
+energy_DE_LU_2023-01-02_00:30,DE_LU,Winter,Tuesday,"The following is electricity load data (MW) recorded at 30-minute intervals in the DE_LU bidding zone.
+Region: DE_LU. Season: Winter. Day: Tuesday. Is weekend: No.
+Historical average load: 46361.51 MW","42542.02, 41461.16, 40781.24, 40309.46, 40149.79, 40427.44, 40484.02, 40391.98, 40691.74, 40504.25, 40338.21, 40092.26, 40568.21, 41006.96, 41938.8, 43359.56, 44940.98, 46862.84, 48342.01, 49394.86, 50527.2, 52161.04, 52960.0, 52507.58, 52113.8, 51244.42, 50254.94, 49386.19, 48868.62, 48690.86, 4916",46,9068.2506,7387.0252,95.8,False,llama3:8b-instruct-q2_K,fewshot,88.34
+energy_DE_LU_2023-01-06_00:30,DE_LU,Winter,Saturday,"The following is electricity load data (MW) recorded at 30-minute intervals in the DE_LU bidding zone.
+Region: DE_LU. Season: Winter. Day: Saturday. Is weekend: Yes.
+Historical average load: 54647.62 ","Here are the predicted electricity loads (MW) for each of the next 48 time steps:
+
+42541.02, 41460.16, 40781.24, 40309.46, 40149.79, 40427.44, 40484.02, 40391.98, 40691.74, 40504.25, 40338.21, 40092.26, 40568.21, 41006.96, 41938.8, 43359.56, 44940.98, 46862.84, 48342.01, 49394.86, 50527.2, 52161.04,",46,3155.5777,1383.5907,95.8,False,llama3:8b-instruct-q2_K,fewshot,93.20
+Final Avg.,,,,,,,11824.3372,10194.1162,95.8,22.2%,llama3:8b-instruct-q2_K,fewshot,

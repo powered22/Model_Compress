@@ -1,0 +1,45 @@
+[rank0] [2026-05-06 15:03:44] [INFO] - ============================================================
+[rank0] [2026-05-06 15:03:44] [INFO] - Short-term Weather Forecasting Experiment
+[rank0] [2026-05-06 15:03:44] [INFO] - ============================================================
+[rank0] [2026-05-06 15:03:44] [INFO] -   Dataset:      data/weather/100_test_data.jsonl
+[rank0] [2026-05-06 15:03:44] [INFO] -   Train set:    data/weather/train.jsonl
+[rank0] [2026-05-06 15:03:44] [INFO] -   Models:       ['llama3:8b-instruct-q2_K']
+[rank0] [2026-05-06 15:03:44] [INFO] -   Modes:        ['fewshot']
+[rank0] [2026-05-06 15:03:44] [INFO] -   Format:       sentence
+[rank0] [2026-05-06 15:03:44] [INFO] -   N_SHOTS_RAG:  4
+[rank0] [2026-05-06 15:03:44] [INFO] -   Loaded 10 test samples, 80 train samples
+[rank0] [2026-05-06 15:03:44] [INFO] - 
+  Few-shot prompt written to: initial_prompts/weather/fewshot-weather.txt
+[rank0] [2026-05-06 15:03:44] [INFO] -   Few-shot examples:  3
+[rank0] [2026-05-06 15:03:44] [INFO] -   Static test set:    7 samples
+[rank0] [2026-05-06 15:03:44] [INFO] - 
+────────────────────────────────────────────────────────────
+[rank0] [2026-05-06 15:03:44] [INFO] - Running persistence baseline...
+[rank0] [2026-05-06 15:03:58] [INFO] - 
+=== Persistence Baseline ===
+[rank0] [2026-05-06 15:03:58] [INFO] -   levenshtein_distance: 299.57142857142856
+[rank0] [2026-05-06 15:03:58] [INFO] -   norm_levenshtein_distance: 0.27130397219712465
+[rank0] [2026-05-06 15:03:58] [INFO] -   lcs: 17.285714285714285
+[rank0] [2026-05-06 15:03:58] [INFO] -   norm_lcs: 0.018647409235030398
+[rank0] [2026-05-06 15:03:58] [INFO] -   l1loss: 0.45796555612244455
+[rank0] [2026-05-06 15:03:58] [INFO] -   l1loss_matched: 0.45796555612244455
+[rank0] [2026-05-06 15:03:58] [INFO] -   timestamp_coverage: 100.0
+[rank0] [2026-05-06 15:03:58] [INFO] -   coverage: 100.0
+[rank0] [2026-05-06 15:03:58] [INFO] -   bertscore: 0.5661367433411735
+[rank0] [2026-05-06 15:03:58] [INFO] -   cosinesim: 0.52526170268764
+[rank0] [2026-05-06 15:03:58] [INFO] -   bleu: 0.01297263992726413
+[rank0] [2026-05-06 15:03:58] [INFO] -   rouge_l: 0.720912899504334
+[rank0] [2026-05-06 15:03:58] [INFO] -   strict: 1.0
+[rank0] [2026-05-06 15:03:58] [INFO] -   lenient: 0.7039767467502934
+[rank0] [2026-05-06 15:03:58] [INFO] - Persistence baseline complete.
+[rank0] [2026-05-06 15:03:58] [INFO] - 
+============================================================
+[rank0] [2026-05-06 15:03:58] [INFO] - MODEL: llama3:8b-instruct-q2_K
+[rank0] [2026-05-06 15:03:58] [INFO] -   Quant level: q2_K
+[rank0] [2026-05-06 15:03:58] [INFO] - ============================================================
+[rank0] [2026-05-06 15:03:58] [INFO] - 
+  Mode: fewshot
+[rank0] [2026-05-06 15:03:58] [INFO] -   ────────────────────────────────────────
+[rank0] [2026-05-06 15:03:58] [INFO] - 
+  Running: model=llama3:8b-instruct-q2_K, mode=fewshot, n_samples=7
+[rank0] [2026-05-06 15:03:58] [INFO] - [WeatherExperiment] model=llama3:8b-instruct-q2_K concurrency=2 timeout=600s
